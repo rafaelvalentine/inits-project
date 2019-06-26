@@ -1,0 +1,25 @@
+.AuthInput {
+    border: none;
+    border-bottom: 0.25px solid #808080;
+    // width: 265px;
+    height: 40px;
+    background: transparent;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    &:focus {
+        outline: none;
+    }
+}
+
+.Input {
+    width: 260px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid #5e3ff44d;
+    box-sizing: border-box;
+    border-radius: 2px;
+    padding-left: 10px;
+    &:focus {
+        outline: none;
+    }
+}
