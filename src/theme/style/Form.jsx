@@ -38,27 +38,73 @@ export const NoMLabel = styled(Label)`
     margin: 1rem 1rem;
 `
 export const CheckBoxLabel = styled.label`
-    margin: 0;
+    margin: 15px 0 0;
     cursor: pointer;
     vertical-align: top;
-    display: inline-block;
+    display: block;
     position: relative;
     padding-left: 24px;
     z-index: 2;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    .checkmark {
+        position: absolute;
+        top: 8px;
+        left: 0;
+        height: 15px;
+        width: 15px;
+        background-color: #fff;
+        border: .5px solid ${props => props.theme.cardName}
+      }
+      .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+     
+      input:checked ~ .checkmark:after {
+        display: block;
+      }
+      :hover input ~ .checkmark {
+        background-color: ${props => props.theme.gray};
+      }
+        input:checked ~ .checkmark {
+        background-color:  ${props => props.theme.blue};
+      }
+      .checkmark:after {
+        left: 5px;
+        top: 1px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
 `
 export const CheckBox = styled.input`
-    color: ${props => props.theme.purple};
-    margin-right: 10px;
-    position: absolute;
-    top: 2px;
-    left: 0;
-    opacity: 0;
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0
+    // color: ${props => props.theme.purple};
+    // margin-right: 10px;
+    // position: absolute;
+    // top: 2px;
+    // left: 0;
+    // opacity: 0;
 
-    :checked ~ .checkbox__label:after{
-        border-color: #2948ff;
-        color: #2948ff;
-        content: "\\2713";
-    }
+    // :checked ~ .checkbox__label:after{
+    //     border-color: #2948ff;
+    //     color: #2948ff;
+    //     content: "\\2713";
+    // }
 `
 
 export const TwoComponentBox = styled.div`
@@ -68,6 +114,7 @@ export const TwoComponentBox = styled.div`
     width: 100%;
     margin: 0;
     padding:0 5px;
+    flex-wrap: ${props => props.flexWrap ? props.flexWrap : 'nowrap'}
 `
 export const AltBox = styled(TwoComponentBox)`
     justify-content:flex-start;
@@ -149,10 +196,11 @@ NoLabelInput.defaultProps = {
 }
 export const MainLabelContainer = styled.label`
     display: block;
-    margin-top ${ props => props.marTop ? props.marTop : '24px'};
+    margin-top ${props => props.marTop ? props.marTop : '24px'};
+  
 `
 export const MainLabelContainerAlt = styled.div`
-    margin-top ${ props => props.marTop ? props.marTop : '16px'};
+    margin-top ${props => props.marTop ? props.marTop : '16px'};
 `
 export const UsedCard = styled.div`
     display: flex;
@@ -174,20 +222,32 @@ export const PaymentLabelPair = styled.div`
     margin-bottom: 1rem;
 `
 export const Select = styled.select`
-    width: 100%;
-    border: 0.5px solid #54c4cf;    
-    border-radius: 2px !important; 
-    height: 40px;
+    width: ${props => props.width};
+    height: ${props => props.height};
+    margin: ${props => props.margin};
+    border: 1px solid ${props => props.theme.selectBorder};
     background: transparent;
-    padding-left: 10px;
-    margin-bottom: 5px;
-    font-weight: 300;
-    font-size: 0.8rem;
-    color: ${props => props.theme.black};
+    padding: 8px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 14px;
+    appearance: none;
+    background-image: url(${require('../../assets/images/arrow-dropdown.svg')});
+    background-repeat: no-repeat;
+    background-position: 90%;
+    background-size: center;
+    border-radius: 2px;
+    color: ${props => props.theme.cardName};
+    cursor:pointer;
     :focus{
-        outline: none;
+        outline: ${props => props.theme.blue};
     }
 `
+Select.defaultProps = {
+  width: '49px',
+  height: '29px'
+}
 export const TxtArea = styled.textarea`
     border: 0.5px solid #54c4cf;    
     border-radius: 2px !important;

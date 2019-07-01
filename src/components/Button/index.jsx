@@ -3,6 +3,21 @@ import { Logo } from '../Picture'
 import Spinner from '../Tools/Spinner'
 import * as ButtonStyle from './styles'
 
+const PrimaryButton = ({ primaryContent, primaryClicked, loading, ...props }) => {
+  return (
+    <ButtonStyle.GreenButtonAlt onClick={primaryClicked} {...props}>
+      {primaryContent}
+    </ButtonStyle.GreenButtonAlt>
+  )
+}
+
+const SecondaryButton = ({ secondaryContent, secondaryClicked, loading, ...props }) => {
+  return (
+    <ButtonStyle.RedButtonAlt onClick={secondaryClicked} {...props}>
+      {secondaryContent}
+    </ButtonStyle.RedButtonAlt>
+  )
+}
 const Button = ({ content, clicked, loading, ...props }) => {
   return (
     <ButtonStyle.Container onClick={clicked} {...props}>
@@ -41,6 +56,24 @@ export const SelectBtn = ({ chosen, content, ...props }) => {
     <ButtonStyle.AltContainer chosen={chosen} {...props}>
       {content}
     </ButtonStyle.AltContainer>
+  )
+}
+
+export const DuoButton = ({ primaryAlt, secondAlt, primaryContent, secondaryContent, primaryClicked, secondaryClicked, DuoButtonMargin, ...props }) => {
+  return (
+    <ButtonStyle.DuoButtonWrapper margin={DuoButtonMargin}{...props}>
+      <SecondaryButton
+        alt={secondAlt}
+        secondaryContent={secondaryContent}
+        secondaryClicked={secondaryClicked}
+
+      />
+      <PrimaryButton
+        alt={primaryAlt}
+        primaryContent={primaryContent}
+        primaryClicked={primaryClicked}
+      />
+    </ButtonStyle.DuoButtonWrapper>
   )
 }
 

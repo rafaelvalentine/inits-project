@@ -70,3 +70,44 @@ CreateUserButton.defaultProps = {
   margin: '0',
   height: '40px'
 }
+
+export const GreenButtonAlt = styled(Container)`
+    width: ${props => props.width};
+    height: ${props => props.height};
+    color: ${props => props.theme.white};
+    background-color: ${props => props.alt ? props.theme.lightGreen : props.theme.green};
+`
+GreenButtonAlt.defaultProps = {
+  width: '90px',
+  height: '32px',
+  margin: '0 auto'
+}
+export const RedButtonAlt = styled(GreenButtonAlt)`
+width: ${props => props.width};
+height: ${props => props.height};
+color: ${props => props.alt ? props.theme.paleOrange : props.theme.paleGreen};
+background-color: ${props => props.alt ? props.theme.lightOrange : props.theme.PaleGreen};
+`
+// RedButtonAlt.defaultProps = {
+//   width: '90px',
+//   height: '32px',
+//   margin: '24px auto'
+// }
+// GreenButtonAlt.defaultProps = {
+//   width: '90px',
+//   height: '32px',
+//   margin: '24px auto'
+// }
+export const DuoButtonWrapper = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+width:100%;
+padding:${props => props.padding};
+margin:${props => props.margin};
+`
+
+DuoButtonWrapper.defaultProps = {
+  padding: '0 8px',
+  margin: '0'
+}

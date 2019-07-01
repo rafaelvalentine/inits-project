@@ -4,7 +4,7 @@ export default {
     purple: '#5353D0',
     blue: '#2F80ED',
     red: '#FF4500',
-    white: '#FFF',
+    white: '#FFFFFF',
     title: '#9E9E9E',
     text: '#7E7E7E',
     textBlack: '#000000',
@@ -13,7 +13,8 @@ export default {
     label: '#B0BAC9',
     cardName: '#7E7E7E',
     cardSkill: '#515151',
-    lightOrange: '#FF4500',
+    paleOrange: '#FF4500',
+    lightOrange: 'rgba(255, 69, 0, 0.1)',
     mediumOrange: '#F79E1B',
     electricBlue: '#0C57FB',
     gray: '#F4F6F8',
@@ -22,5 +23,7 @@ export default {
     paleGreen: 'rgba(39, 174, 96, 0.5)',
     lightGreen: 'rgba(39, 174, 96, 0.1)',
     handleText: '#3B3B3B',
-    subHandleText: '#515151'
+    subHandleText: '#515151',
+    faintBorder: '#F7F7F7',
+    selectBorder: '#F1F2F7'
 }

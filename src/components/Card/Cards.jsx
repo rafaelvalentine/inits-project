@@ -2,8 +2,8 @@ import React from 'react'
 import * as Card from './styles'
 import { Header } from '../../theme/style/typeface'
 import { Logo } from '../Picture'
-import { UserDetails } from './cardParts'
-// import Button from '../Button'
+import { UserDetails, JobCompleted, SkillList } from './cardParts'
+import { DuoButton } from '../Button'
 
 const CardBox = ({ children, ...props }) => {
   return (
@@ -61,13 +61,29 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
   )
 }
 
-export const Profile = ({ image }) => {
+export const Profile = ({ image, rating, type, jobs, skills, primaryAlt, secondAlt, primaryContent, primaryClicked, secondaryClicked, disabled }) => {
+  let secondaryContent
+  let altButton
+  disabled ? secondaryContent = 'Disable' : secondaryContent = 'Enabled'
+  !disabled ? altButton = 'true' : altButton = 'false'
   return (
     <CardBox
       width='220px'
-      height='330px' >
+      height='330px'
+      margin='25px'
+    >
       <UserDetails
         image={image}
+        rating={rating}
+        type={type}
+      />
+      <JobCompleted jobs={jobs} />
+      <SkillList skills={skills} />
+      <DuoButton
+        DuoButtonMargin='40px 0 0'
+        primaryContent='Connect'
+        secondaryContent={secondaryContent}
+        secondAlt={altButton}
       />
     </CardBox>
   )

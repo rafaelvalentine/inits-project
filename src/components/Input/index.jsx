@@ -254,6 +254,13 @@ export const Select = ({ name, label, children, value, ...props }) => {
     </Form.MainLabelContainer >
   )
 }
+export const SelectAlt = ({ name, children, value, changed, ...props }) => {
+  return (
+    <Form.MainLabelContainerAlt {...props}>
+      <Form.Select name={name} value={value} onChange={changed} {...props}> { children } </Form.Select>
+    </Form.MainLabelContainerAlt>
+  )
+}
 
 export const Text = ({ label, name, ...props }) => {
   return (
@@ -265,7 +272,17 @@ export const Text = ({ label, name, ...props }) => {
     </Form.MainLabelContainer >
   )
 }
-
+export const CheckBox = ({ label, name, type, ...props }) => {
+  return (
+    <Form.CheckBoxLabel >
+      <Form.MainLabel >
+        <Type.BoldLabel > { label } </Type.BoldLabel>
+      </Form.MainLabel >
+      <Form.CheckBox name={name} type={type} {...props} />
+      <span className="checkmark"></span>
+    </Form.CheckBoxLabel >
+  )
+}
 export const DuoPickDate = ({
   labelFrom,
   labelTo,

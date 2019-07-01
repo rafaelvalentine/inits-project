@@ -10,12 +10,17 @@ export const SubWrapper = styled.div`
 width:100%;
 height:100%;
 display: flex;
-justify-content: center;
+justify-content: ${props => props.justifyContent ? props.justifyContent : 'center' };
 align-items:center;
 padding:${props => props.padding ? props.padding : '80px 0 '};
+flex-wrap:wrap;
+margin:0 auto;
 `
 export const SubWrapperAlt = styled(SubWrapper)`
 flex-direction:column;
 align-items: center;
-padding:${props => props.padding ? props.padding : '80px 0 '}
+padding:${props => props.padding ? props.padding : '80px 0 '};
+`
+
+export const ListWrapper = styled.div`
 `

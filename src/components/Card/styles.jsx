@@ -29,10 +29,48 @@ Container.defaultProps ={
   height: '150px',
   boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)'
 }
+
+export const FixContainer = styled.div`
+display: flex;
+justify-content: flex-start;
+align-items:center;
+background:${props => props.theme.transparent};
+width: 100%;
+height: 100% ;
+flex-wrap: wrap;
+overflow-y: scroll;
+`
+
+export const FixContainerAlt = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items:flex-start;
+background:${props => props.theme.transparent};
+width: 100%;
+padding: 8px 10px;
+max-height:120px;
+flex-wrap: nowrap;
+border:none;
+
+`
 export const MainWrapper = styled.div`
 display: flex;
 justify-content: space-between;
 align-items:center;
+`
+export const JobsCompleted = styled.div`
+display: flex;
+justify-content: flex-start;
+align-items:center;
+border-top: 1px solid ${props => props.theme.faintBorder};
+border-bottom: 1px solid ${props => props.theme.faintBorder};
+padding:8px 2px;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 16px;
+color:${props => props.theme.blue};
 `
 export const Wrapper = styled(MainWrapper)`
 `

@@ -6,9 +6,6 @@ import { Logo } from '../Picture'
 import { Main, MainDuo, MainTrios, MainTriosAlt } from '../Input'
 import Button from '../Button'
 
-
-
-
 export const CreateAdminForm = ({ history, changed, inputs, loading, submit }) => {
   return (
     <CardBox
@@ -20,12 +17,14 @@ export const CreateAdminForm = ({ history, changed, inputs, loading, submit }) =
         altBackground='true'
         fontSize='18px'
         onClick={() => history.push('/dashboard')}>
-        <Logo
-          src={require('../../assets/images/arrow-left.svg')}
-          height='24px'
-          width='24px'
-          margin='0 8px'
-        />   Create New Admin
+        <div>
+          <Logo
+            src={require('../../assets/images/arrow-left.svg')}
+            height='24px'
+            width='24px'
+            margin='0 8px'
+          />   Create New Admin
+        </div>
       </CardHeader>
 
       <Card.Container

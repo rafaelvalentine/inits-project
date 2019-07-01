@@ -50,6 +50,20 @@
     box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+    width: .2em;
+    border-radius: 100px;
+}
+
+ ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+ ::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -106,4 +120,37 @@ code {
 
 button {
     cursor: pointer;
+}
+
+
+/* 
+==========================================================================
+	Filter Search
+========================================================================== 
+*/
+
+#filtermodal {
+    max-width: 554px;
+    margin: 176px 336px;
+    /* height: 233px; */
+}
+
+#filtermodal .modal-content {
+    width: 550px;
+    height: 233px;
+}
+
+#filtermodal .modal-content .modal-body {
+    padding: 24px 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#filtermodal .modal-content .modal-footer {
+    border: transparent;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0 40px 24px;
 }

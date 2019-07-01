@@ -70,14 +70,17 @@ export const Label = styled.span`
     font-style: normal;
     font-size: 10px;
     line-height: 14px;
-    color: ${props => props.theme.black};
+    color: ${props => props.theme.handleText};
+`
+export const SkillType = styled(Label)`
+font-weight: bold;
+color: ${props => props.theme.subHandleText};
 `
 export const IncrementLabel = styled(Label)`
     text-transform: uppercase;
     font-size: 1rem;
 `
 export const BoldLabel = styled(Label)`
-    // margin-bottom: 0.2rem;
     text-align: ${props => props.textAlign} !important;
     color: ${props => props.alt ? props.theme.textBlack : props.theme.label};
 `
@@ -133,15 +136,19 @@ export const CheckBoxLabel = styled(Label)`
 `
 
 export const Number = styled.span`
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-transform: uppercase;
+font-size: 12px;
+line-height: 16px;
+margin-left:4px;
+color: ${props => props.theme.text};
 `
 export const CardHeader = styled.div`
+display:flex;
+justify-content: space-between;
+align-items:center;
 width: 100%;
 height: 56px;
 border-radius: 4px;
-padding: 20px 56px;
+padding: ${props => props.padding ? props.padding : '20px 56px'};
 font-style: normal;
 font-weight: bold;
 font-size: ${props => props.fontSize ? props.fontSize : '12px'};
@@ -153,11 +160,10 @@ export const UserHandle = styled(Header)`
 font-size: 12px;
 line-height: 16px;
 color: ${props => props.theme.handleText};
+text-transform: capitalize;
+margin:0;
 `
 export const SubHandle = styled(UserHandle)`
-font-style: normal;
-font-weight: normal;
-font-size: 12px;
-line-height: 16px;
-color:  ${props => props.theme.SubhandleText};
+margin: 10px 0 0;
+color: ${props => props.theme.subHandleText};
 `

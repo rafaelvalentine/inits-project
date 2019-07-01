@@ -16,6 +16,7 @@ const SearchBar = ({ inputs, changed, clicked, filterClicked }) => {
         content='search'
       />
       <FilterButton
+        clicked={filterClicked}
         content='filter'
 
       />
