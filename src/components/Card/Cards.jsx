@@ -61,11 +61,13 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
   )
 }
 
-export const Profile = ({ image, rating, type, jobs, skills, primaryAlt, secondAlt, primaryContent, primaryClicked, secondaryClicked, disabled }) => {
+export const Profile = ({ name, image, rating, type, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnable, handleDisable }) => {
   let secondaryContent
   let altButton
-  disabled ? secondaryContent = 'Disable' : secondaryContent = 'Enabled'
-  !disabled ? altButton = 'true' : altButton = 'false'
+  let clicked
+  !isDisabled ? secondaryContent = 'Disable' : secondaryContent = 'Enable'
+  isDisabled ? altButton = true : altButton = false
+  isDisabled ? clicked = handleEnable : clicked = handleDisable
   return (
     <CardBox
       width='220px'
@@ -76,14 +78,16 @@ export const Profile = ({ image, rating, type, jobs, skills, primaryAlt, secondA
         image={image}
         rating={rating}
         type={type}
+        name={name}
       />
-      <JobCompleted jobs={jobs} />
+      <JobCompleted jobs={jobsCompleted} />
       <SkillList skills={skills} />
       <DuoButton
         DuoButtonMargin='40px 0 0'
         primaryContent='Connect'
         secondaryContent={secondaryContent}
         secondAlt={altButton}
+        secondaryClicked={clicked}
       />
     </CardBox>
   )

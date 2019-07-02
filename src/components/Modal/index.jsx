@@ -1,3 +1,4 @@
 import FilterModal from './filterModal'
+import DisableUserModal, { ConfirmDisableUserModal } from './disableUserModal'
 
-export { FilterModal } 
+export { FilterModal, DisableUserModal, ConfirmDisableUserModal } 

@@ -35,40 +35,41 @@ const FilterModal = ({ clicked, ...props }) => {
             label='Name (Aa - Zz)'
           />
           <SelectAlt
-            width='120px'
+            width='110px'
             height=' 32px'
             margin='0 12px'
           >
             <option hidden>Category</option>
           </SelectAlt>
           <SelectAlt
-            width='120px'
+            width='110px'
             height=' 32px'
             margin='0 12px'
           >
-            <option hidden>Category</option>
+            <option hidden>Star Rating</option>
+          </SelectAlt>
+          <SelectAlt
+            width='110px'
+            height=' 32px'
+            margin='0 12px'
+          >
+            <option hidden>City</option>
+          </SelectAlt>
+          <SelectAlt
+            width='110px'
+            height=' 32px'
+            margin='0 12px'
+          >
+            <option hidden>Skills</option>
           </SelectAlt>
           <SelectAlt
             width='120px'
             height=' 32px'
             margin='0 12px'
           >
-            <option hidden>Category</option>
+            <option hidden>Jobs Completed</option>
           </SelectAlt>
-          <SelectAlt
-            width='120px'
-            height=' 32px'
-            margin='0 12px'
-          >
-            <option hidden>Category</option>
-          </SelectAlt>
-          <SelectAlt
-            width='120px'
-            height=' 32px'
-            margin='0 12px'
-          >
-            <option hidden>Category</option>
-          </SelectAlt>
+
         </AltBox>
 
       </Modal.Body>

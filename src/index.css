@@ -141,7 +141,7 @@ button {
 }
 
 #filtermodal .modal-content .modal-body {
-    padding: 24px 50px 0;
+    padding: 24px 14px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -153,4 +153,23 @@ button {
     justify-content: flex-start;
     align-items: flex-start;
     padding: 0 40px 24px;
+}
+
+
+/* 
+==========================================================================
+	Centered Modal
+========================================================================== 
+*/
+
+#centeredmodal {
+    /* max-width: 705px; */
+    /* margin: 176px 336px; */
+    /* height: 233px; */
+    z-index: 2001;
+}
+
+#centeredmodal .modal-content {
+    /* width: 705px;
+    height: 450px; */
 }

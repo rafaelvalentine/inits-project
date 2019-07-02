@@ -5,7 +5,7 @@ import { Profile } from '../../components/Card/Cards'
 import { CreateUserButton } from '../../components/Button'
 import Pagination from '../../components/Tools/Pagination'
 import * as Page from '../../theme/style/styles'
-import { FilterModal } from '../../components/Modal'
+import { FilterModal, DisableUserModal, ConfirmDisableUserModal } from '../../components/Modal'
 
 export default class index extends Component {
   state ={
@@ -17,7 +17,29 @@ export default class index extends Component {
     lowerPageBound: 0,
     data:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},],
     skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
-    showFilter: false
+    showFilter: false,
+    showDisableModal:false,
+    showConfirmDisable: false,
+    user:{
+      id: Math.random(),
+      name:'ezike ozichukwu',
+      image: require('../../assets/images/admin-profile.png'),
+      rating:'4.7',
+      type:'react dev',
+      jobsCompleted:21,
+      skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
+      isDisabled: false
+    },
+    user2:{
+      id: Math.random(),
+      name:'temi adeleke',
+      image: require('../../assets/images/profile-withface.png'),
+      rating:'3.3',
+      type:'HRM',
+      jobsCompleted: 7,
+      skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
+      isDisabled: true
+    }
   }
 
   scrollToTop =()=> window.scrollTo({
@@ -84,9 +106,28 @@ selectedPage = page =>{
   this.setState({currentPage: page})
 }
 
-handleShowFilterSearch = () =>{
+handleShowFilterSearch = e =>{
+  e.target.blur()
   let filter = this.state.showFilter
   this.setState({showFilter: !filter })
+}
+
+handleDisable = (name, id) =>{
+  // e.target.blur()
+  let disable = this.state.showDisableModal
+  this.setState({clickedName: name, clickedId: id }, ()=> this.setState({showDisableModal: !disable}))
+}
+handleOpenConfirmDisable = e =>{
+  let confirmDisable = this.state.showConfirmDisable
+  this.setState({loading: true}, ()=> setTimeout(() => {
+    this.setState({showConfirmDisable: !confirmDisable, showDisableModal:false })
+  }, 3000))
+  
+}
+
+handleConfirmDisable = e =>{
+  let confirmDisable = this.state.showConfirmDisable
+  this.setState({showConfirmDisable: !confirmDisable })
 }
 componentDidMount(){
   this.renderPageNumbers()
@@ -116,6 +157,7 @@ componentDidMount(){
            />
            {/* This is the create new user Component */}
             <CreateUserButton
+            clicked={()=> this.props.history.push('manage-users/createuser')}
             content='create new user'
             />
         </Page.SubWrapper>
@@ -123,12 +165,24 @@ componentDidMount(){
          padding='80px 40px'
         justifyContent='flex-start'>
           {/* This is the map Component  to display all available users*/}
-          { currentUsers.map(skill=>(
+          <Profile 
+          key={Math.random()}
+          handleEnable={()=>console.log('handleEnable was just clicked')}
+          handleDisable={()=>this.handleDisable(this.state.user.name, this.state.user.id)}
+          {...this.state.user}
+          />
+           <Profile 
+          key={Math.random()}
+          handleEnable={()=>console.log('handleEnable was just clicked')}
+          handleDisable={()=>this.handleDisable(this.state.user2.name, this.state.user2.id)}
+          {...this.state.user2}
+          />
+          {/* {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>(
             <Profile 
           key={Math.random()}
           skills={this.state.skills}
           />
-          ))}
+          )) : 'No Users Found'} */}
         </Page.SubWrapper>
         {/* This is the Pagination  Component */}
         <Pagination 
@@ -154,6 +208,28 @@ componentDidMount(){
         show={this.state.showFilter}
         onHide={this.handleShowFilterSearch}
         clicked={this.handleShowFilterSearch}
+        />
+        {/* 
+        This is the disable user modal Component 
+        Note:  that all Modal CSS is handled by index.css
+        */}
+        <DisableUserModal
+        show={this.state.showDisableModal}
+        loading={this.state.loading}
+        onHide={this.handleDisable}
+        inputs={this.state.user}
+        open={this.handleOpenConfirmDisable}
+        />
+        {/* 
+        This is the filter search modal Component 
+        Note:  that all Modal CSS is handled by index.css
+        */}
+        <ConfirmDisableUserModal
+        show={this.state.showConfirmDisable}
+        onHide={this.handleConfirmDisable}
+        history={this.props.history}
+        inputs={this.state.user}
+        close={this.handleConfirmDisable}
         />
       </Page.Wrapper>
 

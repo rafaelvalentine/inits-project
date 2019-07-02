@@ -6,6 +6,7 @@ import CreateAdmin from '../container/CreateAdmin'
 import ConfirmAdmin from '../pages/CreateAdmin/confirmAdmin'
 import AdminSettings from '../container/Settings'
 import Users from '../container/ManageUsers'
+import CreateUser from './CreateUser'
 
 import { Helmet } from 'react-helmet'
 import ScrollToTop from '../components/Tools/ScrollToTop'
@@ -108,6 +109,8 @@ export const App = ({ history }) => (
           <Route path='/dashboard/confirmadmin' exact component={ConfirmAdmin} />
           <Route path='/dashboard/adminsettings' exact component={AdminSettings} />
           <Route path='/manage-users' exact component={Users} />
+          <Route path='/manage-users/createuser' exact component={CreateUser} />
+          
           {/* <SignedInRoute path='/sign-up' exact component={SignUp} />
         <SignedInRoute path='/sign-up/freelancer/step-one' exact component={FreeFormOne} />
         <Route path='/sign-up/freelancer/step-two' exact component={ConfirmFreelancer} />

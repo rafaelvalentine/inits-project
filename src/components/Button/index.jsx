@@ -5,13 +5,13 @@ import * as ButtonStyle from './styles'
 
 const PrimaryButton = ({ primaryContent, primaryClicked, loading, ...props }) => {
   return (
-    <ButtonStyle.GreenButtonAlt onClick={primaryClicked} {...props}>
-      {primaryContent}
+    <ButtonStyle.GreenButtonAlt disabled={loading} onClick={primaryClicked} {...props}>
+      { loading ? <Spinner /> : primaryContent}
     </ButtonStyle.GreenButtonAlt>
   )
 }
 
-const SecondaryButton = ({ secondaryContent, secondaryClicked, loading, ...props }) => {
+const SecondaryButton = ({ secondaryContent, secondaryClicked, ...props }) => {
   return (
     <ButtonStyle.RedButtonAlt onClick={secondaryClicked} {...props}>
       {secondaryContent}
@@ -20,7 +20,7 @@ const SecondaryButton = ({ secondaryContent, secondaryClicked, loading, ...props
 }
 const Button = ({ content, clicked, loading, ...props }) => {
   return (
-    <ButtonStyle.Container onClick={clicked} {...props}>
+    <ButtonStyle.Container disabled={loading} onClick={clicked} {...props}>
       { loading ? <Spinner /> : content}
     </ButtonStyle.Container>
   )
@@ -59,19 +59,21 @@ export const SelectBtn = ({ chosen, content, ...props }) => {
   )
 }
 
-export const DuoButton = ({ primaryAlt, secondAlt, primaryContent, secondaryContent, primaryClicked, secondaryClicked, DuoButtonMargin, ...props }) => {
+export const DuoButton = ({ loading, primaryAlt, secondAlt, primaryContent, secondaryContent, primaryClicked, secondaryClicked, DuoButtonMargin, ...props }) => {
   return (
-    <ButtonStyle.DuoButtonWrapper margin={DuoButtonMargin}{...props}>
+    <ButtonStyle.DuoButtonWrapper margin={DuoButtonMargin}>
       <SecondaryButton
         alt={secondAlt}
         secondaryContent={secondaryContent}
         secondaryClicked={secondaryClicked}
-
+        {...props}
       />
       <PrimaryButton
+        loading={loading}
         alt={primaryAlt}
         primaryContent={primaryContent}
         primaryClicked={primaryClicked}
+        {...props}
       />
     </ButtonStyle.DuoButtonWrapper>
   )

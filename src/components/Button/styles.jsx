@@ -71,11 +71,24 @@ CreateUserButton.defaultProps = {
   height: '40px'
 }
 
-export const GreenButtonAlt = styled(Container)`
+export const GreenButtonAlt = styled.button`
     width: ${props => props.width};
     height: ${props => props.height};
+    margin:${props => props.margin}
     color: ${props => props.theme.white};
     background-color: ${props => props.alt ? props.theme.lightGreen : props.theme.green};
+    border-radius: 2px;
+    border: 1px solid ${props => props.theme.transparent};
+    text-transform:capitalize;
+    text-align: center;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 21px;
+    cursor: pointer;
+    color: ${props => props.theme.white};
+    background-color: ${props => props.alt ? props.theme.orange : props.theme.green};
+    transition: .3s;
 `
 GreenButtonAlt.defaultProps = {
   width: '90px',
@@ -83,21 +96,13 @@ GreenButtonAlt.defaultProps = {
   margin: '0 auto'
 }
 export const RedButtonAlt = styled(GreenButtonAlt)`
-width: ${props => props.width};
-height: ${props => props.height};
-color: ${props => props.alt ? props.theme.paleOrange : props.theme.paleGreen};
-background-color: ${props => props.alt ? props.theme.lightOrange : props.theme.PaleGreen};
+    width: ${props => props.width};
+    height: ${props => props.height};
+    margin:${props => props.margin}
+    color: ${props => props.alt ? props.theme.paleOrange : props.theme.paleGreen};
+    background-color: ${props => props.alt ? props.theme.lightOrange : props.theme.lightGreen};
 `
-// RedButtonAlt.defaultProps = {
-//   width: '90px',
-//   height: '32px',
-//   margin: '24px auto'
-// }
-// GreenButtonAlt.defaultProps = {
-//   width: '90px',
-//   height: '32px',
-//   margin: '24px auto'
-// }
+
 export const DuoButtonWrapper = styled.div`
 display:flex;
 justify-content:center;
