@@ -17,6 +17,7 @@ export default {
     lightOrange: 'rgba(255, 69, 0, 0.1)',
     mediumOrange: '#F79E1B',
     electricBlue: '#0C57FB',
+    lightElectricBlue: 'rgba(12, 87, 251, .1)',
     gray: '#F4F6F8',
     transparent: 'transparent',
     faintBlue: '#FBFEFF',

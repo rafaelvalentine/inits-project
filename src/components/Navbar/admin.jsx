@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import * as Com from './styles'
 import { Admin as AdminIMG } from '../Picture'
 import { Name as AdminName } from '../Name'
+import { NavDropDown } from '../DropDown'
 
 /**
  * this component holds the admin profile Info and Dropdown list for more options
@@ -20,7 +21,7 @@ const Admin = ({ admin, history }) => {
   }
   let dropdown
   if (dropDown.show) {
-    dropdown = <DropDown history={history} />
+    dropdown = <NavDropDown history={history} />
   }
   /**
  * Hook that alerts clicks outside of the passed ref
@@ -49,31 +50,14 @@ const Admin = ({ admin, history }) => {
   return (
     <Com.AdminWrapper ref={wrapperRef}>
       <AdminIMG
-        src={null || require('../../assets/images/admin-profile.png')}
+        src={null || require('../../assets/images/default_user.jpg')}
       />
-      <AdminName name='' icon={require('../../assets/images/arrow-dropdown.svg')} clicked={toggleDropDown}>
+      <AdminName name={ admin.fullname || 'Admin'} icon={require('../../assets/images/arrow-dropdown.svg')} clicked={toggleDropDown}>
         { dropdown }
       </AdminName>
     </Com.AdminWrapper>
   )
 }
 
-const DropDown = props => {
-  return (
-    <Com.Dropdown>
-      <Com.Options onClick={()=> props.history.push('/dashboard/createadmin')}>
-        <img src={require('../../assets/images/createadmin.svg')} alt='Create new admin user' />
-        <span> Create new admin user </span>
-      </Com.Options>
-      <Com.Options onClick={()=> props.history.push('/dashboard/adminsettings')}>
-        <img src={require('../../assets/images/settings.svg')} alt='settings' />
-        <span> Settings </span>
-      </Com.Options>
-      <Com.Options onClick={()=> props.history.push('/')}>
-        <img src={require('../../assets/images/logout.svg')} alt='logout' />
-        <span> Logout </span>
-      </Com.Options>
-    </Com.Dropdown>
-  )
-}
+
 export default Admin

@@ -5,7 +5,7 @@ import { Profile } from '../../components/Card/Cards'
 import { CreateUserButton } from '../../components/Button'
 import Pagination from '../../components/Tools/Pagination'
 import * as Page from '../../theme/style/styles'
-import { FilterModal, DisableUserModal, ConfirmDisableUserModal } from '../../components/Modal'
+import { FilterModal, DisableUserModal, ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal  } from '../../components/Modal'
 
 export default class index extends Component {
   state ={
@@ -15,12 +15,18 @@ export default class index extends Component {
     pageLimit: 5,
     upperPageBound: 5,
     lowerPageBound: 0,
-    data:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},],
-    skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
+    // data:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},],
+    // skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
     showFilter: false,
     showDisableModal:false,
-    showConfirmDisable: false,
-    user:{
+    showConfirmDisableModal: false,
+    showEnableModal:false,
+    showConfirmEnableModal: false,
+    clickedUser:{
+      id:'',
+      name:''
+    },
+    data:[{
       id: Math.random(),
       name:'ezike ozichukwu',
       image: require('../../assets/images/admin-profile.png'),
@@ -30,7 +36,7 @@ export default class index extends Component {
       skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
       isDisabled: false
     },
-    user2:{
+    {
       id: Math.random(),
       name:'temi adeleke',
       image: require('../../assets/images/profile-withface.png'),
@@ -39,7 +45,7 @@ export default class index extends Component {
       jobsCompleted: 7,
       skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
       isDisabled: true
-    }
+    }]
   }
 
   scrollToTop =()=> window.scrollTo({
@@ -112,22 +118,57 @@ handleShowFilterSearch = e =>{
   this.setState({showFilter: !filter })
 }
 
-handleDisable = (name, id) =>{
+handleCloseEnableUser =(name, id)=>{
+  let enable = this.state.showEnableModal
+   this.setState({showEnableModal: !enable})
+}
+handleCloseDisableUser = (name, id) =>{
   // e.target.blur()
   let disable = this.state.showDisableModal
-  this.setState({clickedName: name, clickedId: id }, ()=> this.setState({showDisableModal: !disable}))
+   this.setState({showDisableModal: !disable})
+}
+handleEnableUser =(name, id)=>{
+  let enable = this.state.showEnableModal
+  this.setState({clickedUser:{ name, id} }, ()=> this.setState({showEnableModal: !enable}))
+}
+handleDisableUser = (name, id) =>{
+  // e.target.blur()
+  let disable = this.state.showDisableModal
+  this.setState({clickedUser:{ name, id} }, ()=> this.setState({showDisableModal: !disable}))
 }
 handleOpenConfirmDisable = e =>{
-  let confirmDisable = this.state.showConfirmDisable
+  let DisableUser = this.state.data.filter( user=>(
+    user.id === this.state.clickedUser.id
+  ))
+  let rest = this.state.data.filter( users=>(
+    users.id !== this.state.clickedUser.id
+  ))
+  let isDisabled = DisableUser[0].isDisabled
+  let confirmDisable = this.state.showConfirmDisableModal
   this.setState({loading: true}, ()=> setTimeout(() => {
-    this.setState({showConfirmDisable: !confirmDisable, showDisableModal:false })
+    this.setState({ data: [...rest, { ...DisableUser[0], isDisabled: !isDisabled }], showConfirmDisableModal: !confirmDisable, showDisableModal:false },()=>console.log(this.state.data))
   }, 3000))
-  
 }
-
+handleOpenConfirmEnable = e =>{
+  let EnableUser = this.state.data.filter( user=>(
+    user.id === this.state.clickedUser.id
+  ))
+  let rest = this.state.data.filter( users=>(
+    users.id !== this.state.clickedUser.id
+  ))
+  let isDisabled = EnableUser[0].isDisabled
+  let confirmEnable = this.state.showConfirmEnableModal
+  this.setState({loading: true}, ()=> setTimeout(() => {
+    this.setState({ data: [...rest, { ...EnableUser[0], isDisabled: !isDisabled }], showConfirmEnableModal: !confirmEnable, showEnableModal:false })
+  }, 3000))
+}
 handleConfirmDisable = e =>{
-  let confirmDisable = this.state.showConfirmDisable
-  this.setState({showConfirmDisable: !confirmDisable })
+  let confirmDisable = this.state.showConfirmDisableModal
+  this.setState({showConfirmDisableModal: !confirmDisable, loading: false, clickedUser:{ name:'', id:''} })
+}
+handleConfirmEnable = e =>{
+  let confirmEnable = this.state.showConfirmEnableModal
+  this.setState({showConfirmEnableModal: !confirmEnable, loading: false, clickedUser:{ name:'', id:''} })
 }
 componentDidMount(){
   this.renderPageNumbers()
@@ -165,24 +206,26 @@ componentDidMount(){
          padding='80px 40px'
         justifyContent='flex-start'>
           {/* This is the map Component  to display all available users*/}
-          <Profile 
+          {/* <Profile 
           key={Math.random()}
-          handleEnable={()=>console.log('handleEnable was just clicked')}
-          handleDisable={()=>this.handleDisable(this.state.user.name, this.state.user.id)}
+          handleEnableUser={()=>this.handleEnableUser(this.state.user.name[0], this.state.user[0].id)}
+          handleDisableUser={()=>this.handleDisableUser(this.state.user.name[0], this.state.user[0].id)}
           {...this.state.user}
           />
            <Profile 
           key={Math.random()}
-          handleEnable={()=>console.log('handleEnable was just clicked')}
-          handleDisable={()=>this.handleDisable(this.state.user2.name, this.state.user2.id)}
+          handleEnableUser={()=>this.handleEnableUser(this.state.user[1].name, this.state.user[1].id)}
+          handleDisableUser={()=>this.handleDisableUser(this.state.user[1].name, this.state.user[1].id)}
           {...this.state.user2}
-          />
-          {/* {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>(
+          /> */}
+          {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>(
             <Profile 
           key={Math.random()}
-          skills={this.state.skills}
+          handleEnableUser={()=>this.handleEnableUser(user.name, user.id)}
+          handleDisableUser={()=>this.handleDisableUser(user.name, user.id)}
+            {...user}
           />
-          )) : 'No Users Found'} */}
+          )) : 'No Users Found'}
         </Page.SubWrapper>
         {/* This is the Pagination  Component */}
         <Pagination 
@@ -216,20 +259,42 @@ componentDidMount(){
         <DisableUserModal
         show={this.state.showDisableModal}
         loading={this.state.loading}
-        onHide={this.handleDisable}
-        inputs={this.state.user}
+        onHide={this.handleCloseDisableUser}
+        inputs={this.state.clickedUser}
         open={this.handleOpenConfirmDisable}
         />
         {/* 
-        This is the filter search modal Component 
+        This is the confirm disabled user modal Component 
         Note:  that all Modal CSS is handled by index.css
         */}
         <ConfirmDisableUserModal
-        show={this.state.showConfirmDisable}
+        show={this.state.showConfirmDisableModal}
         onHide={this.handleConfirmDisable}
         history={this.props.history}
-        inputs={this.state.user}
+        inputs={this.state.clickedUser}
         close={this.handleConfirmDisable}
+        />
+          {/* 
+        This is the enable user modal Component 
+        Note:  that all Modal CSS is handled by index.css
+        */}
+        <EnableUserModal
+        show={this.state.showEnableModal}
+        loading={this.state.loading}
+        onHide={this.handleCloseEnableUser}
+        inputs={this.state.clickedUser}
+        open={this.handleOpenConfirmEnable}
+        />
+        {/* 
+        This is the confirm enabled user modal Component 
+        Note:  that all Modal CSS is handled by index.css
+        */}
+        <ConfirmEnableUserModal
+        show={this.state.showConfirmEnableModal}
+        onHide={this.handleConfirmEnable}
+        history={this.props.history}
+        inputs={this.state.clickedUser}
+        close={this.handleConfirmEnable}
         />
       </Page.Wrapper>
 

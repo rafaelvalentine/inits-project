@@ -1,9 +1,10 @@
 import React from 'react'
 import * as Card from './styles'
-import { Header } from '../../theme/style/typeface'
+import { Header, CardHeader } from '../../theme/style/typeface'
 import { Logo } from '../Picture'
+import { Main } from '../Input'
 import { UserDetails, JobCompleted, SkillList } from './cardParts'
-import { DuoButton } from '../Button'
+import Button,{ DuoButton } from '../Button'
 
 const CardBox = ({ children, ...props }) => {
   return (
@@ -16,6 +17,7 @@ const CardBox = ({ children, ...props }) => {
 export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
   let bottom
   let newFigure
+  let newFigure2
   if (figure < 1000) {
     newFigure = figure
   }
@@ -25,7 +27,16 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
   if (figure > 1000000) {
     newFigure = `${Math.round(figure / 1000000)}m`
   }
-  if (figure2 !== null && figure2 !== '' && figure2 !== undefined) {
+  if (figure < 1000) {
+    newFigure2 = figure2
+  }
+  if (figure2 > 1000) {
+    newFigure2 = `${Math.round(figure2 / 1000)}k`
+  }
+  if (figure2 > 1000000) {
+    newFigure2 = `${Math.round(figure2 / 1000000)}m`
+  }
+  if ( newFigure2 !== null && figure2 !== '' && figure2 !== undefined) {
     bottom = (
       <Card.Container
         className='bottom'
@@ -38,7 +49,7 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
         borderRadius='0'
         margin='42px auto 0'
       >
-        { figure2 || 'No Info'}
+        { newFigure2 || 'No Info'}
       </Card.Container>
     )
   }
@@ -61,13 +72,13 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
   )
 }
 
-export const Profile = ({ name, image, rating, type, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnable, handleDisable }) => {
+export const Profile = ({ name, image, rating, type, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnableUser, handleDisableUser }) => {
   let secondaryContent
   let altButton
   let clicked
   !isDisabled ? secondaryContent = 'Disable' : secondaryContent = 'Enable'
   isDisabled ? altButton = true : altButton = false
-  isDisabled ? clicked = handleEnable : clicked = handleDisable
+  isDisabled ? clicked = handleEnableUser : clicked = handleDisableUser
   return (
     <CardBox
       width='220px'
@@ -89,6 +100,159 @@ export const Profile = ({ name, image, rating, type, jobsCompleted, skills, prim
         secondAlt={altButton}
         secondaryClicked={clicked}
       />
+    </CardBox>
+  )
+}
+
+
+export const CreateCategory = ({ history, inputs, complete, changed, loading, close, create }) => {
+  return (
+    <CardBox
+      width='600px'
+      height='350px'
+      justify='flex-start'
+    >
+
+      <CardHeader
+        altBackground='true'
+        fontSize='18px'
+      >
+         Create Job Category
+        <Logo
+          src={require('../../assets/images/close-line-alt.svg')}
+          height='24px'
+          width='24px'
+          margin='0 8px'
+          clicked={close}
+        />
+      </CardHeader>
+
+      <Card.Container
+        width='100%'
+        height='70%'
+        backgroundColor='transparent'
+        boxShadow='none'
+        borderRadius='0'
+        margin='40px auto 0'
+        justify='center'
+        align='center'
+      >
+       <Main
+       name='category'
+       label='Job Category'
+       placeholder='Create Category'
+       changed={changed}
+       value={inputs.category}
+       width='290px'
+       height='40px'
+       />
+        <Button
+          content=' Create Category'
+          width='290px'
+          height='40px'
+          loading={loading}
+          clicked={create}
+        />
+      </Card.Container>
+    </CardBox>
+  )
+}
+
+export const EditCategory = ({ history, inputs, complete, changed, loading, close, create }) => {
+  return (
+    <CardBox
+      width='600px'
+      height='350px'
+      justify='flex-start'
+    >
+
+      <CardHeader
+        altBackground='true'
+        fontSize='18px'
+      >
+         Edit Job Category
+        <Logo
+          src={require('../../assets/images/close-line-alt.svg')}
+          height='24px'
+          width='24px'
+          margin='0 8px'
+          clicked={close}
+        />
+      </CardHeader>
+
+      <Card.Container
+        width='100%'
+        height='70%'
+        backgroundColor='transparent'
+        boxShadow='none'
+        borderRadius='0'
+        margin='40px auto 0'
+        justify='center'
+        align='center'
+      >
+       <Main
+       name='category'
+       label='Job Category'
+       placeholder='Edit Category'
+       changed={changed}
+       value={inputs.category}
+       width='290px'
+       height='40px'
+       />
+        <Button
+          content=' Save Category'
+          width='290px'
+          height='40px'
+          loading={loading}
+          clicked={create}
+        />
+      </Card.Container>
+    </CardBox>
+  )
+}
+export const DeleteCategory = ({ history, inputs, complete, changed, loading, close, create }) => {
+  return (
+    <CardBox
+      width='600px'
+      height='350px'
+      justify='flex-start'
+    >
+
+      <CardHeader
+        altBackground='true'
+        fontSize='18px'
+      >
+         Edit Job Category
+        <Logo
+          src={require('../../assets/images/close-line-alt.svg')}
+          height='24px'
+          width='24px'
+          margin='0 8px'
+          clicked={close}
+        />
+      </CardHeader>
+
+      <Card.Container
+        width='100%'
+        height='70%'
+        backgroundColor='transparent'
+        boxShadow='none'
+        borderRadius='0'
+        margin='40px auto 0'
+        justify='center'
+        align='center'
+      >
+         <Card.Info>
+         Are you sure You want to delete { inputs.category || 'category'}
+        </Card.Info>
+        <Button
+          content=' Delete Category'
+          width='290px'
+          height='40px'
+          loading={loading}
+          clicked={create}
+        />
+      </Card.Container>
     </CardBox>
   )
 }

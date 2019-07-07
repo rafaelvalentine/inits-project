@@ -43,7 +43,7 @@ export const CreateAdminForm = ({ history, changed, inputs, loading, submit }) =
           placeholder='John Doe'
           width='290px'
           marTop='24px'
-          name='name'
+          name='fullname'
           value={inputs.name}
           changed={changed}
         />
@@ -164,7 +164,7 @@ export const EditAdmin = ({ history, inputs, changed, toggle, loading, submit })
         <MainTriosAlt
           nameOne='fullName'
           nameTwo='email'
-          valueOne={inputs.fullName}
+          valueOne={inputs.fullname}
           valueTwo={inputs.email}
           password={inputs.password}
           confirmPassword={inputs.confirmPassword}
@@ -348,7 +348,7 @@ export const ConfirmUser = ({ history, inputs, close }) => {
   )
 }
 
-// component shows that a User has been created
+// component is used to disable a User
 export const DisableUser = ({ history, loading, inputs, openConfirm, close }) => {
   return (
     <CardBox
@@ -453,8 +453,7 @@ export const ConfirmDisableUser = ({ history, inputs, complete, loading, close }
           margin='0 0 24px'
         />
         <Card.Info>
-          { inputs.name || 'John Doe'}
-        has been disabled. Other users will not be able to view his account
+          { inputs.name || 'John Doe'} has been disabled. Other users will not be able to view their account
         </Card.Info>
 
         <Button
@@ -468,66 +467,115 @@ export const ConfirmDisableUser = ({ history, inputs, complete, loading, close }
   )
 }
 
-// export const CompleteDisabledUser = ({ history, inputs, close }) => {
-//   return (
-//     <CardBox
-//       width='600px'
-//       height='350px'
-//       justify='flex-start'
-//     >
+// component is used to Enable a User
+export const EnableUser = ({ history, loading, inputs, openConfirm, close }) => {
+  return (
+    <CardBox
+      width='600px'
+      height='350px'
+      justify='flex-start'
+    >
 
-//       <CardHeader
-//         altBackground='true'
-//         fontSize='18px'
-//       >
-//           Disable User
-//         <Logo
-//           src={require('../../assets/images/close-line-alt.svg')}
-//           height='24px'
-//           width='24px'
-//           margin='0 8px'
-//           clicked={close}
-//         />
-//       </CardHeader>
+      <CardHeader
+        altBackground='true'
+        fontSize='18px'
+      >
+         Enable User
+        <Logo
+          src={require('../../assets/images/close-line-alt.svg')}
+          height='24px'
+          width='24px'
+          margin='0 8px'
+          clicked={close}
+        />
+      </CardHeader>
 
-//       <Card.Container
-//         width='100%'
-//         height='70%'
-//         backgroundColor='transparent'
-//         boxShadow='none'
-//         borderRadius='0'
-//         margin='40px auto 0'
-//         justify='center'
-//         align='center'
-//       >
-//         <Logo
-//           src={require('../../assets/images/diableadmin.svg')}
-//           height='64px'
-//           width='64px'
-//           margin='0 0 24px'
-//         />
-//         <Card.Info>
-//           Are you sure you want to disable { inputs.name || 'John Doe'} ?
-//         </Card.Info>
+      <Card.Container
+        width='100%'
+        height='70%'
+        backgroundColor='transparent'
+        boxShadow='none'
+        borderRadius='0'
+        margin='40px auto 0'
+        justify='center'
+        align='center'
+      >
+        <Logo
+          src={require('../../assets/images/admincreated.svg')}
+          height='64px'
+          width='64px'
+          margin='0 0 24px'
+        />
+        <Card.Info>
+          Are you sure you want to enable { inputs.name || 'John Doe'} ?
+        </Card.Info>
 
-//         <DuoButton
-//           primaryAlt
-//           secondAlt
-//           primaryContent='disable'
-//           secondaryContent='Cancel'
-//           primaryClicked={openConfirm}
-//           secondaryClicked={close}
-//           DuoButtonMargin='65px auto 24px'
-//           width='154px'
-//           height='48px'
-//           margin='0 10px'
-//         />
-//         {/* <Button
-//           content='Ok'
-//           width='290px'
-//           clicked={() => history.push('/manage-users')}
-//         /> */}
-//       </Card.Container>
-//     </CardBox>
-//   )
-// }
+        <DuoButton
+          loading={loading}
+          secondAlt
+          primaryContent='enable'
+          secondaryContent='Cancel'
+          primaryClicked={openConfirm}
+          secondaryClicked={close}
+          DuoButtonMargin='65px auto 24px'
+          width='154px'
+          height='48px'
+          margin='0 10px'
+        />
+      </Card.Container>
+    </CardBox>
+  )
+}
+
+export const ConfirmEnableUser = ({ history, inputs, complete, loading, close }) => {
+  return (
+    <CardBox
+      width='600px'
+      height='350px'
+      justify='flex-start'
+    >
+
+      <CardHeader
+        altBackground='true'
+        fontSize='18px'
+      >
+         Enable User
+        <Logo
+          src={require('../../assets/images/close-line-alt.svg')}
+          height='24px'
+          width='24px'
+          margin='0 8px'
+          clicked={close}
+        />
+      </CardHeader>
+
+      <Card.Container
+        width='100%'
+        height='70%'
+        backgroundColor='transparent'
+        boxShadow='none'
+        borderRadius='0'
+        margin='40px auto 0'
+        justify='center'
+        align='center'
+      >
+        <Logo
+          src={require('../../assets/images/admincreated.svg')}
+          height='64px'
+          width='64px'
+          margin='0 0 24px'
+        />
+        <Card.Info>
+          { inputs.name || 'John Doe'} has been Enabled. Other users will now be able to view their account
+        </Card.Info>
+
+        <Button
+          content='Ok'
+          width='290px'
+          loading={loading}
+          clicked={close}
+        />
+      </Card.Container>
+    </CardBox>
+  )
+}

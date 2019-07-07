@@ -279,7 +279,7 @@ export const CheckBox = ({ label, name, type, ...props }) => {
         <Type.BoldLabel > { label } </Type.BoldLabel>
       </Form.MainLabel >
       <Form.CheckBox name={name} type={type} {...props} />
-      <span className="checkmark"></span>
+      <span className='checkmark' />
     </Form.CheckBoxLabel >
   )
 }
@@ -355,6 +355,36 @@ export const SearchInput = ({ name, type, placeholder, value, changed, ...props 
         />
       </Form.SearchInputContainer>
     </Form.AltBox>
+  )
+}
+export const SortInput = ({ name, type, placeholder, value, changed, children, clicked, ...props }) => {
+  return (
+    <Form.AltBox >
+      <Form.SortInputContainer onClick={clicked}>
+        <Logo src={require('../../assets/images/filterslider.svg')}
+          width='12px'
+          height='12px'
+        />
+        <Form.SortInput
+          disabled
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={changed}
+          {...props}
+        />
+
+        <Logo src={require('../../assets/images/arrow-dropdown.svg')}
+          width='16px'
+          height='16px'
+          margin='0 8px 0 auto'
+        />
+        {children}
+      </Form.SortInputContainer>
+      
+    </Form.AltBox>
+
   )
 }
 export default Input

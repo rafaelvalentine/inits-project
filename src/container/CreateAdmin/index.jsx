@@ -1,5 +1,6 @@
 import CreateAdmin from '../../pages/CreateAdmin'
 import { connect } from 'react-redux'
+import { handleCreateAdmin } from '../../Store/Actions'
 
 
 /**
@@ -10,10 +11,10 @@ import { connect } from 'react-redux'
 // //  Admin: state.Free.freelancer.freelancerLoggedIn
 // })
 
-// const mapDispatchToProps = dispatch => ({
-//   // handleFreelancerPageRefresh () {
-//   //   dispatch(action.handlefreelancerPageRefresh())
-//   // }
-// })
+const mapDispatchToProps = dispatch => ({
+  handleCreateAdmin (data) {
+    return dispatch(handleCreateAdmin(data))
+  }
+})
 
-export default connect(null, null)(CreateAdmin)
+export default connect(null, mapDispatchToProps)(CreateAdmin)

@@ -8,7 +8,7 @@ import { SubMainNav } from '../../theme/style/typeface'
 
 export default class index extends Component {
   state = {
-    fullName: 'Jon Snow',
+    fullname: 'Jon Snow',
     email: 'JonSnow@kingslanding.com',
     password: '',
     changepassword: false,
@@ -25,7 +25,7 @@ export default class index extends Component {
 
   handleSubmit = e => {
     let admin = this.state
-    if (admin.fullName === undefined || validator.isEmpty(admin.fullName)) {
+    if (admin.fullname === undefined || validator.isEmpty(admin.fullname)) {
       swal('Name is required!')
       return
     }
@@ -58,20 +58,40 @@ export default class index extends Component {
    * Uploading new admin details 
    */
     let change = this.state.changepassword
-    let  data ={
-      fullName: admin.fullName,
+    let  data;
+    if(change){
+     data={
+        fullname: admin.fullname,
+        email:admin.email,
+        state:admin.state,
+        lga: admin.lga,
+        address: admin.address,
+        password:admin.password
+      }
+    }
+    if(!change) {data={
+      fullname: admin.fullname,
       email:admin.email,
       state:admin.state,
       lga: admin.lga,
       address: admin.address,
-      password: change ? admin.password : null
-    }
+    }}
     console.log(data)
     e.target.blur()
     this.setState({loading: true}, ()=> setTimeout(() => {
       this.props.history.push('/dashboard')
     }, 3000))
    
+  }
+  componentDidMount(){
+    this.props.handleGetAdminDetailOnRefresh()
+    .then(res =>{
+      console.log(res)
+      this.setState({ ...this.state, fullname: res.data.fullname,
+        email:res.data.email,
+        state:res.data.state,
+        lga: res.data.lga })
+    })
   }
   render () {
     return (

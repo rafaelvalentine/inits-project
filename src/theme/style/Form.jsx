@@ -187,6 +187,13 @@ border-radius: 0;
     outline: none;
 }
 `
+export const SortInput = styled(MainInput)`
+border: 1px solid ${props => props.theme.transparent};
+width:80px;
+height:100%;
+background:${props => props.theme.transparent};
+
+`
 export const NoLabelInput = styled(MainInput)`
     margin: ${props => props.margin};
 `
@@ -304,6 +311,17 @@ border-radius: 4px;
 `
 export const SearchInputContainer = styled(DatePickerContainer)`
 padding: 0 30px;
+`
+
+export const SortInputContainer = styled(DatePickerContainer)`
+position: relative;
+padding: 12px 8px;
+background: ${props => props.theme.transparent};
+height:40px;
+border: 1px solid ${props => props.theme.faintBorder};
+display: flex;
+justify-content: flex-start;
+align-items:center;
 `
 /**
  *

@@ -6,66 +6,54 @@ import CreateAdmin from '../container/CreateAdmin'
 import ConfirmAdmin from '../pages/CreateAdmin/confirmAdmin'
 import AdminSettings from '../container/Settings'
 import Users from '../container/ManageUsers'
+import Transactions from '../container/Transactions'
 import CreateUser from './CreateUser'
-
+import Jobs from './ManageJobs';
 import { Helmet } from 'react-helmet'
 import ScrollToTop from '../components/Tools/ScrollToTop'
+import swal from 'sweetalert';
 
-// function PrivateRoute ({ component: Component, ...rest }) {
-//   return (
-//     <Route
-//       {...rest}
-//       render={props => {
-//         if (localStorage.getItem('userId')) {
-//           if (localStorage.getItem('type') !== 'organization') {
-//             return <Redirect
-//               to={{
-//                 pathname: '/individual',
-//                 state: { from: props.location }
-//               }}
-//             />
-//           }
-//           return <Component {...props} />
-//         }
-//         return <Redirect
-//           to={{
-//             pathname: '/sign-in',
-//             state: { from: props.location }
-//           }}
-//         />
-//       }
-//       }
-//     />
-//   )
-// }
-// function SignedInRoute ({ component: Component, ...rest }) {
-//   return (
-//     <Route
-//       {...rest}
-//       render={props => {
-//         switch (localStorage.getItem('type')) {
-//           case 'freelancer':
-//             return (<Redirect
-//               to={{
-//                 pathname: '/individual',
-//                 state: { from: props.location }
-//               }}
-//             />)
-//           case 'organization':
-//             return (<Redirect
-//               to={{
-//                 pathname: '/organization',
-//                 state: { from: props.location }
-//               }}
-//             />)
-//           default:
-//             return <Component {...props} />
-//         }
-//       }
-//       }
-//     />
-//   )
-// }
+
+function PrivateRoute ({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        if (localStorage.getItem('userId')) {
+          return <Component {...props} />
+        }
+        swal('Your have to login to view this page', '', 'error')
+        return <Redirect
+          to={{
+            pathname: '/',
+            state: { from: props.location }
+          }}
+        />
+      }
+      }
+    />
+  )
+}
+function SignedInRoute ({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        if (localStorage.getItem('userId')) {
+          swal('You are already Logged in', 'Please logout to Continue', 'warning')
+          return (<Redirect
+            to={{
+              pathname: '/dashboard',
+              state: { from: props.location }
+            }}
+          />)
+        }
+        return <Component {...props} />
+      }
+      }
+    />
+  )
+}
 // function FreelancerRoute ({ component: Component, ...rest }) {
 //   return (
 //     <Route
@@ -103,13 +91,15 @@ export const App = ({ history }) => (
     <Fragment >
       <ScrollToTop>
         <Switch>
-          <Route path='/' exact component={Login} />
-          <Route path='/dashboard' exact component={Dashboard} />
-          <Route path='/dashboard/createadmin' exact component={CreateAdmin} />
-          <Route path='/dashboard/confirmadmin' exact component={ConfirmAdmin} />
-          <Route path='/dashboard/adminsettings' exact component={AdminSettings} />
-          <Route path='/manage-users' exact component={Users} />
-          <Route path='/manage-users/createuser' exact component={CreateUser} />
+          <SignedInRoute path='/' exact component={Login} />
+          <PrivateRoute path='/dashboard' exact component={Dashboard} />
+          <PrivateRoute path='/dashboard/createadmin' exact component={CreateAdmin} />
+          <PrivateRoute path='/dashboard/confirmadmin' exact component={ConfirmAdmin} />
+          <PrivateRoute path='/dashboard/adminsettings' exact component={AdminSettings} />
+          <PrivateRoute path='/manage-users' exact component={Users} />
+          <PrivateRoute path='/manage-users/createuser' exact component={CreateUser} />
+          <PrivateRoute path='/manage-jobs' exact component={Jobs} />
+          <PrivateRoute path='/transactions' exact component={Transactions} />
           
           {/* <SignedInRoute path='/sign-up' exact component={SignUp} />
         <SignedInRoute path='/sign-up/freelancer/step-one' exact component={FreeFormOne} />

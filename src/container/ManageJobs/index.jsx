@@ -1,13 +1,13 @@
-import Navbar from '../../components/Navbar'
+import Jobs from '../../pages/ManageJobs'
 import { connect } from 'react-redux'
-
 
 /**
  * here we handle passing redux to our component and export
  */
-const mapStateToProps = (state) => ({
- Admin: state.Admin.Admin
-})
+
+// const mapStateToProps = (state) => ({
+// //  Admin: state.Free.freelancer.freelancerLoggedIn
+// })
 
 // const mapDispatchToProps = dispatch => ({
 //   // handleFreelancerPageRefresh () {
@@ -15,4 +15,4 @@ const mapStateToProps = (state) => ({
 //   // }
 // })
 
-export default connect(mapStateToProps, null)(Navbar)
+export default connect(null, null)(Jobs)

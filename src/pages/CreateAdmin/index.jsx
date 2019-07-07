@@ -10,15 +10,23 @@ import validator from 'validator'
  */
 export default class index extends Component {
   state = {
-    loading: false
+    loading: false,
+    admin:{ 
+      fullname:'',
+      email:'',
+      town:'',
+      password:'123456789',
+      state:'',
+      lga:''
+    }
   }
 
   handleChange = e =>{
-    this.setState({[e.target.name]: e.target.value}, ()=>console.log(this.state))
+    this.setState({admin:{...this.state.admin, [e.target.name]: e.target.value}})
   }
   handleSubmit = e => {
-    let admin = this.state
-    if (admin.name === undefined || validator.isEmpty(admin.name)) {
+    let admin = this.state.admin
+    if (admin.fullname === undefined || validator.isEmpty(admin.fullname)) {
       swal('Name is required!')
       return
     }
@@ -42,13 +50,19 @@ export default class index extends Component {
       swal('Password must between 8 and 24 characters!')
       return
     }
+
+    this.setState({loading: true})
     /**
    * Uploading new admin details 
    */
+
     e.target.blur()
-    this.setState({loading: true}, ()=> setTimeout(() => {
-      this.props.history.push('./confirmadmin', {email: admin.email, name: admin.name })
-    }, 3000))
+    console.log(admin)
+    this.props.handleCreateAdmin(admin)
+    .then( result => {
+      this.setState({loading: false}, ()=> this.props.history.push('/dashboard/confirmadmin', {email: admin.email, name: admin.fullname }))
+    })
+    
    
   }
   render () {
@@ -57,7 +71,7 @@ export default class index extends Component {
         <Navbar />
         <Page.SubWrapper>
           <CreateAdminForm 
-          inputs={this.state}
+          inputs={this.state.admin}
           history={this.props.history}
           loading={this.state.loading}
           changed={this.handleChange}

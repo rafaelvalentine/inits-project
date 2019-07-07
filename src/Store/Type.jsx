@@ -1,5 +1,9 @@
 const type = {
-    SEARCH_QUERY: "SEARCH_QUERY",
-};
+  SEARCH_QUERY: 'SEARCH_QUERY',
+  LOGIN_USER: 'LOGIN_USER',
+  SET_USERS: 'SET_USERS',
+  SET_JOBS: 'SET_JOBS',
+  CREATE_ADMIN: 'CREATE_ADMIN'
+}
 
 export default type

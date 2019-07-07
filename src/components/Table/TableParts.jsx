@@ -4,7 +4,7 @@ import * as Table from './styles'
 import { formatAmount } from '../Tools/Formatter'
 
 export const TableHead = ({ children }) => (
-  <Table.Thead>
+  <Table.Thead className='jobtable'>
     <tr>
       {children}
     </tr>
@@ -12,7 +12,7 @@ export const TableHead = ({ children }) => (
 )
 
 export const TableBody = ({ children }) => (
-  <Table.Tbody>
+  <Table.Tbody className='jobtable'>
     {children}
   </Table.Tbody>
 )
@@ -30,6 +30,16 @@ export const DuoText = ({ text, subtext, ...props }) => {
       <Table.SubText {...props}>
         {subtext}
       </Table.SubText>
+    </Table.Stacked>
+  )
+}
+
+export const DuoTextAlt = ({ text, subtext, ...props }) => {
+  return (
+    <Table.Stacked>
+      <Table.TextAlt {...props}>
+        { text }
+      </Table.TextAlt>
     </Table.Stacked>
   )
 }
@@ -57,3 +67,49 @@ export const ProfileAndText = ({ img, text, subtext }) => (
     </Table.Stacked>
   </Table.SideBy>
 )
+
+export const Status = ({ accepted, unaccepted, compeleted }) => {
+  let statusMessage = (
+    <Table.Completed>
+      <span>Completed</span>
+    </Table.Completed>
+  )
+  if (accepted) {
+    statusMessage = (
+      <Table.Accepted>
+        <span>Accepted</span>
+      </Table.Accepted>
+    )
+  }
+  if (unaccepted) {
+    statusMessage = (
+      <Table.Accepted
+        alt>
+        <span>Unaccepted</span>
+      </Table.Accepted>
+    )
+  }
+  return (
+    <Table.Stacked>
+      {statusMessage}
+    </Table.Stacked>
+  )
+}
+export const EditText = ({ accepted, unaccepted, compeleted }) => {
+  return (
+    <Table.Stacked>
+      <Table.Edit>
+        <span>EDIT CATEGORY</span>
+      </Table.Edit>
+    </Table.Stacked>
+  )
+}
+export const DeleteText = ({ accepted, unaccepted, compeleted }) => {
+  return (
+    <Table.Stacked>
+      <Table.Delete>
+        <span>DELETE CATEGORY</span>
+      </Table.Delete>
+    </Table.Stacked>
+  )
+}

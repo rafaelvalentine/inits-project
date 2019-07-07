@@ -4,12 +4,12 @@ export const Container = styled.button`
     margin:${props => props.margin};
     width: ${props => props.width};
     height: ${props => props.height};
-    border-radius: 2px;
+    border-radius:${props => props.borderRadius};
     border: 1px solid ${props => props.theme.transparent};
     text-align: center;
     font-style: normal;
     font-weight: bold;
-    font-size: 12px;
+    font-size: ${props => props.fontSize};
     line-height: 21px;
     cursor: pointer;
     color: ${props => props.alt ? props.theme.paleGreen : props.theme.white};
@@ -19,7 +19,9 @@ export const Container = styled.button`
 Container.defaultProps = {
   width: '320px',
   margin: '24px auto',
-  height: '50px'
+  height: '50px',
+  borderRadius:'2px',
+  fontSize: '12px'
 }
 
 export const AltContainer = styled(Container)`

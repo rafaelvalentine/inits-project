@@ -3,18 +3,18 @@ import { withRouter } from 'react-router-dom'
 import * as Navbar from './styles'
 import { Logo } from '../Picture'
 import Links from './links'
-import Admin from './admin'
+import AdminInfo from './admin'
 
 /**
  * this is the main navbar component and feeds redux state to the Admin component
  */
-const index = ({ admin, history }) => {
+const index = ({ Admin, history }) => {
   return (
     <Navbar.Nav>
       <Logo />
       <Links />
-      <Admin
-        admin={admin}
+      <AdminInfo
+        admin={Admin}
         history={history}
       />
     </Navbar.Nav>

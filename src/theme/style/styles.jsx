@@ -13,8 +13,9 @@ display: flex;
 justify-content: ${props => props.justifyContent ? props.justifyContent : 'center' };
 align-items:center;
 padding:${props => props.padding ? props.padding : '80px 0 '};
-flex-wrap:wrap;
+flex-wrap ${props => props.flexWrap ? props.flexWrap : 'wrap'};
 margin:0 auto;
+
 `
 export const SubWrapperAlt = styled(SubWrapper)`
 flex-direction:column;

@@ -167,3 +167,20 @@ export const SubHandle = styled(UserHandle)`
 margin: 10px 0 0;
 color: ${props => props.theme.subHandleText};
 `
+
+export const TabHeader = styled.span`
+text-transform:uppercase;
+padding:  18px 50px;
+font-style: normal;
+font-weight: bold;
+font-size: 12px;
+line-height: 16px;
+border-bottom: 4px solid ${props => props.alt ? props.theme.orange : props.theme.transparent};
+color: ${props => props.alt ? props.theme.orange : props.theme.cardName};
+transition: .3s;
+cursor: pointer;
+:hover{
+    // border-bottom: 4px solid ${props => props.theme.orange};
+    color: ${props => props.theme.orange };
+}
+`
