@@ -72,7 +72,7 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
   )
 }
 
-export const Profile = ({ name, image, rating, type, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnableUser, handleDisableUser }) => {
+export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnableUser, handleDisableUser }) => {
   let secondaryContent
   let altButton
   let clicked
@@ -86,9 +86,9 @@ export const Profile = ({ name, image, rating, type, jobsCompleted, skills, prim
       margin='25px'
     >
       <UserDetails
-        image={image}
-        rating={rating}
-        type={type}
+        image={profileImageUrl}
+        rating={averageRate}
+        type={jobTitle}
         name={name}
       />
       <JobCompleted jobs={jobsCompleted} />

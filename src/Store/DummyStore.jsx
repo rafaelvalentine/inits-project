@@ -9,9 +9,9 @@ const initState = {
       transactionsvalue: '',
       jobsPosted: '',
       jobsCompleted: '',
-      blackListedUsers:''
-
-    }
+      blackListedUsers: ''
+    },
+    allUsers:[{}]
   }
 
 }

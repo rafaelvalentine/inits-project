@@ -50,6 +50,7 @@ export const UserDetails = ({ image, name, type, rating }) => {
           <div>
             {/* this is the rating component that shows all the stars for a user */}
             <Rating
+              readonly
               initialRating={rating || '0'}
               emptySymbol={<Star empty='true' />}
               fullSymbol={<Star />}

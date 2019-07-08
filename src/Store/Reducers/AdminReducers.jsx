@@ -40,6 +40,16 @@ const AdminReducer = (state = initState, action) => {
         }
       }
 
+    case 'SET_USERS_CARD':
+      console.log(action.payload.data)
+      return {
+        ...state,
+        Admin: {
+          ...state.Admin,
+          allUsers: action.payload.data
+        }
+      }
+
     case 'SET_QUOTE_SPINNER':
       console.log(action.payload)
       return {

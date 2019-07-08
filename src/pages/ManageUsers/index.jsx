@@ -4,6 +4,7 @@ import Search from '../../components/SearchBar'
 import { Profile } from '../../components/Card/Cards'
 import { CreateUserButton } from '../../components/Button'
 import Pagination from '../../components/Tools/Pagination'
+import GoldSpinner from '../../components/Tools/GoldSpinner'
 import * as Page from '../../theme/style/styles'
 import { FilterModal, DisableUserModal, ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal  } from '../../components/Modal'
 
@@ -15,8 +16,6 @@ export default class index extends Component {
     pageLimit: 5,
     upperPageBound: 5,
     lowerPageBound: 0,
-    // data:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},],
-    // skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
     showFilter: false,
     showDisableModal:false,
     showConfirmDisableModal: false,
@@ -26,26 +25,7 @@ export default class index extends Component {
       id:'',
       name:''
     },
-    data:[{
-      id: Math.random(),
-      name:'ezike ozichukwu',
-      image: require('../../assets/images/admin-profile.png'),
-      rating:'4.7',
-      type:'react dev',
-      jobsCompleted:21,
-      skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
-      isDisabled: false
-    },
-    {
-      id: Math.random(),
-      name:'temi adeleke',
-      image: require('../../assets/images/profile-withface.png'),
-      rating:'3.3',
-      type:'HRM',
-      jobsCompleted: 7,
-      skills: ['html5', 'css3', 'bootstrap 4', 'java', 'Reactjs'],
-      isDisabled: true
-    }]
+    data:[]
   }
 
   scrollToTop =()=> window.scrollTo({
@@ -137,17 +117,24 @@ handleDisableUser = (name, id) =>{
   this.setState({clickedUser:{ name, id} }, ()=> this.setState({showDisableModal: !disable}))
 }
 handleOpenConfirmDisable = e =>{
-  let DisableUser = this.state.data.filter( user=>(
-    user.id === this.state.clickedUser.id
-  ))
-  let rest = this.state.data.filter( users=>(
-    users.id !== this.state.clickedUser.id
-  ))
-  let isDisabled = DisableUser[0].isDisabled
+  
+  // let DisableUser = this.state.data.filter( user=>(
+  //   user.id === this.state.clickedUser.id
+  // ))
+  // let rest = this.state.data.filter( users=>(
+  //   users.id !== this.state.clickedUser.id
+  // ))
+  // let isDisabled = DisableUser[0].isDisabled
   let confirmDisable = this.state.showConfirmDisableModal
-  this.setState({loading: true}, ()=> setTimeout(() => {
-    this.setState({ data: [...rest, { ...DisableUser[0], isDisabled: !isDisabled }], showConfirmDisableModal: !confirmDisable, showDisableModal:false },()=>console.log(this.state.data))
-  }, 3000))
+  this.setState({loading: true})
+  this.props.handleDisableUser(this.state.clickedUser.id)
+  .then(res =>{
+    console.log(res)
+    this.setState({ showConfirmDisableModal: !confirmDisable, showDisableModal:false })
+  })
+  // this.setState({loading: true}, ()=> setTimeout(() => {
+  //   this.setState({ data: [...rest, { ...DisableUser[0], isDisabled: !isDisabled }], showConfirmDisableModal: !confirmDisable, showDisableModal:false },()=>console.log(this.state.data))
+  // }, 3000))
 }
 handleOpenConfirmEnable = e =>{
   let EnableUser = this.state.data.filter( user=>(
@@ -165,6 +152,10 @@ handleOpenConfirmEnable = e =>{
 handleConfirmDisable = e =>{
   let confirmDisable = this.state.showConfirmDisableModal
   this.setState({showConfirmDisableModal: !confirmDisable, loading: false, clickedUser:{ name:'', id:''} })
+  this.props.handleGetAllUsersCardInfo()
+  .then( res=>{
+    this.setState({data: this.props.Users})
+  })
 }
 handleConfirmEnable = e =>{
   let confirmEnable = this.state.showConfirmEnableModal
@@ -172,6 +163,10 @@ handleConfirmEnable = e =>{
 }
 componentDidMount(){
   this.renderPageNumbers()
+  this.props.handleGetAllUsersCardInfo()
+  .then( res=>{
+    this.setState({data: this.props.Users})
+  })
 }
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage
@@ -206,26 +201,24 @@ componentDidMount(){
          padding='80px 40px'
         justifyContent='flex-start'>
           {/* This is the map Component  to display all available users*/}
-          {/* <Profile 
-          key={Math.random()}
-          handleEnableUser={()=>this.handleEnableUser(this.state.user.name[0], this.state.user[0].id)}
-          handleDisableUser={()=>this.handleDisableUser(this.state.user.name[0], this.state.user[0].id)}
-          {...this.state.user}
+          {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>{
+            let name = `${user.freelancer.firstName} ${user.freelancer.lastName}`
+          return  <Profile 
+          key={user._id}
+          {...user}
+          {...user.freelancer}
+          handleEnableUser={()=>this.handleEnableUser(name, user._id)}
+          handleDisableUser={()=>this.handleDisableUser(name, user._id)}
+          name={name}
+          jobsCompleted={ user.jobsCompleted.length || '0'}
+            
+            
           />
-           <Profile 
-          key={Math.random()}
-          handleEnableUser={()=>this.handleEnableUser(this.state.user[1].name, this.state.user[1].id)}
-          handleDisableUser={()=>this.handleDisableUser(this.state.user[1].name, this.state.user[1].id)}
-          {...this.state.user2}
-          /> */}
-          {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>(
-            <Profile 
-          key={Math.random()}
-          handleEnableUser={()=>this.handleEnableUser(user.name, user.id)}
-          handleDisableUser={()=>this.handleDisableUser(user.name, user.id)}
-            {...user}
-          />
-          )) : 'No Users Found'}
+          }) :  <Page.SubWrapperAlt
+          padding='50px 80px 200px'
+        >  No Users Found
+        <GoldSpinner/>
+        </Page.SubWrapperAlt>}
         </Page.SubWrapper>
         {/* This is the Pagination  Component */}
         <Pagination 
