@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
-// import axios from 'axios'
+import axios from 'axios'
 import Store from './Store/index'
 import './index.css'
 import App from './container/App'
@@ -10,7 +10,7 @@ import colors from './theme/main'
 import * as serviceWorker from './serviceWorker'
 import { handleGetAdminDetailOnRefresh } from './Store/Actions'
 
-// axios.defaults.baseURL = 'https://primework-staging.herokuapp.com/api/v1'
+axios.defaults.baseURL = 'https://primework-staging.herokuapp.com/api/v1'
 
 // const userID = localStorage.getItem('_userID')
 // const jobID = localStorage.getItem('_jobID')

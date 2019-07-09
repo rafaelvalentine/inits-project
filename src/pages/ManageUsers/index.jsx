@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Navbar from '../../container/Navbar'
 import Search from '../../components/SearchBar'
 import { Profile } from '../../components/Card/Cards'
-import { CreateUserButton } from '../../components/Button'
+import { CreateUserButton, CloseSearchButton  } from '../../components/Button'
 import Pagination from '../../components/Tools/Pagination'
 import GoldSpinner from '../../components/Tools/GoldSpinner'
 import * as Page from '../../theme/style/styles'
@@ -10,6 +10,8 @@ import { FilterModal, DisableUserModal, ConfirmDisableUserModal, EnableUserModal
 
 export default class index extends Component {
   state ={
+    loading:false,
+    filterLoading: false,
     firstPage: 1,
     currentPage: 1,
     usersPerPage: 9,
@@ -25,7 +27,9 @@ export default class index extends Component {
       id:'',
       name:''
     },
-    data:[]
+    data:[],
+    query:'',
+    categories:[]
   }
 
   scrollToTop =()=> window.scrollTo({
@@ -117,14 +121,6 @@ handleDisableUser = (name, id) =>{
   this.setState({clickedUser:{ name, id} }, ()=> this.setState({showDisableModal: !disable}))
 }
 handleOpenConfirmDisable = e =>{
-  
-  // let DisableUser = this.state.data.filter( user=>(
-  //   user.id === this.state.clickedUser.id
-  // ))
-  // let rest = this.state.data.filter( users=>(
-  //   users.id !== this.state.clickedUser.id
-  // ))
-  // let isDisabled = DisableUser[0].isDisabled
   let confirmDisable = this.state.showConfirmDisableModal
   this.setState({loading: true})
   this.props.handleDisableUser(this.state.clickedUser.id)
@@ -132,22 +128,14 @@ handleOpenConfirmDisable = e =>{
     console.log(res)
     this.setState({ showConfirmDisableModal: !confirmDisable, showDisableModal:false })
   })
-  // this.setState({loading: true}, ()=> setTimeout(() => {
-  //   this.setState({ data: [...rest, { ...DisableUser[0], isDisabled: !isDisabled }], showConfirmDisableModal: !confirmDisable, showDisableModal:false },()=>console.log(this.state.data))
-  // }, 3000))
 }
 handleOpenConfirmEnable = e =>{
-  let EnableUser = this.state.data.filter( user=>(
-    user.id === this.state.clickedUser.id
-  ))
-  let rest = this.state.data.filter( users=>(
-    users.id !== this.state.clickedUser.id
-  ))
-  let isDisabled = EnableUser[0].isDisabled
+  this.setState({loading: true})
   let confirmEnable = this.state.showConfirmEnableModal
-  this.setState({loading: true}, ()=> setTimeout(() => {
-    this.setState({ data: [...rest, { ...EnableUser[0], isDisabled: !isDisabled }], showConfirmEnableModal: !confirmEnable, showEnableModal:false })
-  }, 3000))
+  this.props.handleEnableUser(this.state.clickedUser.id)
+  .then(res =>{
+    this.setState({ showConfirmEnableModal: !confirmEnable, showEnableModal:false })
+  })
 }
 handleConfirmDisable = e =>{
   let confirmDisable = this.state.showConfirmDisableModal
@@ -160,14 +148,51 @@ handleConfirmDisable = e =>{
 handleConfirmEnable = e =>{
   let confirmEnable = this.state.showConfirmEnableModal
   this.setState({showConfirmEnableModal: !confirmEnable, loading: false, clickedUser:{ name:'', id:''} })
+  this.props.handleGetAllUsersCardInfo()
+  .then( res=>{
+    this.setState({data: this.props.Users})
+  })
 }
+handleSearchInput = e =>{
+  this.setState({query: e.target.value})
+}
+handleFilterSearchInput = inputs =>{
+  this.setState({filterQuery: inputs},()=> this.handleFilterSearchQuery())
+}
+handleSearchQuery = e => {
+  e.target.blur()
+  this.setState({loading: true})
+this.props.postSearchQuery(this.state.query)
+.then(res=>{
+  this.setState({loading: false, data: this.props.Search.result.users})
+  // console.log(res)
+})
+}
+handleFilterSearchQuery = () => {
+this.setState({filterLoading: true})
+//  console.log(this.state.filterQuery)
+this.props.postSearchQuery(this.state.filterQuery)
+.then(res=>{
+  this.setState({filterLoading: false, data: this.props.Search.result.users, showFilter: false})
+  // console.log(res)
+})
+}
+handleCancelSearch = () => {
+  this.setState({data: this.props.Users, query:''}, ()=> this.props.cancelSearch(false))
+}
+
 componentDidMount(){
   this.renderPageNumbers()
   this.props.handleGetAllUsersCardInfo()
   .then( res=>{
     this.setState({data: this.props.Users})
   })
+  this.props.handleGetAllCategories()
+  .then(res=>{
+    this.setState({categories: this.props.Categories})
+  })
 }
+
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage
     const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage
@@ -181,7 +206,7 @@ componentDidMount(){
         {/* This is the Navbar Component */}
         <Navbar />
         <Page.SubWrapperAlt
-          padding='50px 80px 40px'
+          padding='50px 40px 40px'
         >
           <Page.SubWrapper
           padding='0'
@@ -190,27 +215,40 @@ componentDidMount(){
           <Search 
           filterClicked={this.handleShowFilterSearch}
           inputs={this.state}
+          changed={this.handleSearchInput}
+          clicked={this.handleSearchQuery}
+          loading={this.state.loading}
            />
            {/* This is the create new user Component */}
+           {this.props.Search.searchCancel ? 
+            // This is the cancel search user Component 
+           <CloseSearchButton 
+            clicked={this.handleCancelSearch}
+            content='Cancel'
+            /> 
+            :
+            //  This is the create new user Component 
             <CreateUserButton
             clicked={()=> this.props.history.push('manage-users/createuser')}
             content='create new user'
             />
+           }
         </Page.SubWrapper>
         <Page.SubWrapper
-         padding='80px 40px'
+         padding='80px 0'
         justifyContent='flex-start'>
           {/* This is the map Component  to display all available users*/}
           {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>{
-            let name = `${user.freelancer.firstName} ${user.freelancer.lastName}`
+            let name = `${user.freelancer.firstName || 'Jon'} ${user.freelancer.lastName || 'Snow'}`
           return  <Profile 
           key={user._id}
           {...user}
           {...user.freelancer}
           handleEnableUser={()=>this.handleEnableUser(name, user._id)}
           handleDisableUser={()=>this.handleDisableUser(name, user._id)}
-          name={name}
+          name={name }
           jobsCompleted={ user.jobsCompleted.length || '0'}
+          isDisabled={user.disabled}
             
             
           />
@@ -244,6 +282,9 @@ componentDidMount(){
         show={this.state.showFilter}
         onHide={this.handleShowFilterSearch}
         clicked={this.handleShowFilterSearch}
+        categories={this.state.categories}
+        loading={this.state.filterLoading}
+        handleFilterSearchInput={this.handleFilterSearchInput}
         />
         {/* 
         This is the disable user modal Component 

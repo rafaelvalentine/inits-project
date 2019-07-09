@@ -51,6 +51,13 @@ export const CreateUserButton = ({ content, clicked, loading, ...props }) => {
     </ButtonStyle.CreateUserButton>
   )
 }
+export const CloseSearchButton = ({ content, clicked, loading, ...props }) => {
+  return (
+    <ButtonStyle.CloseSearchButton onClick={clicked} {...props}>
+      {content}
+    </ButtonStyle.CloseSearchButton>
+  )
+}
 export const SelectBtn = ({ chosen, content, ...props }) => {
   return (
     <ButtonStyle.AltContainer chosen={chosen} {...props}>

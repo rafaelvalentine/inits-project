@@ -3,7 +3,7 @@ import { SearchInput } from '../Input'
 import { SearchButton, FilterButton } from '../Button'
 import * as Page from './styles'
 
-const SearchBar = ({ inputs, changed, clicked, filterClicked }) => {
+const SearchBar = ({ inputs, changed, clicked, filterClicked, loading }) => {
   return (
     <Page.Wrapper>
       <SearchInput
@@ -14,11 +14,12 @@ const SearchBar = ({ inputs, changed, clicked, filterClicked }) => {
       />
       <SearchButton
         content='search'
+        clicked={clicked}
+        loading={loading}
       />
       <FilterButton
         clicked={filterClicked}
         content='filter'
-
       />
     </Page.Wrapper>
 

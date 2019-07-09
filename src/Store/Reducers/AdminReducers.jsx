@@ -41,7 +41,7 @@ const AdminReducer = (state = initState, action) => {
       }
 
     case 'SET_USERS_CARD':
-      console.log(action.payload.data)
+      // console.log(action.payload.data)
       return {
         ...state,
         Admin: {
@@ -49,6 +49,24 @@ const AdminReducer = (state = initState, action) => {
           allUsers: action.payload.data
         }
       }
+    case 'SET_CATEOGORIES':
+      // console.log(action.payload.data)
+      return {
+        ...state,
+        Admin: {
+          ...state.Admin,
+          categories: [...action.payload.data]
+        }
+      }
+      // case 'ADD_CATEGORY':
+      //   // console.log(action.payload.data)
+      //   return {
+      //     ...state,
+      //     Admin: {
+      //       ...state.Admin,
+      //       categories: [...state.Admin.categories, action.payload.data]
+      //     }
+      //   }
 
     case 'SET_QUOTE_SPINNER':
       console.log(action.payload)

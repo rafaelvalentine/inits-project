@@ -2,14 +2,25 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 import { useSignUpForm } from '../Tools/FormHooks'
 import { CardHeader } from '../../theme/style/typeface'
-import { TwoComponentBox, AltBox } from '../../theme/style/Form'
+import { AltBox } from '../../theme/style/Form'
 import { Logo } from '../Picture'
 import Button from '../Button'
 import { CheckBox, SelectAlt } from '../Input'
+import swal from 'sweetalert'
 
-const FilterModal = ({ clicked, ...props }) => {
+const FilterModal = ({ categories, loading, handleFilterSearchInput, clicked, ...props }) => {
   // using react hook {useState} to manage state for the modal
-  const { inputs, handleSubmit, handleChange } = useSignUpForm()
+  const handleFilterSumbit = (e, inputs) => {
+    e.preventDefault()
+    e.target.blur()
+    let filterSearch = `'${inputs.category},${inputs.city},${inputs.averageRate},${inputs.skills}, ${inputs.jobsCompleted}'`
+    if (inputs.category === undefined && inputs.city === undefined ) {
+      return swal('You have to select Category and City', '',  'warning')
+    }
+    handleFilterSearchInput(filterSearch)
+  }
+  const { inputs, handleSubmit, handleChange } = useSignUpForm(handleFilterSumbit)
+
   return (
     <Modal id='filtermodal' {...props}>
       {/* <Modal.Header closeButton>
@@ -35,39 +46,74 @@ const FilterModal = ({ clicked, ...props }) => {
             label='Name (Aa - Zz)'
           />
           <SelectAlt
+            name='category'
             width='110px'
             height=' 32px'
             margin='0 12px'
+            value={inputs.category}
+            changed={handleChange}
           >
             <option hidden>Category</option>
+            {categories && categories.length > 1 ? categories.map(category => (
+              <option value={category.category}>{category.category}</option>
+            )) : null}
           </SelectAlt>
           <SelectAlt
+            name='averageRate'
             width='110px'
             height=' 32px'
             margin='0 12px'
+            value={inputs.averageRate}
+            changed={handleChange}
           >
             <option hidden>Star Rating</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
           </SelectAlt>
           <SelectAlt
+            name='city'
             width='110px'
             height=' 32px'
             margin='0 12px'
+            value={inputs.city}
+            changed={handleChange}
           >
             <option hidden>City</option>
+            <option value='lagos'>Lagos, Nigeria</option>
+            {/* <option value='lagos,nigeria'>Lagos, Nigeria</option> */}
           </SelectAlt>
           <SelectAlt
+            name='skills'
             width='110px'
             height=' 32px'
             margin='0 12px'
+            value={inputs.skills}
+            changed={handleChange}
           >
             <option hidden>Skills</option>
+            <option value='html5'>HTML5</option>
+            <option value='css3'>CSS3</option>
+            <option value='javascript'>Javascript</option>
+            <option value='bootstrap'>Bootstrap</option>
+            <option value='react'>React</option>
           </SelectAlt>
           <SelectAlt
+            name='jobsCompleted'
             width='120px'
             height=' 32px'
             margin='0 12px'
+            value={inputs.jobsCompleted}
+            changed={handleChange}
           >
             <option hidden>Jobs Completed</option>
+            <option value='5'>5</option>
+            <option value='10'>10</option>
+            <option value='15'>15</option>
+            <option value='20'>20</option>
+            <option value='30'>30</option>
           </SelectAlt>
 
         </AltBox>
@@ -76,9 +122,10 @@ const FilterModal = ({ clicked, ...props }) => {
       <Modal.Footer>
         <Button
           content='Apply'
-          clicked={clicked}
+          clicked={handleSubmit}
           width='120px'
           height='40px'
+          loading={loading}
         />
       </Modal.Footer>
     </Modal>

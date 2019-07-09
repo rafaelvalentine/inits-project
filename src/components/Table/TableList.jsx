@@ -10,6 +10,6 @@ export const JobList = ({ data }) => data.map(data => (
 ))
 
 export const CategoryList = ({ data, handleShowEditCategory, handleShowDeleteCategory }) => data.map(data => (
-  <CategoryRow key={Math.random()}
-    handleShowEditCategory={handleShowEditCategory} handleShowDeleteCategory={handleShowDeleteCategory} {...data} />
+  <CategoryRow key={data._id}
+    handleShowEditCategory={() => handleShowEditCategory(data._id, data.category)} handleShowDeleteCategory={() => handleShowDeleteCategory(data._id, data.category)} {...data} />
 ))

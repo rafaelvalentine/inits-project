@@ -12,14 +12,17 @@ import validator from 'validator'
 export default class index extends Component {
   state = {
     loading: false,
-    openConfirm: false
+    openConfirm: false,
+    password:'123456789'
   }
 
   handleChange = e =>{
-    this.setState({[e.target.name]: e.target.value}, ()=>console.log(this.state))
+    this.setState({[e.target.name]: e.target.value})
   }
   handleSubmit = e => {
     let user = this.state
+    let nameSplit = user.name.trim()
+    
     if (user.name === undefined || validator.isEmpty(user.name)) {
       swal('Name is required!')
       return
@@ -47,11 +50,23 @@ export default class index extends Component {
     /**
    * Uploading new user details 
    */
+
+
     e.target.blur()
-    this.setState({loading: true}, ()=> setTimeout(() => {
+    this.setState({loading: true})
+    const data = {
+      firstName: nameSplit.split(' ')[0] ,
+      lastName:nameSplit.split(' ')[1],
+      email: user.email,
+      password:user.password,
+      type: 'freelancer'
+    }
+    this.props.handleCreateFreelancer(data)
+    .then(res =>{
       this.setState({loading: false, openConfirm: true })
-    }, 3000))
-   
+      console.log(res);
+    })
+    
   }
 
   handleConfirmedUser = e =>{

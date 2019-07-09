@@ -1,5 +1,6 @@
 import CreateUser from '../../pages/CreateUser'
 import { connect } from 'react-redux'
+import { handleCreateFreelancer } from '../../Store/Actions'
 
 /**
  * here we handle passing redux to our component and export
@@ -9,10 +10,10 @@ import { connect } from 'react-redux'
 // //  Admin: state.Free.freelancer.freelancerLoggedIn
 // })
 
-// const mapDispatchToProps = dispatch => ({
-//   // handleFreelancerPageRefresh () {
-//   //   dispatch(action.handlefreelancerPageRefresh())
-//   // }
-// })
+const mapDispatchToProps = dispatch => ({
+  handleCreateFreelancer (data) {
+    return dispatch(handleCreateFreelancer(data))
+  }
+})
 
-export default connect(null, null)(CreateUser)
+export default connect(null, mapDispatchToProps)(CreateUser)

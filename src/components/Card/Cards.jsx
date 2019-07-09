@@ -4,7 +4,7 @@ import { Header, CardHeader } from '../../theme/style/typeface'
 import { Logo } from '../Picture'
 import { Main } from '../Input'
 import { UserDetails, JobCompleted, SkillList } from './cardParts'
-import Button,{ DuoButton } from '../Button'
+import Button, { DuoButton } from '../Button'
 
 const CardBox = ({ children, ...props }) => {
   return (
@@ -36,7 +36,7 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
   if (figure2 > 1000000) {
     newFigure2 = `${Math.round(figure2 / 1000000)}m`
   }
-  if ( newFigure2 !== null && figure2 !== '' && figure2 !== undefined) {
+  if (newFigure2 !== null && figure2 !== '' && figure2 !== undefined) {
     bottom = (
       <Card.Container
         className='bottom'
@@ -83,7 +83,7 @@ export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsComp
     <CardBox
       width='220px'
       height='330px'
-      margin='25px'
+      margin='25px 15px'
     >
       <UserDetails
         image={profileImageUrl}
@@ -103,7 +103,6 @@ export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsComp
     </CardBox>
   )
 }
-
 
 export const CreateCategory = ({ history, inputs, complete, changed, loading, close, create }) => {
   return (
@@ -137,15 +136,15 @@ export const CreateCategory = ({ history, inputs, complete, changed, loading, cl
         justify='center'
         align='center'
       >
-       <Main
-       name='category'
-       label='Job Category'
-       placeholder='Create Category'
-       changed={changed}
-       value={inputs.category}
-       width='290px'
-       height='40px'
-       />
+        <Main
+          name='category'
+          label='Job Category'
+          placeholder='Create Category'
+          changed={changed}
+          value={inputs.category}
+          width='290px'
+          height='40px'
+        />
         <Button
           content=' Create Category'
           width='290px'
@@ -190,15 +189,15 @@ export const EditCategory = ({ history, inputs, complete, changed, loading, clos
         justify='center'
         align='center'
       >
-       <Main
-       name='category'
-       label='Job Category'
-       placeholder='Edit Category'
-       changed={changed}
-       value={inputs.category}
-       width='290px'
-       height='40px'
-       />
+        <Main
+          name='category'
+          label='Job Category'
+          placeholder='Edit Category'
+          changed={changed}
+          value={inputs.category}
+          width='290px'
+          height='40px'
+        />
         <Button
           content=' Save Category'
           width='290px'
@@ -242,8 +241,8 @@ export const DeleteCategory = ({ history, inputs, complete, changed, loading, cl
         justify='center'
         align='center'
       >
-         <Card.Info>
-         Are you sure You want to delete { inputs.category || 'category'}
+        <Card.Info>
+         Are you sure you want to delete { inputs.category.toUpperCase() || 'category'}
         </Card.Info>
         <Button
           content=' Delete Category'

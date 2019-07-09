@@ -15,7 +15,7 @@ const Container = styled.div`
   position: absolute;
   width: 31px;
   height: 31px;
-  margin: 8px 0 0;
+  margin: 3px 0 0;
   border: 3px solid #fff;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;

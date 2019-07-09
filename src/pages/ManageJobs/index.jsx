@@ -4,14 +4,15 @@ import TabHeader from '../../components/TabHead'
 import { JobsTable, CategoryTable } from '../../components/Table'
 import * as Page from '../../theme/style/styles'
 import { CreateCategoryModal, EditCategoryModal, DeleteCategoryModal } from '../../components/Modal'
-
+import validator from 'validator'
+import swal from 'sweetalert'
 
 export default class index extends Component {
   state ={ 
     selected:true,
     loading:false,
     data:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}],
-    data2:[{category:'web development'},{category:'mobile app development'},{category:'content creation'}],
+    data2:[],
     firstPage: 1,
     currentPage: 1,
     usersPerPage: 9,
@@ -94,33 +95,89 @@ selectedPage = page =>{
   this.setState({currentPage: page})
 }
 handleCategoryChange= e =>{
-  this.setState({[e.target.name]:e.target.value}, ()=>console.log(this.state.category))
+  this.setState({[e.target.name]:e.target.value})
 }
 handleShowCreateCategory= () =>{
   let showCreateCategory = !this.state.showCreateCategory
   this.setState({ showCreateCategory, category:'', categoryId:'' })
 }
-handleShowEditCategory = () =>{
+handleShowEditCategory = (id, category) =>{
   let showEditCategory = !this.state.showEditCategory
-  this.setState({ showEditCategory, category:'', categoryId:'' })
+  this.setState({ showEditCategory, categoryId:id, category:category }, ()=> this.handleEditCategory)
 }
-handleShowDeleteCategory = () =>{
+handleShowDeleteCategory = (id, category) =>{
   let showDeleteCategory = !this.state.showDeleteCategory
-  this.setState({ showDeleteCategory, category:'', categoryId:'' })
+  this.setState({ showDeleteCategory, categoryId:id, category:category },  ()=> this.handleDeleteCategory)
 }
 handleCreateCategory= () =>{
-  this.setState({ loading:true, },()=>setTimeout(() => {
-   this.setState({showCreateCategory: false}) 
-  }, 3000))
+  let data ={
+    category: this.state.category
+  }/**
+   * Validating form input
+   */
+  if (this.state.category === undefined || validator.isEmpty(this.state.category.email)) {
+    swal('category is required!')
+    return
+  }
+ 
+  this.setState({ loading:true, })
+  this.props.handleCreateCategory(data)
+  .then(res =>{
+    this.setState({loading: false, showCreateCategory: false, data2:[...this.state.data2, res.data]}) 
+  })
+  // this.setState({ loading:true, },()=> setTimeout(() => {
+  //  this.setState({showCreateCategory: false}) 
+  // }, 3000))
 }
-handleEditCategory= (id) =>{
-  let selectedCategory
-  this.setState({ loading:true, },()=>setTimeout(() => {
-   this.setState({showCreateCategory: false}) 
-  }, 3000))
+handleEditCategory= () =>{
+  let categoryId = this.state.categoryId
+  let category ={
+    category: this.state.category
+  }
+  /**
+   * Validating form input
+   */
+  if (this.state.category === undefined || validator.isEmpty(this.state.category.email)) {
+    swal('category is required!')
+    return
+  }
+  this.setState({ loading:true, })
+  this.props.handleEditCategory(category, categoryId)
+  .then(res=>{
+    this.setState({loading:false, showEditCategory: false}) 
+    this.props.handleGetAllCategories()
+      .then(res=>{
+        this.setState({data2: this.props.Categories})
+      })
+  })
+  // this.setState({ loading:true, },()=>setTimeout(() => {
+  //  this.setState({loading:true,showCreateCategory: false}) 
+  // }, 3000))
 }
+handleDeleteCategory= () =>{
+  let categoryId = this.state.categoryId
+
+  this.setState({ loading:true, })
+  this.props.handleDeleteCategory(categoryId) 
+  .then(res =>{
+    this.setState({loading:false, showDeleteCategory: false}) 
+    this.props.handleGetAllCategories()
+      .then(res=>{
+        this.setState({data2: this.props.Categories})
+      })
+  })
+  // this.setState({ loading:true, },()=>setTimeout(() => {
+  //  this.setState({showCreateCategory: false}) 
+  // }, 3000))
+}
+
+
 componentDidMount(){
   this.renderPageNumbers()
+  this.props.handleGetAllCategories()
+  .then(res=>{
+    this.setState({data2: this.props.Categories})
+  })
 }
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage
@@ -153,7 +210,7 @@ componentDidMount(){
          data={currentUsers} 
          setPagination={true}/> :
          <CategoryTable data={this.state.data2}
-         handleShowEditCategory={this.handleShowEditCategory}
+         handleShowEditCategory={ this.handleShowEditCategory}
          handleShowDeleteCategory={this.handleShowDeleteCategory}
          />}
         </Page.SubWrapperAlt>

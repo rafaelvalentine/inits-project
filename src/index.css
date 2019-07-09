@@ -131,7 +131,7 @@ button {
 
 #filtermodal {
     max-width: 554px;
-    margin: 176px 336px;
+    margin: 176px auto;
     /* height: 233px; */
 }
 

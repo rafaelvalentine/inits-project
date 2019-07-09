@@ -11,7 +11,18 @@ const initState = {
       jobsCompleted: '',
       blackListedUsers: ''
     },
-    allUsers:[{}]
+    allUsers: [{}],
+    categories: []
+  },
+  AdminSearch: {
+    searchType: 'freelance',
+    loading: false,
+    searchQuery: '',
+    searchError: '',
+    result: {
+      users: [],
+      jobs: []
+    }
   }
 
 }

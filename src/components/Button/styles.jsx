@@ -69,10 +69,13 @@ border-radius: 4px;
 `
 CreateUserButton.defaultProps = {
   width: '134px',
-  margin: '0',
+  margin: '0 80px 0 0',
   height: '40px'
 }
-
+export const CloseSearchButton = styled(CreateUserButton)`
+border: 1px solid ${props => props.theme.red};
+color: ${props => props.theme.red};
+`
 export const GreenButtonAlt = styled.button`
     width: ${props => props.width};
     height: ${props => props.height};
