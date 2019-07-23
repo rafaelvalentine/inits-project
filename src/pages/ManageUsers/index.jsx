@@ -29,7 +29,8 @@ export default class index extends Component {
     },
     data:[],
     query:'',
-    categories:[]
+    categories:[],
+    spinner:true
   }
 
   scrollToTop =()=> window.scrollTo({
@@ -191,6 +192,9 @@ componentDidMount(){
   .then(res=>{
     this.setState({categories: this.props.Categories})
   })
+ setTimeout(() => {
+   this.setState({spinner:false})
+ }, 15000);
 }
 
   render () {
@@ -200,7 +204,7 @@ componentDidMount(){
     const allUsers = this.state.data.length
     let newindexOfFirstUser = indexOfFirstUser + 1
     let pageUsers = currentUsers.length + indexOfFirstUser
-    
+    let spinner = this.state.spinner ? <GoldSpinner/> : null
     return (
       <Page.Wrapper>
         {/* This is the Navbar Component */}
@@ -255,7 +259,7 @@ componentDidMount(){
           }) :  <Page.SubWrapperAlt
           padding='50px 80px 200px'
         >  No Users Found
-        <GoldSpinner/>
+        {spinner}
         </Page.SubWrapperAlt>}
         </Page.SubWrapper>
         {/* This is the Pagination  Component */}

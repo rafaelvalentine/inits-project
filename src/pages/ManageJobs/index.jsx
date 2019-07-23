@@ -110,16 +110,16 @@ handleShowDeleteCategory = (id, category) =>{
   this.setState({ showDeleteCategory, categoryId:id, category:category },  ()=> this.handleDeleteCategory)
 }
 handleCreateCategory= () =>{
-  let data ={
-    category: this.state.category
-  }/**
+ /**
    * Validating form input
    */
-  if (this.state.category === undefined || validator.isEmpty(this.state.category.email)) {
+  if (this.state.category === undefined || validator.isEmpty(this.state.category)) {
     swal('category is required!')
     return
   }
- 
+  let data ={
+    category: this.state.category
+  }
   this.setState({ loading:true, })
   this.props.handleCreateCategory(data)
   .then(res =>{
@@ -131,15 +131,16 @@ handleCreateCategory= () =>{
 }
 handleEditCategory= () =>{
   let categoryId = this.state.categoryId
-  let category ={
-    category: this.state.category
-  }
+  
   /**
    * Validating form input
    */
-  if (this.state.category === undefined || validator.isEmpty(this.state.category.email)) {
+  if (this.state.category === undefined || validator.isEmpty(this.state.category)) {
     swal('category is required!')
     return
+  }
+  let category ={
+    category: this.state.category
   }
   this.setState({ loading:true, })
   this.props.handleEditCategory(category, categoryId)

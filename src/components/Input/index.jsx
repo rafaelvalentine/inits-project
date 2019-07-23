@@ -306,7 +306,6 @@ export const DuoPickDate = ({
           <DatePicker
             placeholderText='DD/MM/YYYY'
             className='datePicker'
-            minDate={new Date()}
             isClearable
             dateFormat='dd/MM/yyyy'
             selected={valueFrom}
@@ -323,7 +322,6 @@ export const DuoPickDate = ({
           <DatePicker
             placeholderText='DD/MM/YYYY'
             className='datePicker'
-            minDate={new Date()}
             isClearable
             dateFormat='dd/MM/yyyy'
             selected={valueTo}

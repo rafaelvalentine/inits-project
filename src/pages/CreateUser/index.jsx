@@ -21,7 +21,7 @@ export default class index extends Component {
   }
   handleSubmit = e => {
     let user = this.state
-    let nameSplit = user.name.trim()
+    
     
     if (user.name === undefined || validator.isEmpty(user.name)) {
       swal('Name is required!')
@@ -53,6 +53,7 @@ export default class index extends Component {
 
 
     e.target.blur()
+    let nameSplit = user.name.trim()
     this.setState({loading: true})
     const data = {
       firstName: nameSplit.split(' ')[0] ,
