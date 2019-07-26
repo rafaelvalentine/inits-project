@@ -293,6 +293,7 @@ export const DuoPickDate = ({
   direction,
   wrap,
   justify,
+  disableToDatePicker,
   ...props }) => {
   return (
     <Form.CardsContainer
@@ -308,6 +309,7 @@ export const DuoPickDate = ({
             className='datePicker'
             isClearable
             dateFormat='dd/MM/yyyy'
+            maxDate={new Date()}
             selected={valueFrom}
             onChange={changeFrom}
             {...props}
@@ -324,8 +326,10 @@ export const DuoPickDate = ({
             className='datePicker'
             isClearable
             dateFormat='dd/MM/yyyy'
+            maxDate={new Date()}
             selected={valueTo}
             onChange={changeTo}
+            disabled={disableToDatePicker}
             {...props}
           />
         </Form.DatePickerContainer>
@@ -355,7 +359,7 @@ export const SearchInput = ({ name, type, placeholder, value, changed, ...props 
     </Form.AltBox>
   )
 }
-export const SortInput = ({ name, type, placeholder, value, changed, children, clicked, ...props }) => {
+export const SortInput = ({ name, type, placeholder, value, changed, cancel, showCancel, children, clicked, ...props }) => {
   return (
     <Form.AltBox >
       <Form.SortInputContainer onClick={clicked}>
@@ -364,23 +368,28 @@ export const SortInput = ({ name, type, placeholder, value, changed, children, c
           height='12px'
         />
         <Form.SortInput
-          disabled
           name={name}
           type={type}
           placeholder={placeholder}
           value={value}
           onChange={changed}
           {...props}
-        />
+        >{placeholder}</Form.SortInput>
 
         <Logo src={require('../../assets/images/arrow-dropdown.svg')}
           width='16px'
           height='16px'
           margin='0 8px 0 auto'
         />
+
         {children}
       </Form.SortInputContainer>
-      
+      { showCancel ? <Logo src={require('../../assets/images/close-line.svg')}
+        width='24px'
+        height='24px'
+        margin='0 8px 0 20px'
+        clicked={cancel}
+      /> : null }
     </Form.AltBox>
 
   )

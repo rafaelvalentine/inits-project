@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Admin } from '../Picture'
 import * as Table from './styles'
 import { formatAmount } from '../Tools/Formatter'
+import { MilestonesDropDown } from '../DropDown'
 
 export const TableHead = ({ children }) => (
   <Table.Thead className='jobtable'>
@@ -68,12 +69,17 @@ export const ProfileAndText = ({ img, text, subtext }) => (
   </Table.SideBy>
 )
 
-export const Status = ({ accepted, unaccepted, compeleted }) => {
-  let statusMessage = (
-    <Table.Completed>
-      <span>Completed</span>
-    </Table.Completed>
-  )
+export const Status = ({ accepted, compeleted }) => {
+  let statusMessage
+  if (!accepted) {
+    statusMessage = (
+      <Table.Accepted
+        alt>
+        <span>Unaccepted</span>
+      </Table.Accepted>
+    )
+  }
+
   if (accepted) {
     statusMessage = (
       <Table.Accepted>
@@ -81,12 +87,11 @@ export const Status = ({ accepted, unaccepted, compeleted }) => {
       </Table.Accepted>
     )
   }
-  if (unaccepted) {
+  if (compeleted) {
     statusMessage = (
-      <Table.Accepted
-        alt>
-        <span>Unaccepted</span>
-      </Table.Accepted>
+      <Table.Completed>
+        <span>Completed</span>
+      </Table.Completed>
     )
   }
   return (
@@ -111,5 +116,55 @@ export const DeleteText = ({ accepted, unaccepted, compeleted }) => {
         <span>DELETE CATEGORY</span>
       </Table.Delete>
     </Table.Stacked>
+  )
+}
+
+export const MileStoneList = ({ milestones, showDropDown }) => {
+  /**
+   * here i am using useState to toggle the dropdown
+   */
+  const [dropDown, setDropDown] = useState({})
+
+  const toggleDropDown = () => {
+    if (dropDown.show) {
+      return setDropDown({ show: false })
+    }
+    return setDropDown({ show: true })
+  }
+  let dropdown
+  if (dropDown.show) {
+    dropdown = <MilestonesDropDown milestones={milestones} /> 
+  }
+  /**
+ * Hook that alerts clicks outside of the passed ref
+ */
+  function useOutsideAlerter (ref) {
+  /**
+   * Alert if clicked on outside of element
+   */
+    function handleClickOutside (event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        return setDropDown({ show: false })
+      }
+    }
+
+    useEffect(() => {
+    // Bind the event listener
+      document.addEventListener('mouseover', handleClickOutside)
+      return () => {
+      // Unbind the event listener on clean up
+        document.removeEventListener('mouseover', handleClickOutside)
+      }
+    })
+  }
+  const wrapperRef = useRef(null)
+  useOutsideAlerter(wrapperRef)
+  return (
+    <Table.Stacked style={{ position: 'relative', cursor: 'pointer' }} ref={wrapperRef} onMouseEnter={toggleDropDown}>
+      <Text text={milestones[0].milestone} />
+      ...
+      {dropdown}
+    </Table.Stacked>
+
   )
 }

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { device } from '../device'
 
 export const Container = styled.div`
     background-color: ${props => props.backgroundColor ? props.backgroundColor : props.theme.white};
@@ -23,6 +24,12 @@ export const Container = styled.div`
       text-align: center;
       padding: 5px 0;
     }
+    @media ${device.desktop}{
+      &.profileCard{
+        margin:25px 20px 25px auto;
+      }
+    }
+   
 `
 Container.defaultProps ={
   width: '300px',

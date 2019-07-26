@@ -1,9 +1,13 @@
 import styled from 'styled-components'
+import { device } from '../../components/device'
 
 export const Wrapper = styled.div`
 background: ${props => props.theme.gray}
 min-height: 100vh;
 width: 100%;
+@media ${device.desktop} {
+
+}
 `
 
 export const SubWrapper = styled.div`
@@ -15,12 +19,18 @@ align-items:center;
 padding:${props => props.padding ? props.padding : '80px 0 '};
 flex-wrap ${props => props.flexWrap ? props.flexWrap : 'wrap'};
 margin:0 auto;
-
+@media ${device.laptop} {
+  justify-content:space-between;
+  &.usersCard{
+    justify-content:flex-start;
+  }
+}
 `
 export const SubWrapperAlt = styled(SubWrapper)`
 flex-direction:column;
 align-items: center;
 padding:${props => props.padding ? props.padding : '80px 0 '};
+
 `
 
 export const ListWrapper = styled.div`

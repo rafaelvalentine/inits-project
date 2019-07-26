@@ -7,6 +7,9 @@ import Pagination from '../../components/Tools/Pagination'
 import GoldSpinner from '../../components/Tools/GoldSpinner'
 import * as Page from '../../theme/style/styles'
 import { FilterModal, DisableUserModal, ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal  } from '../../components/Modal'
+import swal from 'sweetalert'
+import validator from 'validator'
+import { Helmet } from 'react-helmet'
 
 export default class index extends Component {
   state ={
@@ -98,7 +101,7 @@ selectedPage = page =>{
 }
 
 handleShowFilterSearch = e =>{
-  e.target.blur()
+  // e.target.blur()
   let filter = this.state.showFilter
   this.setState({showFilter: !filter })
 }
@@ -126,7 +129,6 @@ handleOpenConfirmDisable = e =>{
   this.setState({loading: true})
   this.props.handleDisableUser(this.state.clickedUser.id)
   .then(res =>{
-    console.log(res)
     this.setState({ showConfirmDisableModal: !confirmDisable, showDisableModal:false })
   })
 }
@@ -162,20 +164,22 @@ handleFilterSearchInput = inputs =>{
 }
 handleSearchQuery = e => {
   e.target.blur()
+if(validator.isEmpty(this.state.query)){
+  swal('Empty Field', 'Enter search value', 'warning')
+  return
+}
   this.setState({loading: true})
 this.props.postSearchQuery(this.state.query)
 .then(res=>{
   this.setState({loading: false, data: this.props.Search.result.users})
-  // console.log(res)
 })
 }
 handleFilterSearchQuery = () => {
 this.setState({filterLoading: true})
-//  console.log(this.state.filterQuery)
+
 this.props.postSearchQuery(this.state.filterQuery)
 .then(res=>{
   this.setState({filterLoading: false, data: this.props.Search.result.users, showFilter: false})
-  // console.log(res)
 })
 }
 handleCancelSearch = () => {
@@ -207,6 +211,11 @@ componentDidMount(){
     let spinner = this.state.spinner ? <GoldSpinner/> : null
     return (
       <Page.Wrapper>
+        <Helmet>
+          <meta charSet='utf-8' />
+          <title> Manage Users || Primework Admin</title>
+          <link rel='shortcut icon' href={require('../../assets/images/primeworkfavicon.jpeg')} type='image/x-icon' />
+        </Helmet>
         {/* This is the Navbar Component */}
         <Navbar />
         <Page.SubWrapperAlt
@@ -214,6 +223,7 @@ componentDidMount(){
         >
           <Page.SubWrapper
           padding='0'
+          justifyContent='center'
         >
           {/* This is the search Component */}
           <Search 
@@ -239,9 +249,12 @@ componentDidMount(){
            }
         </Page.SubWrapper>
         <Page.SubWrapper
+          className='usersCard'
          padding='80px 0'
-        justifyContent='flex-start'>
-          {/* This is the map Component  to display all available users*/}
+        justifyContent='flex-start'
+        style={{padding:'0 auto'}}
+        >
+          {/* This is the map Component  to display all available users */}
           {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>{
             let name = `${user.freelancer.firstName || 'Jon'} ${user.freelancer.lastName || 'Snow'}`
           return  <Profile 
@@ -257,13 +270,14 @@ componentDidMount(){
             
           />
           }) :  <Page.SubWrapperAlt
-          padding='50px 80px 200px'
+          padding='50px 80px 500px'
         >  No Users Found
         {spinner}
         </Page.SubWrapperAlt>}
         </Page.SubWrapper>
         {/* This is the Pagination  Component */}
-        <Pagination 
+        {currentUsers && currentUsers.length > 0 ? <Pagination
+        className='userPagination' 
         data={this.state}
         allUsers={allUsers}
         pageUsers={pageUsers}
@@ -276,7 +290,7 @@ componentDidMount(){
         pageLimit={this.state.pageLimit}
         upperPageBound={this.state.upperPageBound}
         lowerPageBound={this.state.lowerPageBound}
-        />
+        /> : null }
         </Page.SubWrapperAlt>
         {/* 
         This is the filter search modal Component 

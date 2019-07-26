@@ -3,28 +3,19 @@ const initState = {
     fullname: '',
     email: '',
     analytics: {
-      registeredUsers: '',
-      activeUsers: '',
-      transactionsPerformed: '',
-      transactionsvalue: '',
-      jobsPosted: '',
-      jobsCompleted: '',
-      blackListedUsers: ''
+      registeredUsers: 0,
+      activeUsers: 0,
+      transactionsPerformed: 0,
+      transactionsValue: 0,
+      jobsPosted: 0,
+      jobsCompleted: 0,
+      blackListedUsers: 0
     },
-    allUsers: [{}],
-    categories: []
-  },
-  AdminSearch: {
-    searchType: 'freelance',
-    loading: false,
-    searchQuery: '',
-    searchError: '',
-    result: {
-      users: [],
-      jobs: []
-    }
+    allUsers: [],
+    categories: [],
+    transactions: [],
+    jobs: []
   }
-
 }
 
 export default initState

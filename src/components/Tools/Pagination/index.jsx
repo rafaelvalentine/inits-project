@@ -2,7 +2,7 @@ import React from 'react'
 import * as Page from './styles'
 import { SelectAlt } from '../../Input'
 
-const Pagination = ({ data, currentPage, handlePagnationUp, handlePagnationDown, handleDataRange, pageUsers, newindexOfFirstUser, allUsers, pageNumbers, selectedPage, pageLimit, upperPageBound, lowerPageBound }) => {
+const Pagination = ({ data, currentPage, handlePagnationUp, handlePagnationDown, handleDataRange, pageUsers, newindexOfFirstUser, allUsers, pageNumbers, selectedPage, pageLimit, upperPageBound, lowerPageBound, ...props}) => {
   const pages = pageNumbers().map(page => {
     if (page.page === data.currentPage) {
       return <Page.PageNumber active key={page.id} onClick={() => selectedPage(page.page)} className='currentpage'>{page.page}</Page.PageNumber>
@@ -13,7 +13,7 @@ const Pagination = ({ data, currentPage, handlePagnationUp, handlePagnationDown,
     return null
   })
   return (
-    <Page.Wrapper>
+    <Page.Wrapper {...props}>
       <div style={{ cursor: 'pointer' }}>
         {data.currentPage !== 1 ? <Page.Button onClick={handlePagnationDown} value='Prev'><img className='double_arrow rotate ' src={require('../../../assets/images/arrow-drop-left.svg')} alt='arrow-left' /> </Page.Button> : null}
         {pages}

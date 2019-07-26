@@ -6,7 +6,8 @@ import { formatAmount } from '../../components/Tools/Formatter'
 import { DashboardTable } from '../../components/Table'
 import * as Page from './styles'
 import * as Dash from '../../theme/style/styles'
-// import "react-datepicker/dist/react-datepicker.css";
+import { CardHeader } from '../../theme/style/typeface'
+import { Helmet } from 'react-helmet'
 
 
 /**
@@ -17,12 +18,15 @@ export default class index extends Component {
     deadLine:'',
     from:'',
     to:'',
+    showToDatePicker: false,
     analyticsdata:[
       {
         id: 1,
         figure: 0,
-        info:'Registered Users',
-        figure2:`0 active users`,
+        info:' Registered Users',
+        info2:'',
+        info3:'active users',
+        figure2: 0,
         img:require('../../assets/images/registeredusers.svg'),
         color:'#27AE60',
 
@@ -31,7 +35,9 @@ export default class index extends Component {
         id: 2,
         figure: 0,
         info:'Transactions Performed',
-        figure2: `‎₦ ${formatAmount('80000000000')} in value`,
+        info2:'₦',
+        info3:'in value',
+        figure2: 0,
         img: require('../../assets/images/transactionsperformed.svg'),
         color:'#5353D0',
       },
@@ -39,7 +45,9 @@ export default class index extends Component {
         id: 3,
         figure: 0,
         info:'Jobs posted',
-        figure2:`${formatAmount('300')} jobs completed`,
+        info2:'',
+        info3:'jobs completed',
+        figure2: 0,
         img:require('../../assets/images/jobsposted.svg'),
         color:'#2F80ED'
       },
@@ -53,51 +61,77 @@ export default class index extends Component {
         color:'#FF4500'
       },
     ],
-    transaction:[
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {}
-    ]
+    transactions:[],
+    minDate: new Date()
   }
 
   handleDatePickedFrom = from => {
-    this.setState({ from }, ()=>console.log(this.state));
+    let dates = [...this.state.transactions]
+    let filteredDates = dates.filter(data => (
+      new Date(data.date).getTime() > new Date(from).getTime()
+    ))
+  if(from === null ){
+    console.log('empty')
+    console.log(this.props.Transactions);
+    return this.setState({ transactions: [ ...this.props.Transactions], from, showToDatePicker: false })
+  }
+    this.setState({ transactions: [ ...filteredDates], from, showToDatePicker: true })
   };
   handleDatePickedTo = to => {
-    this.setState({ to }, ()=>console.log(this.state));
+    let dates = [...this.state.transactions]
+    let filteredDates = dates.filter(data => (
+      new Date(data.date).getTime() < new Date(to).getTime()
+    ))
+    if(to === null ){
+      this.setState({ to })
+      return
+    }
+      this.setState({ transactions: [ ...filteredDates], to })
   };
-  componentDidMount(){
-    this.props.handleGetAllUsers()
-    this.props.handleGetJobs()
+  handleGetMinDate =()=>{
+    let dates = this.state.transactions
+    let sortDates = dates.sort((a,b)=>(
+      new Date(a.date).getTime() - new Date(b.date).getTime()
+    ))
+    let minDate = sortDates[0].date
+    this.setState({minDate: new Date(minDate)})
+    // console.log(minDate)
   }
+  componentDidMount(){
+    
+    this.props.handleGetAllUsers()
+    .then(res=>{
+      this.props.handleGetJobs()
+    })
+    this.props.handleGetAllTransactions()
+    .then(res =>{
+      this.setState({ transactions: [ ...this.state.transactions,...this.props.Transactions] }, () => this.handleGetMinDate())
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     // Typical usage (don't forget to compare props):
     if (nextProps.Analytics !== this.props.Analytics) {
-      // console.log(nextProps.Analytics);
       if (nextProps.Analytics && nextProps.Analytics.registeredUsers) {
         this.setState({analyticsdata:[
           {
             id: 1,
             figure:nextProps.Analytics.registeredUsers || 0,
             info:' Registered Users',
-            figure2:`${formatAmount(nextProps.Analytics.activeUsers || 0 )} active users`,
+            info2:'',
+            info3:'active users',
+            figure2: formatAmount(nextProps.Analytics.activeUsers || 0 ),
             img:require('../../assets/images/registeredusers.svg'),
             color:'#27AE60',
     
           },
           {
             id: 2,
-            figure:0,
+            figure:nextProps.Analytics.transactionsPerformed,
             info:'Transactions Performed',
-            figure2: `‎₦ ${formatAmount('0')} in value`,
+            info2:'₦',
+            info3:'in value',
+            figure2: formatAmount(nextProps.Analytics.transactionsValue|| 0 ),
             img: require('../../assets/images/transactionsperformed.svg'),
             color:'#5353D0',
           },
@@ -105,14 +139,16 @@ export default class index extends Component {
             id: 3,
             figure: nextProps.Analytics.jobsPosted || 0,
             info:'Jobs posted',
-            figure2:`${formatAmount( nextProps.Analytics.jobsCompleted || 0)} jobs completed`,
+            info2:'',
+            info3:'jobs completed',
+            figure2: nextProps.Analytics.jobsCompleted || 0,
             img:require('../../assets/images/jobsposted.svg'),
             color:'#2F80ED'
           },
           {
     
             id: 4,
-            figure: nextProps.Analytics.blackedListedUsers || 0,
+            figure: nextProps.Analytics.blackListedUsers || 0,
             info:'Black Listed Users',
             figure2: null,
             img:require('../../assets/images/blacklist.svg'),
@@ -126,6 +162,11 @@ export default class index extends Component {
   render () {
     return (
       <Dash.Wrapper>
+        <Helmet>
+          <meta charSet='utf-8' />
+          <title>Dashboard || Primework Admin</title>
+          <link rel='shortcut icon' href={require('../../assets/images/primeworkfavicon.jpeg')} type='image/x-icon' />
+        </Helmet>
         <Navbar/>
         <Page.PickDateWrapper>
   {/* Datepicker Component*/}
@@ -139,6 +180,8 @@ export default class index extends Component {
           valueTo={this.state.to}
           changeFrom={this.handleDatePickedFrom} 
           changeTo={this.handleDatePickedTo}
+          disableToDatePicker={!this.state.showToDatePicker}
+          // minDate={this.state.minDate}
           />
         </Page.PickDateWrapper>
         <Dash.SubWrapper
@@ -148,7 +191,15 @@ export default class index extends Component {
            {/* List Component show analytical infomation for db*/}
           <Analytics analytics={this.state.analyticsdata}/>
         </Dash.SubWrapper>
-        <DashboardTable title='Transaction History' data={this.state.transaction} />
+        
+        { this.state.transactions && this.state.transactions.length > 0 ? 
+        <DashboardTable title='Transaction History' data={this.state.transactions} /> 
+        :
+        <CardHeader style={{margin:'160px auto',justifyContent:'center'}} fontSize='24px'>
+          <p>No Data Found</p>
+        </CardHeader>
+        }
+        
       </Dash.Wrapper>
     )
   }

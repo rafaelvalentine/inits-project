@@ -27,6 +27,7 @@ export const handleGetAllUsersCardInfo = () => dispatch => {
   }).catch(err => {
     // dispatch(quoteLoading(false))
     console.log(err)
+    handleError(err)
   })
 }
 /**
@@ -42,6 +43,7 @@ export const handleDisableUser = userId => dispatch => {
   }).catch(err => {
     // dispatch(quoteLoading(false))
     console.log(err)
+    handleError(err)
   })
 }
 export const handleEnableUser = userId => dispatch => {
@@ -54,6 +56,7 @@ export const handleEnableUser = userId => dispatch => {
   }).catch(err => {
     // dispatch(quoteLoading(false))
     console.log(err)
+    handleError(err)
   })
 }
 /**
@@ -85,7 +88,7 @@ export const handleEnableUser = userId => dispatch => {
 //   })
 // }
 export const handleCreateFreelancer = data => dispatch => {
-  console.log(data)
+  // console.log(data)
   return axios({
     url: `https://primework-staging.herokuapp.com/api/v1/user/register`,
     method: 'POST',

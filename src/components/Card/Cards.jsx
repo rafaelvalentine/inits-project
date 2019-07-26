@@ -14,7 +14,7 @@ const CardBox = ({ children, ...props }) => {
   )
 }
 
-export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
+export const AnalyticsCard = ({ figure, figure2, info, info2, info3, img, color }) => {
   let bottom
   let newFigure
   let newFigure2
@@ -49,7 +49,7 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
         borderRadius='0'
         margin='42px auto 0'
       >
-        { newFigure2 || 'No Info'}
+        {`${info2} ${newFigure2} ${info3}` || 'No Info'}
       </Card.Container>
     )
   }
@@ -72,7 +72,7 @@ export const AnalyticsCard = ({ figure, figure2, info, img, color }) => {
   )
 }
 
-export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnableUser, handleDisableUser }) => {
+export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnableUser, handleDisableUser, ...props }) => {
   let secondaryContent
   let altButton
   let clicked
@@ -81,9 +81,11 @@ export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsComp
   isDisabled ? clicked = handleEnableUser : clicked = handleDisableUser
   return (
     <CardBox
+      className='profileCard'
       width='220px'
       height='330px'
       margin='25px 15px'
+      {...props}
     >
       <UserDetails
         image={profileImageUrl}

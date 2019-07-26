@@ -53,7 +53,10 @@ export const TransactionTable = ({
   handlePagnationDown,
   handleDataRange,
   pageNumbers,
-  selectedPage
+  selectedPage,
+  showCancel,
+  handleSortBy,
+  cancel
 }) => {
   /**
    * here i am using useState to toggle the dropdown
@@ -68,7 +71,7 @@ export const TransactionTable = ({
   }
   let dropdown
   if (dropDown.show) {
-    dropdown = <TransactionDropDown />
+    dropdown = <TransactionDropDown handleSortBy={handleSortBy} />
   }
   /**
  * Hook that alerts clicks outside of the passed ref
@@ -104,6 +107,9 @@ export const TransactionTable = ({
             placeholder='Sort By'
             value={pageInfo.sortByValue}
             clicked={toggleDropDown}
+            cancel={cancel}
+            showCancel={showCancel}
+
           >
             { dropdown }
           </SortInput>

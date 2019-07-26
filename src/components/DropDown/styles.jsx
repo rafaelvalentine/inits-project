@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { device } from '../device'
 
 export const NavDropDown = styled.div`
 width: 160px;
@@ -53,5 +54,46 @@ border-bottom: 1px solid #F1F2F7;
 margin:0;
 span{
 color: ${props => props.theme.cardName};
+}
+`
+
+export const MilestonesDropDown = styled(NavDropDown)`
+width: 165px;
+min-height: 0;
+max-height:250px
+top: 48px;
+right:100px;
+left:-50px;
+border-radius: 4px;
+text-align:left;
+&::after{
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent ${props => props.theme.label} transparent;
+}
+@media ${device.desktop}{
+  right:200px;
+}
+`
+export const Milestones = styled(NavOptions)`
+padding: 5px 10px;
+border-top: .5px solid transparent;
+border-bottom: .5px solid transparent;
+margin:0;
+text-align:left;
+text-transform:capitalize;
+:hover{
+  box-shadow: none;
+}
+span{
+  text-align:left;
+  font-size: 12px;
+  line-height: 16px;
+  color: ${props => props.theme.cardName};
 }
 `

@@ -1,16 +1,21 @@
 import Jobs from '../../pages/ManageJobs'
 import { connect } from 'react-redux'
-import { handleGetAllCategories, handleCreateCategory, handleEditCategory, handleDeleteCategory } from '../../Store/Actions'
+import { handleGetAllJobs, handleGetAllCategories, handleCreateCategory, handleEditCategory, handleDeleteCategory } from '../../Store/Actions'
 
 /**
  * here we handle passing redux to our component and export
  */
 
 const mapStateToProps = state => ({
-  Categories: state.Admin.Admin.categories
+  Categories: state.Admin.Admin.categories,
+  Jobs: state.Admin.Admin.jobs
+
 })
 
 const mapDispatchToProps = dispatch => ({
+  handleGetAllJobs () {
+    return dispatch(handleGetAllJobs())
+  },
   handleGetAllCategories () {
     return dispatch(handleGetAllCategories())
   },

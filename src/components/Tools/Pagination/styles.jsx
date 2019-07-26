@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { device } from '../../device'
 
 
 export const Wrapper = styled.div`
@@ -12,6 +13,14 @@ padding:35px 64px;
 font-size: 12px;
 line-height: 16px;
 color: ${props => props.theme.cardName};
+@media ${device.desktop}{
+  &.userPagination{
+    width:94%;
+    position:fixed;
+    bottom:50px;
+  }
+}
+
 `
 export const Button = styled.button`
 width: 25px;

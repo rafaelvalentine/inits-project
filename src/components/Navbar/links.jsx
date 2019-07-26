@@ -78,13 +78,13 @@ Links.defaultProps = {
       address: 'transactions',
       link: 'transactions'
     },
-    {
-      id: '5',
-      img: chatOrange,
-      img2: chat,
-      address: 'live chat',
-      link: 'live-chat'
-    }
+    // {
+    //   id: '5',
+    //   img: chatOrange,
+    //   img2: chat,
+    //   address: 'live chat',
+    //   link: 'live-chat'
+    // }
   ]
 }
 export default Links

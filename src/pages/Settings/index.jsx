@@ -5,6 +5,7 @@ import Navbar from '../../container/Navbar'
 import { EditAdmin } from '../../components/Card'
 import * as Page from '../../theme/style/styles'
 import { SubMainNav } from '../../theme/style/typeface'
+import { Helmet } from 'react-helmet'
 
 export default class index extends Component {
   state = {
@@ -96,6 +97,11 @@ export default class index extends Component {
   render () {
     return (
       <Page.Wrapper>
+        <Helmet>
+          <meta charSet='utf-8' />
+          <title>Admin Profile Settings || Primework Admin</title>
+          <link rel='shortcut icon' href={require('../../assets/images/primeworkfavicon.jpeg')} type='image/x-icon' />
+        </Helmet>
         <Navbar  />
         <Page.SubWrapper
           padding='100px 80px 40px'

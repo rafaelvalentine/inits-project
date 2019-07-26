@@ -10,6 +10,7 @@ const mapStateToProps = (state) => ({
   Users: state.Admin.Admin.allUsers,
   Categories: state.Admin.Admin.categories,
   Search: state.Search
+ 
 })
 
 const mapDispatchToProps = dispatch => ({

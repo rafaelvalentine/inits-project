@@ -187,12 +187,18 @@ border-radius: 0;
     outline: none;
 }
 `
-export const SortInput = styled(MainInput)`
+export const SortInput = styled.div`
 border: 1px solid ${props => props.theme.transparent};
 width:80px;
 height:100%;
 background:${props => props.theme.transparent};
-
+font-style: normal;
+font-weight: bold;
+font-size: 10px;
+line-height: 14px;
+text-align:center;
+color: #9E9E9E;
+cursor:pointer;
 `
 export const NoLabelInput = styled(MainInput)`
     margin: ${props => props.margin};

@@ -1,8 +1,8 @@
 import type from '../Type'
 import axios from 'axios'
+import { handleError } from '../../lib'
 
-const { SET_USERS, SET_JOBS } = type
-
+const { SET_USERS, SET_JOBS, SET_TRANSACTIONS } = type
 
 const setUsersInfo = payload => ({
   type: SET_USERS,
@@ -12,12 +12,16 @@ const setJobsInfo = payload => ({
   type: SET_JOBS,
   payload
 })
+const setTransactionInfo = payload => ({
+  type: SET_TRANSACTIONS,
+  payload
+})
 /**
  * Get all users for dashboard analytics card
  */
 export const handleGetAllUsers = () => dispatch => {
-  axios({
-    url: `https://primework-staging.herokuapp.com/api/v1/job/all`,
+  return axios({
+    url: `https://primework-staging.herokuapp.com/api/v1/user/freelancer/all`,
     method: 'GET'
   }).then(res => {
     let result = res.data
@@ -27,10 +31,10 @@ export const handleGetAllUsers = () => dispatch => {
     let black = 0
     let blackList = []
     for (let index = 0; index < usersArray.length; index++) {
-      if (!usersArray[index].disable) {
+      if (!usersArray[index].disabled) {
         activeUsers.push(active++)
       }
-      if (usersArray[index].disable) {
+      if (usersArray[index].disabled) {
         blackList.push(black++)
       }
     }
@@ -41,18 +45,18 @@ export const handleGetAllUsers = () => dispatch => {
     }
     // console.log(blackList.length)
     dispatch(setUsersInfo(usersData))
+    return result
   }).catch(err => {
-    // dispatch(quoteLoading(false))
     console.log(err)
+    handleError(err)
   })
 }
-
 
 /**
  * Get all Jobs for dashboard analytics card
  */
 export const handleGetJobs = () => dispatch => {
-  axios({
+  return axios({
     url: `https://primework-staging.herokuapp.com/api/v1/job/all`,
     method: 'GET'
   }).then(res => {
@@ -69,10 +73,42 @@ export const handleGetJobs = () => dispatch => {
       jobsPosted: jobsArray.length,
       jobsCompleted: completedJob.length
     }
-    // console.log(blackList.length)
+    // console.log(jobsData)
     dispatch(setJobsInfo(jobsData))
+    return result
   }).catch(err => {
     // dispatch(quoteLoading(false))
     console.log(err)
+    handleError(err)
+  })
+}
+export const handleGetAllTransactions = () => dispatch => {
+  return axios({
+    url: `https://primework-staging.herokuapp.com/api/v1/transaction/history`,
+    method: 'GET'
+  }).then(res => {
+    let result = res.data
+    let transactionArray = result.data
+    let sum = 0
+    let transactionsValue
+    transactionArray.map(transaction => {
+      if (transaction.amount) {
+        transactionsValue = sum + transaction.amount
+      }
+      // console.log(transactionsValue)
+    })
+
+    let transactionData = {
+      transactionsPerformed: transactionArray.length,
+      transactionsValue,
+      transactions: transactionArray
+    }
+    // console.log(transactionData)
+    dispatch(setTransactionInfo(transactionData))
+
+    return result
+  }).catch(err => {
+    console.log(err)
+    handleError(err)
   })
 }

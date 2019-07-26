@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { device } from '../../components/device'
 
 
 export const PickDateWrapper = styled.div`

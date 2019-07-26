@@ -4,7 +4,7 @@ import { JobsDropDown } from '../DropDown'
 import Button from '../Button'
 import { TabHeader } from '../../theme/style/typeface'
 import * as Tab from './styles'
-const TabHead = ({ selected, clickedJob, clickedCategory, sortByValue }) => {
+const TabHead = ({ selected, clickedJob, clickedCategory, sortByValue, task, cancel, showCancel, handleFilterBy }) => {
   /**
    * here i am using useState to toggle the dropdown
    */
@@ -18,7 +18,7 @@ const TabHead = ({ selected, clickedJob, clickedCategory, sortByValue }) => {
   }
   let dropdown
   if (dropDown.show) {
-    dropdown = <JobsDropDown />
+    dropdown = <JobsDropDown handleFilterBy={handleFilterBy} />
   }
   /**
  * Hook that alerts clicks outside of the passed ref
@@ -62,7 +62,9 @@ const TabHead = ({ selected, clickedJob, clickedCategory, sortByValue }) => {
 
       <div style={{ marginLeft: 'auto', marginRight: '87px' }} ref={wrapperRef}>
         {selected ? <SortInput
-          placeholder='Sort By'
+          showCancel={showCancel}
+          cancel={cancel}
+          placeholder={task || 'Sort By'}
           value={sortByValue}
           clicked={toggleDropDown}
         >

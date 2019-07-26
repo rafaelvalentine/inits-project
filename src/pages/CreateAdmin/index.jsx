@@ -4,6 +4,7 @@ import { CreateAdminForm } from '../../components/Card'
 import * as Page from '../../theme/style/styles'
 import swal from 'sweetalert'
 import validator from 'validator'
+import { Helmet } from 'react-helmet'
 
 /**
  * this is the component to create a new Admin 
@@ -68,6 +69,11 @@ export default class index extends Component {
   render () {
     return (
       <Page.Wrapper>
+        <Helmet>
+          <meta charSet='utf-8' />
+          <title>Create Admin || Primework Admin</title>
+          <link rel='shortcut icon' href={require('../../assets/images/primeworkfavicon.jpeg')} type='image/x-icon' />
+        </Helmet>
         <Navbar />
         <Page.SubWrapper>
           <CreateAdminForm 

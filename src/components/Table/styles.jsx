@@ -82,6 +82,7 @@ font-size: 10px;
   line-height: 14px;
   text-align: center;
   text-transform: capitalize;
+  font-weight:bold;
 span{
   color: ${props => props.theme.blue};
 }

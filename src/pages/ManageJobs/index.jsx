@@ -6,13 +6,16 @@ import * as Page from '../../theme/style/styles'
 import { CreateCategoryModal, EditCategoryModal, DeleteCategoryModal } from '../../components/Modal'
 import validator from 'validator'
 import swal from 'sweetalert'
+import GoldSpinner from '../../components/Tools/GoldSpinner'
+import { Helmet } from 'react-helmet'
 
 export default class index extends Component {
   state ={ 
     selected:true,
     loading:false,
-    data:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}],
-    data2:[],
+    spinner:true,
+    data:[],
+    categoryData:[],
     firstPage: 1,
     currentPage: 1,
     usersPerPage: 9,
@@ -23,7 +26,8 @@ export default class index extends Component {
     categoryId:'',
     showCreateCategory: false,
     showEditCategory: false,
-    showDeleteCategory:false
+    showDeleteCategory:false,
+    cancelFilter: false
   }
 
   scrollToTop =()=> window.scrollTo({
@@ -123,11 +127,8 @@ handleCreateCategory= () =>{
   this.setState({ loading:true, })
   this.props.handleCreateCategory(data)
   .then(res =>{
-    this.setState({loading: false, showCreateCategory: false, data2:[...this.state.data2, res.data]}) 
+    this.setState({loading: false, showCreateCategory: false, categoryData:[...this.state.categoryData, res.data]}) 
   })
-  // this.setState({ loading:true, },()=> setTimeout(() => {
-  //  this.setState({showCreateCategory: false}) 
-  // }, 3000))
 }
 handleEditCategory= () =>{
   let categoryId = this.state.categoryId
@@ -148,12 +149,9 @@ handleEditCategory= () =>{
     this.setState({loading:false, showEditCategory: false}) 
     this.props.handleGetAllCategories()
       .then(res=>{
-        this.setState({data2: this.props.Categories})
+        this.setState({categoryData: this.props.Categories})
       })
   })
-  // this.setState({ loading:true, },()=>setTimeout(() => {
-  //  this.setState({loading:true,showCreateCategory: false}) 
-  // }, 3000))
 }
 handleDeleteCategory= () =>{
   let categoryId = this.state.categoryId
@@ -164,21 +162,53 @@ handleDeleteCategory= () =>{
     this.setState({loading:false, showDeleteCategory: false}) 
     this.props.handleGetAllCategories()
       .then(res=>{
-        this.setState({data2: this.props.Categories})
+        this.setState({categoryData: this.props.Categories})
       })
   })
-  // this.setState({ loading:true, },()=>setTimeout(() => {
-  //  this.setState({showCreateCategory: false}) 
-  // }, 3000))
 }
+handleFilterBy = filter =>{
+let Jobs = [...this.props.Jobs]
+  if (filter === 'completed'){
+  let history = Jobs.filter(job=>(
+      job.completed === true
+    ))
+   return this.setState({data: [...history], cancelFilter: true })
+  }
+  if (filter === 'accepted'){
+    let history = Jobs.filter(job=>(
+        job.assigned === true
+      ))
+     return this.setState({data: [...history], cancelFilter: true })
+    }
+    if (filter === 'unaccepted'){
+      let history = Jobs.filter(job=>(
+          job.assigned === false
+        ))
+       return this.setState({data: [...history], cancelFilter: true,  })
+      }
+      return null
+}
+
+
+handleCancel = () => (
+  this.setState({data: [...this.props.Jobs], cancelFilter: false })
+)
+
 
 
 componentDidMount(){
   this.renderPageNumbers()
+  this.props.handleGetAllJobs()
+  .then(res=>{
+    this.setState({data: this.props.Jobs})
+  })
   this.props.handleGetAllCategories()
   .then(res=>{
-    this.setState({data2: this.props.Categories})
+    this.setState({categoryData: this.props.Categories})
   })
+  setTimeout(() => {
+    this.setState({spinner:false})
+  }, 15000);
 }
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage
@@ -187,18 +217,9 @@ componentDidMount(){
     const allUsers = this.state.data.length
     let newindexOfFirstUser = indexOfFirstUser + 1
     let pageUsers = currentUsers.length + indexOfFirstUser
-    return (
-      <Page.Wrapper>
-        <Navbar />
-        <Page.SubWrapperAlt
-          padding='56px 70px'>
-{/* this ths tab header component used toggle tabs */}
-          <TabHeader 
-          selected={this.state.selected} 
-          clickedJob={this.handleSelect}
-          clickedCategory={this.handleShowCreateCategory}
-          />
-         { this.state.selected ? <JobsTable 
+    let spinner = this.state.spinner ? <GoldSpinner/> : null
+    let table =(
+      <JobsTable 
          pageInfo={this.state}
          allUsers={allUsers}
          newindexOfFirstUser={newindexOfFirstUser}
@@ -209,8 +230,43 @@ componentDidMount(){
          handlePagnationUp={this.handlePagnationUp}
          handlePagnationDown={this.handlePagnationDown}
          data={currentUsers} 
-         setPagination={true}/> :
-         <CategoryTable data={this.state.data2}
+         setPagination={true} />
+    )
+    let placerholder = (
+      <Page.SubWrapperAlt
+      padding='50px 80px 500px'
+    >  No Jobs Found
+    {spinner}
+    </Page.SubWrapperAlt>
+    )
+    let display = placerholder
+    if(this.state.data && this.state.data.length > 0 ){
+      display = table
+    }
+
+
+    return (
+      <Page.Wrapper>
+        <Helmet>
+          <meta charSet='utf-8' />
+          <title>Job History || Primework Admin</title>
+          <link rel='shortcut icon' href={require('../../assets/images/primeworkfavicon.jpeg')} type='image/x-icon' />
+        </Helmet>
+        <Navbar />
+        <Page.SubWrapperAlt
+          padding='56px 70px'>
+{/* this ths tab header component used toggle tabs */}
+          <TabHeader 
+          task='Filter By'
+          handleFilterBy={this.handleFilterBy}
+          showCancel={this.state.cancelFilter}
+          selected={this.state.selected} 
+          clickedJob={this.handleSelect}
+          clickedCategory={this.handleShowCreateCategory}
+          cancel={this.handleCancel}
+          />
+         { this.state.selected ? display :
+         <CategoryTable data={this.state.categoryData}
          handleShowEditCategory={ this.handleShowEditCategory}
          handleShowDeleteCategory={this.handleShowDeleteCategory}
          />}

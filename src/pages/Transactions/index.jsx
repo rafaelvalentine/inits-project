@@ -2,19 +2,21 @@ import React, { Component } from 'react'
 import Navbar from '../../container/Navbar'
 import { TransactionTable } from '../../components/Table'
 import * as Page from '../../theme/style/styles'
+import { Helmet } from 'react-helmet'
 
 
 export default class index extends Component {
   state ={ 
     loading:false,
-    data:[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}],
+    data:[],
     data2:[{category:'web development'},{category:'mobile app development'},{category:'content creation'}],
     firstPage: 1,
     currentPage: 1,
     usersPerPage: 9,
     pageLimit: 5,
     upperPageBound: 5,
-    lowerPageBound: 0
+    lowerPageBound: 0,
+    cancelSortBy: false
   }
   scrollToTop =()=> window.scrollTo({
     top: 0,
@@ -85,8 +87,47 @@ selectedPage = page =>{
   this.setState({currentPage: page})
 }
 
+handleSortBy = sort =>{
+  let Transactions = [...this.props.Transactions]
+    if (sort === 'oldest'){
+    let history = Transactions.sort((a, b)=>(
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+      ))
+     return this.setState({data: [...history], cancelSortBy: true })
+    }
+    if (sort === 'newest'){
+      let history = Transactions.sort((a, b)=>(
+           new Date(b.date).getTime() - new Date(a.date).getTime()
+        ))
+       return this.setState({data: [...history], cancelSortBy: true })
+      }
+      if (sort === 'lowest'){
+        let history = Transactions.sort((a, b)=>(
+           a.amount - b.amount
+          ))
+         return this.setState({data: [...history], cancelSortBy: true })
+        }
+        if (sort === 'highest'){
+          let history = Transactions.sort((a, b)=>(
+               b.amount - a.amount 
+            ))
+           return this.setState({data: [...history], cancelSortBy: true })
+          }
+        return null
+  }
+  
+  
+  handleCancel = () => (
+    this.setState({data: [...this.props.Transactions], cancelSortBy: false })
+  )
+
 componentDidMount(){
+  this.props.handleGetAllTransactions()
+  .then(res =>{
+    this.setState({ data: [...this.props.Transactions]})
+  })
   this.renderPageNumbers()
+ 
 }
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage
@@ -97,6 +138,11 @@ componentDidMount(){
     let pageUsers = currentUsers.length + indexOfFirstUser
     return (
       <Page.Wrapper>
+        <Helmet>
+          <meta charSet='utf-8' />
+          <title>Transactions || Primework Admin</title>
+          <link rel='shortcut icon' href={require('../../assets/images/primeworkfavicon.jpeg')} type='image/x-icon' />
+        </Helmet>
         <Navbar />
         <Page.SubWrapper>
           <TransactionTable 
@@ -112,6 +158,9 @@ componentDidMount(){
           handlePagnationDown={this.handlePagnationDown}
           data={currentUsers} 
           setPagination={true}
+          handleSortBy={this.handleSortBy}
+          cancel={this.handleCancel}
+          showCancel={this.state.cancelSortBy}
           /> 
         </Page.SubWrapper>
       </Page.Wrapper>

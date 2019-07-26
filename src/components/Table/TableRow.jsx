@@ -1,90 +1,98 @@
 import React from 'react'
-import { TableBody, Text, DuoText, DuoTextAlt, ProfileAndText, Status, EditText, DeleteText } from './TableParts'
+import { TableBody, Text, DuoText, DuoTextAlt, ProfileAndText, Status, EditText, DeleteText, MileStoneList } from './TableParts'
+import moment from 'moment'
 
-export const TransactionRow = () => (
+export const TransactionRow = ({ date, jobInfo, paidBy, paidTo, amount }) => {
+  let paidByName
+  if (paidBy.freelancer.firstName && paidBy.freelancer.lastName) {
+    paidByName = `${paidBy.freelancer.firstName} ${paidBy.freelancer.lastName}`
+  }
+  if (paidBy.organization.organizationName) {
+    paidByName = paidBy.organization.organizationName
+  }
+  return (
+    <TableBody>
+      <td>
+        <Text
+          text={moment(date).format('DD/MM/YYYY')}
+        />
+      </td>
+      <td>
+        <DuoText
+          text={jobInfo.jobTitle}
+          subtext={jobInfo.jobCategory}
+        />
+      </td>
+      <td>
+        <ProfileAndText
+          text={paidByName}
+          subtext={paidBy.type}
+          img={paidBy.organization.organizationLogoUrl || require('../../assets/images/primework_purple.png')}
+        />
+      </td>
+      <td>
+        <DuoText
+          altText='true'
+          text={amount}
+          subtext='Milestone Payment'
+        />
+      </td>
+      <td>
+        <ProfileAndText
+          text={`${paidTo.freelancer.firstName} ${paidTo.freelancer.lastName}`}
+          subtext={paidTo.type}
+          img={paidTo.freelancer.profileImageUrl}
+        />
+      </td>
+    </TableBody>
+  )
+}
+
+export const JobRow = ({ jobInfo, creator, freelancer, milestones, assigned, completed, budget, ...props }) => (
   <TableBody>
     <td>
-      <Text
-        text='10/04/2019'
+      <ProfileAndText
+        text={creator.organization.organizationName || 'Damilola Sasha'}
+        subtext={creator.type || 'Frontend Developer'}
+        img={'' || require('../../assets/images/primework_purple.png')}
       />
     </td>
     <td>
       <DuoText
-        text='Job Title Goes Here'
-        subtext='Job Category Goes Here'
-      />
-    </td>
-    <td>
-      <ProfileAndText
-        text='Damilola Sasha'
-        subtext='Frontend Developer'
-        img={require('../../assets/images/profile-withface.png')}
+        text={jobInfo.jobTitle || 'Job Title Goes Here'}
+        subtext={jobInfo.jobCategory || 'Job Category Goes Here'}
       />
     </td>
     <td>
       <DuoText
-        altText='true'
-        text='200000'
-        subtext='Milestone Payment'
+        text={moment(new Date(jobInfo.deadLine)).format('DD/MM/YYYY') || '10-06-2019'}
+        subtext={moment(new Date(jobInfo.deadLine), 'MMDDYYYY').fromNow() || 'In 6 Days'}
       />
     </td>
     <td>
-      <ProfileAndText
-        text='Damilola Sasha'
-        subtext='Frontend Developer'
-        img={require('../../assets/images/profile-withface.png')}
-      />
-    </td>
-  </TableBody>
-)
-
-export const JobRow = () => (
-  <TableBody>
-    <td>
-      <ProfileAndText
-        text='Damilola Sasha'
-        subtext='Frontend Developer'
-        img={require('../../assets/images/profile-withface.png')}
-      />
-      {/* <Text
-        text='10/04/2019'
+      <MileStoneList milestones={milestones} />
+      {/* <DuoTextAlt
+        text={milestones[0].milestone || 'Lorem ipsum dolor sit amet consectetur adipisicing elit. '}
       /> */}
     </td>
     <td>
-      <DuoText
-        text='Job Title Goes Here'
-        subtext='Job Category Goes Here'
-      />
-    </td>
-    <td>
-      <DuoText
-        text='10-06-2019'
-        subtext='In 6 Days'
-      />
-    </td>
-    <td>
-      <DuoTextAlt
-        text='Lorem ipsum dolor sit amet consectetur adipisicing elit. '
-      />
-    </td>
-    <td>
       <Status
-        accepted
-        unaccepted={false}
+        compeleted={completed}
+        accepted={assigned}
       />
     </td>
     <td>
       <ProfileAndText
-        text='Damilola Sasha'
-        subtext='Frontend Developer'
-        img={require('../../assets/images/profile-withface.png')}
+        text={`${freelancer.freelancer.firstName || 'jon'} ${freelancer.freelancer.lastName || 'snow'}` || 'Damilola Sasha'}
+        subtext={freelancer.type || 'Frontend Developer'}
+        img={freelancer.freelancer.profileImageUrl}
       />
     </td>
     <td>
       <DuoText
         altText='true'
         altSubText
-        text='200000'
+        text={budget || '0'}
         subtext='in Progress'
       />
     </td>
