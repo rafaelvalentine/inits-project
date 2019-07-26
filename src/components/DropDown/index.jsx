@@ -58,9 +58,9 @@ export const JobsDropDown = ({ handleFilterBy }) => {
   )
 }
 export const MilestonesDropDown = ({ milestones }) => {
-  let milestone = milestones.map(milestone => (
+  let milestone = milestones.map((milestone, index) => (
     <DropDown.Milestones key={milestone._id}>
-      <span>{milestone.milestone}</span>
+      <span>{`${index + 1}. ${milestone.milestone}`}</span>
     </DropDown.Milestones>
   ))
   return (
