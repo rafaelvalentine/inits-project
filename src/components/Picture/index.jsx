@@ -10,7 +10,7 @@ const LogoIMG = styled.img.attrs(props => ({
 width: ${props => props.width};
 height: ${props => props.height};
 margin: ${props => props.margin};
-cursor: pointer;
+cursor: auto;
 `
 const AdminIMG = styled.img.attrs(props => ({
   src: props.src,
@@ -21,7 +21,7 @@ const AdminIMG = styled.img.attrs(props => ({
 width: ${props => props.width};
 height: ${props => props.height};
 margin: ${props => props.margin};
-cursor: pointer;
+cursor: auto;
 align-self: flex-start;
 border-radius: ${props => props.borderRadius};
 `
@@ -34,7 +34,7 @@ const UserIMG = styled.img.attrs(props => ({
 width: ${props => props.width};
 height: ${props => props.height};
 margin: ${props => props.margin};
-cursor: pointer;
+cursor: auto;
 align-self: flex-start;
 border-radius: 4px;
 
@@ -46,7 +46,7 @@ const DatePickerIMG = styled.img.attrs(props => ({
   margin: props.margin
 }))`
   width: ${props => props.width};
-    height: ${props => props.height}
+  height: ${props => props.height}
 `
 
 const StarIMG = styled.img.attrs(props => ({

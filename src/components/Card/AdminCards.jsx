@@ -142,7 +142,7 @@ export const EditAdmin = ({ history, inputs, changed, toggle, loading, submit })
   return (
     <CardBox
       width='100%'
-      height='100%'
+      height='900px'
       justify='flex-start'
       align='flex-start'
       padding='24px 40px'
@@ -150,7 +150,7 @@ export const EditAdmin = ({ history, inputs, changed, toggle, loading, submit })
     >
       <Card.Container
         width='90%'
-        height='50%'
+        height='100'
         backgroundColor='transparent'
         boxShadow='none'
         borderRadius='0'
@@ -176,12 +176,22 @@ export const EditAdmin = ({ history, inputs, changed, toggle, loading, submit })
           changed={changed}
           toggle={toggle}
           width='300px'
-        />
+        >
+          <Button
+            alt='true'
+            content='Save Changes'
+            width='175px'
+            margin='40px 0'
+            loading={loading}
+            clicked={submit}
+          />
+        </MainTriosAlt>
 
       </Card.Container>
+
       <Card.Container
         width='90%'
-        height='50%'
+        height='100'
         backgroundColor='transparent'
         boxShadow='none'
         borderRadius='0'
@@ -208,7 +218,6 @@ export const EditAdmin = ({ history, inputs, changed, toggle, loading, submit })
           changed={changed}
           width='300px'
         />
-
       </Card.Container>
       <Button
         alt='true'

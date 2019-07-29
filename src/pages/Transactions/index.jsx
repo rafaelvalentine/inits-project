@@ -144,7 +144,8 @@ componentDidMount(){
           <link rel='shortcut icon' href={require('../../assets/images/primeworkfavicon.jpeg')} type='image/x-icon' />
         </Helmet>
         <Navbar />
-        <Page.SubWrapper>
+        <Page.SubWrapper
+        padding='0'>
           <TransactionTable 
           title='Transactions'
           pageInfo={this.state}

@@ -118,7 +118,8 @@ export const TransactionTable = ({
     )
   }
   return (
-    <PageTable.Wrapper>
+    <PageTable.Wrapper
+      padding='64px 80px'>
       <PageTable.Container>
         {header}
         <Table id='myTable'>

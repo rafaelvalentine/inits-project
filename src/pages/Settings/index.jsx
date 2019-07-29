@@ -17,11 +17,11 @@ export default class index extends Component {
   }
 
   handleChange = e =>{
-    this.setState({[e.target.name]: e.target.value}, ()=>console.log(this.state))
+    this.setState({[e.target.name]: e.target.value})
   }
   handleToggle = e =>{
     let toggle = this.state.changepassword
-    this.setState({changepassword: !toggle, password: '', confirmPassword:'' }, ()=>console.log(this.state.changepassword))
+    this.setState({changepassword: !toggle, password: '', confirmPassword:'' })
   }
 
   handleSubmit = e => {
@@ -104,7 +104,7 @@ export default class index extends Component {
         </Helmet>
         <Navbar  />
         <Page.SubWrapper
-          padding='100px 80px 40px'
+          padding='64px 80px 40px'
         >
          <Page.SubWrapperAlt
          padding='0'

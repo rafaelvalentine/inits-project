@@ -7,6 +7,7 @@ const Container = styled.div`
   position: relative;
   width: 54px;
   height: 54px;
+  margin: 0 auto;
 }
 .lds-ring div {
   box-sizing: border-box;

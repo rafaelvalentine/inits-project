@@ -145,7 +145,8 @@ export const UnderLinedBox = styled.div`
     border-bottom: 1px solid #E0E7FF;
     display: flex;
     width:100%;
-    padding-bottom: 64px;
+    padding-bottom: 30px;
+    flex-direction:column;
 `
 /**
      * Main forms
@@ -311,9 +312,13 @@ export const TableList = styled(TableHead)`
 `
 
 export const DatePickerContainer = styled.div`
-padding: 0 8px;
+padding: 0 0 0 8px;
 background: ${props => props.theme.white};
 border-radius: 4px;
+display:flex;
+align-items:center;
+justify-content:flex-start;
+flex-wrap:nowrap;
 `
 export const SearchInputContainer = styled(DatePickerContainer)`
 padding: 0 30px;

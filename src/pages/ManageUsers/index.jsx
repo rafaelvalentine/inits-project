@@ -12,12 +12,12 @@ import validator from 'validator'
 import { Helmet } from 'react-helmet'
 
 export default class index extends Component {
-  state ={
+  state = {
     loading:false,
     filterLoading: false,
     firstPage: 1,
     currentPage: 1,
-    usersPerPage: 9,
+    usersPerPage: 5,
     pageLimit: 5,
     upperPageBound: 5,
     lowerPageBound: 0,
@@ -209,6 +209,7 @@ componentDidMount(){
     let newindexOfFirstUser = indexOfFirstUser + 1
     let pageUsers = currentUsers.length + indexOfFirstUser
     let spinner = this.state.spinner ? <GoldSpinner/> : null
+    let messages = this.state.spinner ? 'Searching...' : 'No Users Found'
     return (
       <Page.Wrapper>
         <Helmet>
@@ -219,7 +220,7 @@ componentDidMount(){
         {/* This is the Navbar Component */}
         <Navbar />
         <Page.SubWrapperAlt
-          padding='50px 40px 40px'
+          padding='64px 40px 40px'
         >
           <Page.SubWrapper
           padding='0'
@@ -250,9 +251,8 @@ componentDidMount(){
         </Page.SubWrapper>
         <Page.SubWrapper
           className='usersCard'
-         padding='80px 0'
-        justifyContent='flex-start'
-        style={{padding:'0 auto'}}
+         padding='72px 0'
+        style={{margin:'0 auto'}}
         >
           {/* This is the map Component  to display all available users */}
           {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>{
@@ -266,13 +266,12 @@ componentDidMount(){
           name={name }
           jobsCompleted={ user.jobsCompleted.length || '0'}
           isDisabled={user.disabled}
-            
-            
           />
           }) :  <Page.SubWrapperAlt
-          padding='50px 80px 500px'
-        >  No Users Found
-        {spinner}
+          padding='50px 80px'
+          style={{margin:'0 auto', textAlign:'center'}}> 
+            <p>{messages}</p>
+            {spinner}
         </Page.SubWrapperAlt>}
         </Page.SubWrapper>
         {/* This is the Pagination  Component */}

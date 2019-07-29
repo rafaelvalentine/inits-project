@@ -5,9 +5,6 @@ export const Wrapper = styled.div`
 background: ${props => props.theme.gray}
 min-height: 100vh;
 width: 100%;
-@media ${device.desktop} {
-
-}
 `
 
 export const SubWrapper = styled.div`
@@ -16,20 +13,20 @@ height:100%;
 display: flex;
 justify-content: ${props => props.justifyContent ? props.justifyContent : 'center' };
 align-items:center;
-padding:${props => props.padding ? props.padding : '80px 0 '};
+padding:${props => props.padding ? props.padding : '64px 0 '};
 flex-wrap ${props => props.flexWrap ? props.flexWrap : 'wrap'};
 margin:0 auto;
 @media ${device.laptop} {
-  justify-content:space-between;
+  justify-content: ${props => props.justifyContent ? props.justifyContent : 'center' };
   &.usersCard{
-    justify-content:flex-start;
+    justify-content:space-between;
   }
 }
 `
 export const SubWrapperAlt = styled(SubWrapper)`
 flex-direction:column;
 align-items: center;
-padding:${props => props.padding ? props.padding : '80px 0 '};
+padding:${props => props.padding ? props.padding : '64px 0 '};
 
 `
 

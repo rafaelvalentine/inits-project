@@ -211,6 +211,7 @@ export const MainTriosAlt = ({
   changepassword,
   changed,
   toggle,
+  children,
   ...props }) => {
   return (
     <Form.UnderLinedBox>
@@ -241,6 +242,7 @@ export const MainTriosAlt = ({
           {...props}
         />
       </Form.TwoComponentBox>
+      {children}
     </Form.UnderLinedBox>
   )
 }

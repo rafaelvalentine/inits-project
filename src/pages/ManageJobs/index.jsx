@@ -218,6 +218,7 @@ componentDidMount(){
     let newindexOfFirstUser = indexOfFirstUser + 1
     let pageUsers = currentUsers.length + indexOfFirstUser
     let spinner = this.state.spinner ? <GoldSpinner/> : null
+    let messages = this.state.spinner ? 'Searching...' : 'No Jobs Found'
     let table =(
       <JobsTable 
          pageInfo={this.state}
@@ -235,7 +236,7 @@ componentDidMount(){
     let placerholder = (
       <Page.SubWrapperAlt
       padding='50px 80px 500px'
-    >  No Jobs Found
+    > <p>{messages}</p>
     {spinner}
     </Page.SubWrapperAlt>
     )

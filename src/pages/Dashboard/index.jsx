@@ -187,6 +187,7 @@ export default class index extends Component {
         <Dash.SubWrapper
         padding='0 60px'
         flexWrap='nowrap'
+        justifyContent='space-between'
         >
            {/* List Component show analytical infomation for db*/}
           <Analytics analytics={this.state.analyticsdata}/>
