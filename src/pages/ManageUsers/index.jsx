@@ -186,7 +186,7 @@ handleCancelSearch = () => {
   this.setState({data: this.props.Users, query:''}, ()=> this.props.cancelSearch(false))
 }
 
-componentDidMount(){
+componentWillMount(){
   this.renderPageNumbers()
   this.props.handleGetAllUsersCardInfo()
   .then( res=>{

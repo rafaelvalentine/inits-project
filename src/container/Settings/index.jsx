@@ -1,6 +1,6 @@
 import Setting from '../../pages/Settings'
 import { connect } from 'react-redux'
-import { handleGetAdminDetailOnRefresh } from '../../Store/Actions'
+import { handleGetAdminDetailOnRefresh, handleUpdateAdmin } from '../../Store/Actions'
 
 /**
  * here we handle passing redux to our component and export
@@ -12,7 +12,10 @@ import { handleGetAdminDetailOnRefresh } from '../../Store/Actions'
 
 const mapDispatchToProps = dispatch => ({
   handleGetAdminDetailOnRefresh () {
-   return dispatch(handleGetAdminDetailOnRefresh())
+    return dispatch(handleGetAdminDetailOnRefresh())
+  },
+  handleUpdateAdmin (info) {
+    return dispatch(handleUpdateAdmin(info))
   }
 })
 

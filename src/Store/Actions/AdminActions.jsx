@@ -24,14 +24,16 @@ export const handleCreateAdmin = data => dispatch => {
     console.log(err)
   })
 }
-export const handleUpdateAdmin = () => dispatch => {
+export const handleUpdateAdmin = data => dispatch => {
   let userId = localStorage.getItem('userId')
-  axios({
-    url: `https://primework-staging.herokuapp.com/api/v1/user/get/${userId}`,
-    method: 'GET'
+return axios({
+    url: `https://primework-staging.herokuapp.com/api/v1/admin/update/${userId}`,
+    method: 'POST',
+    data
   }).then(res => {
     let result = res.data
     // dispatch(freelancerPageRefresh(result))
+    return result
   }).catch(err => {
     // dispatch(quoteLoading(false))
     console.log(err)
@@ -46,6 +48,24 @@ export const handleGetAdminDetailOnRefresh = () => dispatch => {
   }
   return axios({
     url: `https://primework-staging.herokuapp.com/api/v1/admin/me`,
+    method: 'GET',
+    headers
+  }).then(res => {
+    let result = res.data
+    // call dispatch here
+    dispatch(handleLogin(result))
+    return result
+  }).catch(err => console.log(err))
+}
+export const handleEditAdminDetails = () => dispatch => {
+  let token = localStorage.getItem('token')
+  let headers = {
+    'Content-Type': 'application/json',
+    'x-access-token': token
+    // 'Authorization': `bearer ${token}`
+  }
+  return axios({
+    url: `https://primework-staging.herokuapp.com/api/v1/admin/update`,
     method: 'GET',
     headers
   }).then(res => {

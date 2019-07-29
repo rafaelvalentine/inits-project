@@ -162,7 +162,7 @@ export const EditAdmin = ({ history, inputs, changed, toggle, loading, submit })
           PERSONAL INFORMATION
         </Title>
         <MainTriosAlt
-          nameOne='fullName'
+          nameOne='fullname'
           nameTwo='email'
           valueOne={inputs.fullname}
           valueTwo={inputs.email}
@@ -186,7 +186,6 @@ export const EditAdmin = ({ history, inputs, changed, toggle, loading, submit })
             clicked={submit}
           />
         </MainTriosAlt>
-
       </Card.Container>
 
       <Card.Container
@@ -205,10 +204,10 @@ export const EditAdmin = ({ history, inputs, changed, toggle, loading, submit })
         <MainTrios
           nameOne='state'
           nameTwo='lga'
-          nameThree='homeAddress'
+          nameThree='town'
           valueOne={inputs.state}
           valueTwo={inputs.lga}
-          valueThree={inputs.homeAddress}
+          valueThree={inputs.town}
           placeholderOne='Lagos'
           placeholderTwo='Alimosho'
           placeholderThree='Alimosho'

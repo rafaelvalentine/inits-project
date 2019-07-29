@@ -95,17 +95,13 @@ export const handleGetAllTransactions = () => dispatch => {
       if (transaction.amount) {
         transactionsValue = sum + transaction.amount
       }
-      // console.log(transactionsValue)
     })
-
     let transactionData = {
       transactionsPerformed: transactionArray.length,
       transactionsValue,
       transactions: transactionArray
     }
-    // console.log(transactionData)
     dispatch(setTransactionInfo(transactionData))
-
     return result
   }).catch(err => {
     console.log(err)

@@ -4,7 +4,8 @@ import validator from 'validator'
 import Navbar from '../../container/Navbar'
 import { EditAdmin } from '../../components/Card'
 import * as Page from '../../theme/style/styles'
-import { SubMainNav } from '../../theme/style/typeface'
+import { SubMainNav, CardHeader } from '../../theme/style/typeface'
+import { Logo } from '../../components/Picture'
 import { Helmet } from 'react-helmet'
 
 export default class index extends Component {
@@ -63,35 +64,51 @@ export default class index extends Component {
     if(change){
      data={
         fullname: admin.fullname,
-        email:admin.email,
+        town:admin.town,
+        email:admin.email.toLowerCase(),
         state:admin.state,
         lga: admin.lga,
         address: admin.address,
         password:admin.password
       }
     }
-    if(!change) {data={
+    if(!change) {
+      data={
       fullname: admin.fullname,
       email:admin.email,
       state:admin.state,
       lga: admin.lga,
       address: admin.address,
+      town:admin.town,
     }}
     console.log(data)
     e.target.blur()
-    this.setState({loading: true}, ()=> setTimeout(() => {
-      this.props.history.push('/dashboard')
-    }, 3000))
+    this.setState({loading: true})
+    this.props.handleUpdateAdmin(data)
+    .then(res=>{
+      this.setState({loading: false})
+      this.props.handleGetAdminDetailOnRefresh()
+      .then(res =>{
+        this.setState({ ...this.state, fullname: res.data.fullname,
+          email:res.data.email,
+          state:res.data.state,
+          lga: res.data.lga,
+          town: res.data.town })
+    })
+  })
+    // this.setState({loading: true}, ()=> setTimeout(() => {
+    //   this.props.history.push('/dashboard')
+    // }, 3000))
    
   }
   componentDidMount(){
     this.props.handleGetAdminDetailOnRefresh()
     .then(res =>{
-      console.log(res)
       this.setState({ ...this.state, fullname: res.data.fullname,
         email:res.data.email,
         state:res.data.state,
-        lga: res.data.lga })
+        lga: res.data.lga, 
+        town: res.data.town })
     })
   }
   render () {
@@ -109,9 +126,22 @@ export default class index extends Component {
          <Page.SubWrapperAlt
          padding='0'
          >
-         <SubMainNav>
+         {/* <SubMainNav>
             settings
-          </SubMainNav>
+          </SubMainNav> */}
+           <CardHeader
+              altBackground='true'
+              fontSize='18px'
+              onClick={() => this.props.history.push('/dashboard')}>
+                <div>
+                    <Logo
+                    src={require('../../assets/images/arrow-left.svg')}
+                    height='24px'
+                    width='24px'
+                    margin='0 8px'/>   
+                  Settings
+                  </div>
+           </CardHeader>
           <EditAdmin 
           inputs={this.state}
           changed={this.handleChange}

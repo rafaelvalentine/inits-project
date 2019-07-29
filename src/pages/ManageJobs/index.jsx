@@ -196,7 +196,7 @@ handleCancel = () => (
 
 
 
-componentDidMount(){
+componentWillMount(){
   this.renderPageNumbers()
   this.props.handleGetAllJobs()
   .then(res=>{
