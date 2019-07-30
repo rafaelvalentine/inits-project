@@ -195,9 +195,9 @@ handleCancel = () => (
 )
 
 
-
-componentWillMount(){
+componentDidMount(){
   this.renderPageNumbers()
+  this.setState({data: this.props.Jobs, categoryData: this.props.Categories})
   this.props.handleGetAllJobs()
   .then(res=>{
     this.setState({data: this.props.Jobs})
@@ -206,9 +206,21 @@ componentWillMount(){
   .then(res=>{
     this.setState({categoryData: this.props.Categories})
   })
-  setTimeout(() => {
-    this.setState({spinner:false})
-  }, 15000);
+
+ setTimeout(() => {
+   this.setState({spinner:false, data: this.props.Jobs, categoryData: this.props.Categories })
+ }, 15000);
+}
+componentWillReceiveProps(nextProps) {
+  // Typical usage (don't forget to compare props):
+  if(nextProps.Jobs){
+    this.setState({data: this.props.Jobs})
+  }
+  if (nextProps.Jobs !== this.props.Jobs) {
+    if (nextProps.Jobs && nextProps.Jobs > 0) {
+      this.setState({data: this.props.Jobs})
+    }
+  }
 }
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage

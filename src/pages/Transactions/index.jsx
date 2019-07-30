@@ -101,18 +101,18 @@ handleSortBy = sort =>{
         ))
        return this.setState({data: [...history], cancelSortBy: true })
       }
-      if (sort === 'lowest'){
+    if (sort === 'lowest'){
         let history = Transactions.sort((a, b)=>(
            a.amount - b.amount
           ))
          return this.setState({data: [...history], cancelSortBy: true })
-        }
-        if (sort === 'highest'){
+    }
+      if (sort === 'highest'){
           let history = Transactions.sort((a, b)=>(
                b.amount - a.amount 
             ))
            return this.setState({data: [...history], cancelSortBy: true })
-          }
+      }
         return null
   }
   
@@ -122,6 +122,7 @@ handleSortBy = sort =>{
   )
 
 componentDidMount(){
+  this.setState({ data: [...this.props.Transactions]})
   this.props.handleGetAllTransactions()
   .then(res =>{
     this.setState({ data: [...this.props.Transactions]})

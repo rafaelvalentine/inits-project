@@ -8,6 +8,7 @@ export const CardsContainer = styled.div`
     align-items:${props => props.align};
     align-content:${props => props.content};
     margin: ${props => props.margin};
+    width:${props => props.width ? props.width : '100%'};
 `
 export const Input = styled.input`
     width: ${props => props.width};
@@ -116,9 +117,14 @@ export const TwoComponentBox = styled.div`
     padding:0 5px;
     flex-wrap: ${props => props.flexWrap ? props.flexWrap : 'nowrap'}
 `
-export const AltBox = styled(TwoComponentBox)`
+export const AltBox = styled.div`
     justify-content:flex-start;
+    display: flex;
+    align-items: center;
+    width: ${props => props.width ? props.width : '100%'};
     margin: 0;
+    padding:0 5px;
+    flex-wrap: ${props => props.flexWrap ? props.flexWrap : 'nowrap'}
 `
 export const AltBoxStacked = styled.div`
     display: flex;

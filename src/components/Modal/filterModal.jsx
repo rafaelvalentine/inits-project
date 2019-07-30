@@ -55,7 +55,7 @@ const FilterModal = ({ categories, loading, handleFilterSearchInput, clicked, ..
           >
             <option hidden>Category</option>
             {categories && categories.length > 1 ? categories.map(category => (
-              <option value={category.category}>{category.category}</option>
+              <option key={category._id} value={category.category}>{category.category}</option>
             )) : null}
           </SelectAlt>
           <SelectAlt

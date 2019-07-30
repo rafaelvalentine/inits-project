@@ -3,10 +3,13 @@ import { device } from '../../components/device'
 
 
 export const PickDateWrapper = styled.div`
-width: 60%;
+width: 100%;
 padding: 50px 80px;
+display:flex;
+justify-content:flex-start;
+align-items:center;
 .label{
-  font-style: normal;
+font-style: normal;
 font-weight: bold;
 font-size: 12px;
 line-height: 16px;
@@ -38,7 +41,7 @@ color: ${props => props.theme.header};
 }
 
 .datePicker:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  font-style: normal;
+font-style: normal;
 font-weight: bold;
 font-size: 12px;
 line-height: 16px;

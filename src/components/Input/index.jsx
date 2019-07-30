@@ -301,8 +301,12 @@ export const DuoPickDate = ({
     <Form.CardsContainer
       direction={direction}
       flexWrap={wrap}
+      width='100'
+      {...props}
     >
-      <Form.AltBox>
+      <Form.AltBox
+        width='100'
+      >
         <div className='label'> {labelFrom}</div>
         <Form.DatePickerContainer>
           <DatePickerImage />
@@ -310,6 +314,9 @@ export const DuoPickDate = ({
             placeholderText='DD/MM/YYYY'
             className='datePicker'
             isClearable
+            peekNextMonth
+            showMonthDropdown
+            showYearDropdown
             dateFormat='dd/MM/yyyy'
             maxDate={new Date()}
             selected={valueFrom}
@@ -317,9 +324,10 @@ export const DuoPickDate = ({
             {...props}
           />
         </Form.DatePickerContainer>
-
       </Form.AltBox>
-      <Form.AltBox>
+      <Form.AltBox
+        width='100'
+      >
         <div className='label'>{labelTo}</div>
         <Form.DatePickerContainer>
           <DatePickerImage />
@@ -327,6 +335,9 @@ export const DuoPickDate = ({
             placeholderText='DD/MM/YYYY'
             className='datePicker'
             isClearable
+            peekNextMonth
+            showMonthDropdown
+            showYearDropdown
             dateFormat='dd/MM/yyyy'
             maxDate={new Date()}
             selected={valueTo}

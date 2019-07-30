@@ -8,7 +8,7 @@ import './index.css'
 import App from './container/App'
 import colors from './theme/main'
 import * as serviceWorker from './serviceWorker'
-import { handleGetAdminDetailOnRefresh } from './Store/Actions'
+import { handleGetAdminDetailOnRefresh, handleGetAllUsersCardInfo, handleGetAllJobs, handleGetAllTransactions } from './Store/Actions'
 
 axios.defaults.baseURL = 'https://primework-staging.herokuapp.com/api/v1'
 
@@ -17,9 +17,9 @@ axios.defaults.baseURL = 'https://primework-staging.herokuapp.com/api/v1'
 const token = localStorage.getItem('token')
 if (token) {
     Store.dispatch(handleGetAdminDetailOnRefresh())
-        //   Store.dispatch(getSumbittedQuotes(userID, jobID))
-        //   Store.dispatch(getQuotedJob(userID, jobID))
-        //   Store.dispatch(getFreelancerReviews(userID))
+    Store.dispatch(handleGetAllTransactions())
+    Store.dispatch(handleGetAllUsersCardInfo())
+    Store.dispatch(handleGetAllJobs())
 }
 ReactDOM.render( < Provider store = { Store } >
     <

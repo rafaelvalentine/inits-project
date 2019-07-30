@@ -67,7 +67,10 @@ const Login = ({ handleLogin, loading }) => {
           </Type.SubHeader>
 
           <Form.CardsContainer
-            margin='25px 0 0' >
+            margin='25px 0 0' 
+            justify='center'
+            align='center'
+            >
             <Input.Main
               label='EMAIL ADDRESS'
               placeholder='rock_zion@outlook.com'

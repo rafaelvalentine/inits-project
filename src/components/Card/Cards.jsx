@@ -14,7 +14,7 @@ const CardBox = ({ children, ...props }) => {
   )
 }
 
-export const AnalyticsCard = ({ figure, figure2, info, info2, info3, img, color }) => {
+export const AnalyticsCard = ({ figure, figure2, info, info2, info3, img, color, ...props }) => {
   let bottom
   let newFigure
   let newFigure2
@@ -55,8 +55,9 @@ export const AnalyticsCard = ({ figure, figure2, info, info2, info3, img, color 
   }
   return (
     <Card.Container
+      style={{ cursor: 'pointer' }}
       padding='24px 24px 0' margin='20px'
-    >
+      {...props}>
       <Card.Wrapper>
         <Header margin='0'>
           { newFigure || '0'}

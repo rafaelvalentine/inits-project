@@ -8,7 +8,20 @@ import Pagination from '../Tools/Pagination'
 import { SortInput } from '../Input'
 import { TransactionDropDown } from '../DropDown'
 
-export const DashboardTable = ({ title, setPagination, data }) => {
+export const DashboardTable = ({ 
+  title,
+  data,
+  pageInfo,
+  setPagination,
+  allUsers,
+  pageUsers,
+  newindexOfFirstUser,
+  handlePagnationUp,
+  handlePagnationDown,
+  handleDataRange,
+  pageNumbers,
+  selectedPage
+ }) => {
   let header
   if (title) {
     header = (
@@ -17,7 +30,7 @@ export const DashboardTable = ({ title, setPagination, data }) => {
       </Header>
     )
   }
-  const newData = data.slice(0, 10)
+  // const newData = data.slice(0, 10)
   return (
     <PageTable.Wrapper>
       <PageTable.Container>
@@ -31,11 +44,24 @@ export const DashboardTable = ({ title, setPagination, data }) => {
             <th>paid to</th>
           </TableHead>
           <tbody>
-            <TransactionList data={newData} />
+            <TransactionList data={data} />
           </tbody>
 
         </Table>
-        { setPagination ? <Pagination /> : null }
+        { setPagination ? <Pagination
+          data={pageInfo}
+          allUsers={allUsers}
+          pageUsers={pageUsers}
+          newindexOfFirstUser={newindexOfFirstUser}
+          handlePagnationUp={handlePagnationUp}
+          handlePagnationDown={handlePagnationDown}
+          handleDataRange={handleDataRange}
+          pageNumbers={pageNumbers}
+          selectedPage={selectedPage}
+          pageLimit={pageInfo.pageLimit}
+          upperPageBound={pageInfo.upperPageBound}
+          lowerPageBound={pageInfo.lowerPageBound}
+        /> : null }
       </PageTable.Container>
     </PageTable.Wrapper>
   )

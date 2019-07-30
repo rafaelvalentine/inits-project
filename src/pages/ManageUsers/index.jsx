@@ -129,15 +129,22 @@ handleOpenConfirmDisable = e =>{
   this.setState({loading: true})
   this.props.handleDisableUser(this.state.clickedUser.id)
   .then(res =>{
-    this.setState({ showConfirmDisableModal: !confirmDisable, showDisableModal:false })
+    this.RefreshUsersCards()
+    .then(res=>(
+      this.setState({ showConfirmDisableModal: !confirmDisable, showDisableModal:false })
+    ))
   })
-}
+  }
 handleOpenConfirmEnable = e =>{
   this.setState({loading: true})
   let confirmEnable = this.state.showConfirmEnableModal
   this.props.handleEnableUser(this.state.clickedUser.id)
   .then(res =>{
-    this.setState({ showConfirmEnableModal: !confirmEnable, showEnableModal:false })
+    this.RefreshUsersCards()
+    .then(res=>(
+      this.setState({ showConfirmEnableModal: !confirmEnable, showEnableModal:false })
+    ))
+    
   })
 }
 handleConfirmDisable = e =>{
@@ -185,22 +192,30 @@ this.props.postSearchQuery(this.state.filterQuery)
 handleCancelSearch = () => {
   this.setState({data: this.props.Users, query:''}, ()=> this.props.cancelSearch(false))
 }
-
-componentWillMount(){
+RefreshUsersCards = () => this.props.handleGetAllUsersCardInfo()
+componentDidMount(){
   this.renderPageNumbers()
   this.props.handleGetAllUsersCardInfo()
-  .then( res=>{
-    this.setState({data: this.props.Users})
-  })
-  this.props.handleGetAllCategories()
-  .then(res=>{
-    this.setState({categories: this.props.Categories})
-  })
+    .then(res=>(
+      this.setState({data: this.props.Users})
+    ))
+    this.props.handleGetAllCategories()
+      .then(res=>{
+        this.setState({categories: this.props.Categories})
+      })
+this.setState({data: this.props.Users})
  setTimeout(() => {
-   this.setState({spinner:false})
+   this.setState({spinner:false, data: this.props.Users})
  }, 15000);
 }
-
+componentWillReceiveProps(nextProps) {
+  // Typical usage (don't forget to compare props):
+  if (nextProps.Users !== this.props.Users) {
+    if (nextProps.Users && nextProps.Users > 0) {
+      this.setState({data: this.props.Users})
+    }
+  }
+}
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage
     const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage
@@ -267,12 +282,11 @@ componentWillMount(){
           jobsCompleted={ user.jobsCompleted.length || '0'}
           isDisabled={user.disabled}
           />
-          }) :  <Page.SubWrapperAlt
-          padding='50px 80px'
-          style={{margin:'0 auto', textAlign:'center'}}> 
-            <p>{messages}</p>
-            {spinner}
-        </Page.SubWrapperAlt>}
+          }) : 
+          <Page.SubWrapperAlt
+          padding='50px 80px 500px'> <p>{messages}</p> {spinner}
+        </Page.SubWrapperAlt>
+      }
         </Page.SubWrapper>
         {/* This is the Pagination  Component */}
         {currentUsers && currentUsers.length > 0 ? <Pagination
