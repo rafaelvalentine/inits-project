@@ -12,6 +12,7 @@ import Jobs from './ManageJobs';
 import { Helmet } from 'react-helmet'
 import ScrollToTop from '../components/Tools/ScrollToTop'
 import swal from 'sweetalert';
+import Chat from '../pages/chat';
 
 
 function PrivateRoute ({ component: Component, ...rest }) {
@@ -99,6 +100,7 @@ export const App = ({ history }) => (
           <PrivateRoute path='/manage-users' exact component={Users} />
           <PrivateRoute path='/manage-users/createuser' exact component={CreateUser} />
           <PrivateRoute path='/manage-jobs' exact component={Jobs} />
+          <Route path='/chat' exact component={Chat} />
           <PrivateRoute path='/transactions' exact component={Transactions} />
           
           {/* <SignedInRoute path='/sign-up' exact component={SignUp} />
