@@ -26,6 +26,8 @@ export default class index extends Component {
     showConfirmDisableModal: false,
     showEnableModal:false,
     showConfirmEnableModal: false,
+    disableUserMessage:'',
+
     clickedUser:{
       id:'',
       name:''
@@ -225,6 +227,7 @@ componentWillReceiveProps(nextProps) {
     let pageUsers = currentUsers.length + indexOfFirstUser
     let spinner = this.state.spinner ? <GoldSpinner/> : null
     let messages = this.state.spinner ? 'Searching...' : 'No Users Found'
+    // console.log(currentUsers)
     return (
       <Page.Wrapper>
         <Helmet>

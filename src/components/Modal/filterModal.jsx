@@ -5,7 +5,7 @@ import { CardHeader } from '../../theme/style/typeface'
 import { AltBox } from '../../theme/style/Form'
 import { Logo } from '../Picture'
 import Button from '../Button'
-import { CheckBox, SelectAlt } from '../Input'
+import { CheckBox, Select } from '../Input'
 import swal from 'sweetalert'
 
 const FilterModal = ({ categories, loading, handleFilterSearchInput, clicked, ...props }) => {
@@ -45,76 +45,95 @@ const FilterModal = ({ categories, loading, handleFilterSearchInput, clicked, ..
             type='checkbox'
             label='Name (Aa - Zz)'
           />
-          <SelectAlt
+          <Select
             name='category'
             width='110px'
             height=' 32px'
-            margin='0 12px'
+            margin='0'
             value={inputs.category}
             changed={handleChange}
+            label='Category'
+            marTop='0'
+            MainLabelContainerMargin='5px 10px 10px 15px'
           >
             <option hidden>Category</option>
             {categories && categories.length > 1 ? categories.map(category => (
               <option key={category._id} value={category.category}>{category.category}</option>
             )) : null}
-          </SelectAlt>
-          <SelectAlt
+          </Select>
+          <Select
             name='averageRate'
             width='110px'
             height=' 32px'
-            margin='0 12px'
+            margin='0'
             value={inputs.averageRate}
             changed={handleChange}
+            label='Star Rating'
+            marTop='0'
+            MainLabelContainerMargin='5px 10px 10px 15px'
           >
             <option hidden>Star Rating</option>
+            <option value="">none</option>
             <option value='1'>1</option>
             <option value='2'>2</option>
             <option value='3'>3</option>
             <option value='4'>4</option>
             <option value='5'>5</option>
-          </SelectAlt>
-          <SelectAlt
+          </Select>
+          <Select
             name='city'
             width='110px'
             height=' 32px'
-            margin='0 12px'
+            margin='0'
             value={inputs.city}
             changed={handleChange}
+            label='Location'
+            marTop='0'
+            MainLabelContainerMargin='5px 10px 10px 15px'
           >
             <option hidden>City</option>
+            <option value="">none</option>
             <option value='lagos'>Lagos, Nigeria</option>
             {/* <option value='lagos,nigeria'>Lagos, Nigeria</option> */}
-          </SelectAlt>
-          <SelectAlt
+          </Select>
+          <Select
             name='skills'
             width='110px'
             height=' 32px'
-            margin='0 12px'
+            margin='0'
             value={inputs.skills}
             changed={handleChange}
+            label='Skills'
+            marTop='0'
+            MainLabelContainerMargin='5px 10px 10px 15px'
           >
             <option hidden>Skills</option>
+            <option value="">none</option>
             <option value='html5'>HTML5</option>
             <option value='css3'>CSS3</option>
             <option value='javascript'>Javascript</option>
             <option value='bootstrap'>Bootstrap</option>
             <option value='react'>React</option>
-          </SelectAlt>
-          <SelectAlt
+          </Select>
+          <Select
             name='jobsCompleted'
             width='120px'
             height=' 32px'
-            margin='0 12px'
+            margin='0'
             value={inputs.jobsCompleted}
             changed={handleChange}
+            label='Job Completed'
+            marTop='0'
+            MainLabelContainerMargin='5px 10px 10px 15px'
           >
             <option hidden>Jobs Completed</option>
+            <option value="">none</option>
             <option value='5'>5</option>
             <option value='10'>10</option>
             <option value='15'>15</option>
             <option value='20'>20</option>
             <option value='30'>30</option>
-          </SelectAlt>
+          </Select>
 
         </AltBox>
 

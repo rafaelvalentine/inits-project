@@ -105,11 +105,11 @@ button {
 
 #filtermodal .modal-content {
     width: 550px;
-    height: 233px;
+    min-height: 233px;
 }
 
 #filtermodal .modal-content .modal-body {
-    padding: 24px 14px 0;
+    padding: 5px 14px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -120,7 +120,7 @@ button {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 0 40px 24px;
+    padding: 0 40px;
 }
 
 

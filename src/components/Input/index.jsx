@@ -248,7 +248,7 @@ export const MainTriosAlt = ({
 }
 export const Select = ({ name, label, children, value, ...props }) => {
   return (
-    <Form.MainLabelContainer >
+    <Form.MainLabelContainer {...props}>
       <Form.MainLabel >
         <Type.BoldLabel > { label } </Type.BoldLabel> <br />
       </Form.MainLabel>

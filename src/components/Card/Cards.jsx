@@ -74,6 +74,7 @@ export const AnalyticsCard = ({ figure, figure2, info, info2, info3, img, color,
 }
 
 export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnableUser, handleDisableUser, ...props }) => {
+  // console.log(props)
   let secondaryContent
   let altButton
   let clicked

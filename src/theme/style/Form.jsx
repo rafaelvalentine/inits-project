@@ -216,7 +216,8 @@ NoLabelInput.defaultProps = {
 }
 export const MainLabelContainer = styled.label`
     display: block;
-    margin-top ${props => props.marTop ? props.marTop : '24px'};
+    margin-top: ${props => props.marTop ? props.marTop : '24px'};
+    margin: ${props => props.MainLabelContainerMargin };
   
 `
 export const MainLabelContainerAlt = styled.div`
