@@ -26,14 +26,10 @@ export default class index extends Component {
     showConfirmDisableModal: false,
     showEnableModal:false,
     showConfirmEnableModal: false,
-<<<<<<< HEAD
     disableUserMessage:'',
-
-=======
     showDisableMessage:false,
     message:'Disabled by admin',
     otherMessage:'',
->>>>>>> development
     clickedUser:{
       id:'',
       name:''
@@ -134,7 +130,7 @@ handleDisableUser = (name, id) =>{
 }
 handleOpenConfirmDisable = e =>{
   let confirmDisable = this.state.showConfirmDisableModal
-  let disableMessage 
+  let disableMessage = this.state.message
   if(!validator.isEmpty(this.state.otherMessage)){
     disableMessage = this.state.otherMessage
   }

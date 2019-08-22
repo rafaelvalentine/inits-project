@@ -74,10 +74,7 @@ export const AnalyticsCard = ({ figure, figure2, info, info2, info3, img, color,
   )
 }
 
-<<<<<<< HEAD
-export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnableUser, handleDisableUser, ...props }) => {
-  // console.log(props)
-=======
+
 export const Profile = ({ name, 
   profileImageUrl, 
   averageRate, 
@@ -95,7 +92,6 @@ export const Profile = ({ name,
   handleStartNewChat,
   _id,
   ...props }) => {
->>>>>>> development
   let secondaryContent
   let altButton
   let clicked
