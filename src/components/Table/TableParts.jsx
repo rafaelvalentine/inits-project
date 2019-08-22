@@ -75,7 +75,7 @@ export const Status = ({ accepted, compeleted }) => {
     statusMessage = (
       <Table.Accepted
         alt>
-        <span>Unaccepted</span>
+        <span>Pending</span>
       </Table.Accepted>
     )
   }
@@ -83,7 +83,7 @@ export const Status = ({ accepted, compeleted }) => {
   if (accepted) {
     statusMessage = (
       <Table.Accepted>
-        <span>Accepted</span>
+        <span>In Progress</span>
       </Table.Accepted>
     )
   }

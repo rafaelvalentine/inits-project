@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import { DisableUser, ConfirmDisableUser, EnableUser, ConfirmEnableUser } from '../Card'
+import { DisableUser, ConfirmDisableUser, EnableUser, ConfirmEnableUser, DisableUserMessage } from '../Card'
 
 const DisableUserModal = ({ open, inputs, history, loading, ...props }) => {
   return (
@@ -27,7 +27,20 @@ export const ConfirmDisableUserModal = ({ inputs, history, loading, ...props }) 
     </Modal>
   )
 }
-
+export const DisableUserMessageModal = ({ inputs, history, loading, clicked, handleDisableInput, ...props }) => {
+  return (
+    <Modal id='centeredmodal' centered {...props}>
+      <DisableUserMessage
+        inputs={inputs}
+        loading={loading}
+        history={history}
+        close={props.onHide}
+        handleDisableInput={handleDisableInput}
+        clicked={clicked}
+      />
+    </Modal>
+  )
+}
 export const EnableUserModal = ({ open, inputs, history, loading, ...props }) => {
   return (
     <Modal id='centeredmodal' centered {...props}>
@@ -53,4 +66,6 @@ export const ConfirmEnableUserModal = ({ inputs, history, loading, ...props }) =
     </Modal>
   )
 }
+
+
 export default DisableUserModal

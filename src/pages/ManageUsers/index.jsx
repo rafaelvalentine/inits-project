@@ -6,7 +6,7 @@ import { CreateUserButton, CloseSearchButton  } from '../../components/Button'
 import Pagination from '../../components/Tools/Pagination'
 import GoldSpinner from '../../components/Tools/GoldSpinner'
 import * as Page from '../../theme/style/styles'
-import { FilterModal, DisableUserModal, ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal  } from '../../components/Modal'
+import { FilterModal, DisableUserModal, ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal,  DisableUserMessageModal  } from '../../components/Modal'
 import swal from 'sweetalert'
 import validator from 'validator'
 import { Helmet } from 'react-helmet'
@@ -26,8 +26,14 @@ export default class index extends Component {
     showConfirmDisableModal: false,
     showEnableModal:false,
     showConfirmEnableModal: false,
+<<<<<<< HEAD
     disableUserMessage:'',
 
+=======
+    showDisableMessage:false,
+    message:'Disabled by admin',
+    otherMessage:'',
+>>>>>>> development
     clickedUser:{
       id:'',
       name:''
@@ -128,12 +134,16 @@ handleDisableUser = (name, id) =>{
 }
 handleOpenConfirmDisable = e =>{
   let confirmDisable = this.state.showConfirmDisableModal
+  let disableMessage 
+  if(!validator.isEmpty(this.state.otherMessage)){
+    disableMessage = this.state.otherMessage
+  }
   this.setState({loading: true})
-  this.props.handleDisableUser(this.state.clickedUser.id)
+  this.props.handleDisableUser(this.state.clickedUser.id, {disableMessage} )
   .then(res =>{
     this.RefreshUsersCards()
     .then(res=>(
-      this.setState({ showConfirmDisableModal: !confirmDisable, showDisableModal:false })
+      this.setState({ showConfirmDisableModal: !confirmDisable, showDisableModal:false, showDisableMessage:false })
     ))
   })
   }
@@ -210,6 +220,19 @@ this.setState({data: this.props.Users})
    this.setState({spinner:false, data: this.props.Users})
  }, 15000);
 }
+
+handleShowDisableMessageModal =()=>{
+ let showDisableMessage = !this.state.showDisableMessage
+ let showDisableModal = !this.state.showDisableModal
+ this.setState({showDisableMessage, showDisableModal})
+}
+handleDisableInput = e =>{
+  this.setState({[e.target.name]:e.target.value}, ()=> console.log(this.state))
+}
+handleStartNewChat = userId =>{
+  // console.log(userId)
+  this.props.history.push('/chat')
+} 
 componentWillReceiveProps(nextProps) {
   // Typical usage (don't forget to compare props):
   if (nextProps.Users !== this.props.Users) {
@@ -284,6 +307,7 @@ componentWillReceiveProps(nextProps) {
           name={name }
           jobsCompleted={ user.jobsCompleted.length || '0'}
           isDisabled={user.disabled}
+          handleStartNewChat={this.handleStartNewChat}
           />
           }) : 
           <Page.SubWrapperAlt
@@ -329,7 +353,22 @@ componentWillReceiveProps(nextProps) {
         loading={this.state.loading}
         onHide={this.handleCloseDisableUser}
         inputs={this.state.clickedUser}
-        open={this.handleOpenConfirmDisable}
+        // open={this.handleOpenConfirmDisable}
+        open={this.handleShowDisableMessageModal}
+        />
+
+          {/* 
+        This is the set disabled user message modal Component 
+        Note:  that all Modal CSS is handled by index.css
+        */}
+        <DisableUserMessageModal
+        show={this.state.showDisableMessage}
+        onHide={this.handleShowDisableMessageModal}
+        history={this.props.history}
+        inputs={this.state.clickedUser}
+        close={this.handleShowDisableMessageModal}
+        handleDisableInput={this.handleDisableInput}
+        clicked={this.handleOpenConfirmDisable}
         />
         {/* 
         This is the confirm disabled user modal Component 

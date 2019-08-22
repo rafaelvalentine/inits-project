@@ -33,10 +33,11 @@ export const handleGetAllUsersCardInfo = () => dispatch => {
 /**
  * Disable Clicked User
  */
-export const handleDisableUser = userId => dispatch => {
+export const handleDisableUser = (userId, data) => dispatch => {
   return axios({
     url: `https://primework-staging.herokuapp.com/api/v1/user/block/${userId}`,
-    method: 'PUT'
+    method: 'PUT',
+    data
   }).then(res => {
     let result = res.data
     return result

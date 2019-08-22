@@ -3,7 +3,7 @@ import CardBox from './Cards'
 import * as Card from './styles'
 import { CardHeader, Title } from '../../theme/style/typeface'
 import { Logo } from '../Picture'
-import { Main, MainDuo, MainTrios, MainTriosAlt } from '../Input'
+import { Main, MainDuo, MainTrios, MainTriosAlt, CheckBox, Text } from '../Input'
 import Button, { DuoButton } from '../Button'
 
 // component form for creating a new Admin
@@ -421,7 +421,83 @@ export const DisableUser = ({ history, loading, inputs, openConfirm, close }) =>
     </CardBox>
   )
 }
+// component is used to send disable message to a User
+export const DisableUserMessage = ({ history, loading, inputs, clicked, openConfirm, handleDisableInput, close }) => {
+  return (
+    <CardBox
+      width='600px'
+      height=''
+      justify='flex-start'
+    >
 
+      <CardHeader
+        altBackground='true'
+        fontSize='18px'
+      >
+          Disable User
+        <Logo
+          src={require('../../assets/images/close-line-alt.svg')}
+          height='24px'
+          width='24px'
+          margin='0 8px'
+          clicked={close}
+        />
+      </CardHeader>
+
+      <Card.Container
+        width='100%'
+        height=''
+        backgroundColor='transparent'
+        boxShadow='none'
+        borderRadius='0'
+        margin='0 auto 0'
+        padding='30px 32px'
+        justify='flex-start'
+        align='flex-start'
+      >
+        <Card.Message>
+           Select a reason for disabling user
+        </Card.Message>
+
+        <div>
+          <CheckBox type='radio' name='message' labelClass='radio' onChange={handleDisableInput} className='radio' value='User witheld payment' />
+          <Card.Message style={{ marginLeft: '30px' }}>
+              User witheld payment
+          </Card.Message>
+        </div>
+        <div>
+          <CheckBox type='radio' name='message' labelClass='radio'onChange={handleDisableInput} className='radio' value='Untimely project delivery' />
+          <Card.Message style={{ marginLeft: '30px' }}>
+              Untimely project delivery
+          </Card.Message>
+        </div>
+        <div>
+          <CheckBox type='radio' name='message' labelClass='radio' onChange={handleDisableInput} className='radio' value=' Misconduct' />
+          <Card.Message style={{ marginLeft: '30px' }}>
+              Misconduct
+          </Card.Message>
+        </div>
+        <div>
+          <CheckBox type='radio' name='message' labelClass='radio' className='radio' />
+          <Card.Message style={{ marginLeft: '30px' }}>
+              Other
+          </Card.Message>
+        </div>
+        <div>
+          <Text width='536px' name='otherMessage' placeholder='Write a message...' onChange={handleDisableInput} value={inputs.otherMessage}/>
+        </div>
+        <Button
+          content='Send'
+          width='154px'
+          height='48px'
+          margin='0 auto 0 0'
+          clicked={clicked}
+          loading={inputs.loading}
+        />
+      </Card.Container>
+    </CardBox>
+  )
+}
 export const ConfirmDisableUser = ({ history, inputs, complete, loading, close }) => {
   return (
     <CardBox

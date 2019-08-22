@@ -43,7 +43,7 @@ export default class index extends Component {
       {
         id: 2,
         figure: 0,
-        info:'Transactions Performed',
+        info:'Payments Made',
         info2:'₦',
         info3:'in value',
         figure2: 0,

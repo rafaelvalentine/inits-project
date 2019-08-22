@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import * as Card from './styles'
 import { Header, CardHeader } from '../../theme/style/typeface'
 import { Logo } from '../Picture'
 import { Main } from '../Input'
 import { UserDetails, JobCompleted, SkillList } from './cardParts'
 import Button, { DuoButton } from '../Button'
+import { ConnectDropDown } from '../DropDown'
 
 const CardBox = ({ children, ...props }) => {
   return (
@@ -73,20 +74,77 @@ export const AnalyticsCard = ({ figure, figure2, info, info2, info3, img, color,
   )
 }
 
+<<<<<<< HEAD
 export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsCompleted, skills, primaryAlt, secondAlt, primaryContent, secondaryClicked, isDisabled, handleEnableUser, handleDisableUser, ...props }) => {
   // console.log(props)
+=======
+export const Profile = ({ name, 
+  profileImageUrl, 
+  averageRate, 
+  jobTitle, 
+  jobsCompleted, 
+  skills, 
+  primaryAlt, 
+  secondAlt, 
+  primaryContent, 
+  secondaryClicked, 
+  isDisabled, 
+  handleEnableUser, 
+  handleDisableUser, 
+  email, 
+  handleStartNewChat,
+  _id,
+  ...props }) => {
+>>>>>>> development
   let secondaryContent
   let altButton
   let clicked
   !isDisabled ? secondaryContent = 'Disable' : secondaryContent = 'Enable'
   isDisabled ? altButton = true : altButton = false
   isDisabled ? clicked = handleEnableUser : clicked = handleDisableUser
+  const [connect, setConnect] = useState({ show: false })
+  let show = !connect.show
+  const toggleDropDown = () => {
+    if (connect.show) {
+      return setConnect(connect => ({ ...connect, show }))
+    }
+    return setConnect(connect => ({ ...connect, show }))
+  }
+  let dropdown
+  if (connect.show) {
+    dropdown = <ConnectDropDown email={email} toggleDropDown={toggleDropDown} handleStartNewChat={() => handleStartNewChat(_id)} />
+  }
+  /**
+ * Hook that alerts clicks outside of the passed ref
+ */
+  function useOutsideAlerter (ref) {
+  /**
+   * Alert if clicked on outside of element
+   */
+    function handleClickOutside (event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        return setConnect(connect => ({ ...connect, show: false }))
+      }
+    }
+
+    useEffect(() => {
+    // Bind the event listener
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+      // Unbind the event listener on clean up
+        document.removeEventListener('mousedown', handleClickOutside)
+      }
+    })
+  }
+  const wrapperRef = useRef(null)
+  useOutsideAlerter(wrapperRef)
   return (
     <CardBox
       className='profileCard'
       width='220px'
       height='330px'
       margin='25px 15px'
+      style={{ position: 'relative' }}
       {...props}
     >
       <UserDetails
@@ -94,6 +152,7 @@ export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsComp
         rating={averageRate}
         type={jobTitle}
         name={name}
+        email={email}
       />
       <JobCompleted jobs={jobsCompleted} />
       <SkillList skills={skills} />
@@ -102,8 +161,14 @@ export const Profile = ({ name, profileImageUrl, averageRate, jobTitle, jobsComp
         primaryContent='Connect'
         secondaryContent={secondaryContent}
         secondAlt={altButton}
+        primaryClicked={toggleDropDown}
         secondaryClicked={clicked}
       />
+      <div ref={wrapperRef}>
+        {connect.show ? dropdown : null}
+      </div>
+
+      {/* <ConnectDropDown /> */}
     </CardBox>
   )
 }
@@ -256,7 +321,9 @@ export const DeleteCategory = ({ history, inputs, complete, changed, loading, cl
           clicked={create}
         />
       </Card.Container>
+
     </CardBox>
   )
 }
+
 export default CardBox

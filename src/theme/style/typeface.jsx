@@ -164,7 +164,7 @@ text-transform: capitalize;
 margin:0;
 `
 export const SubHandle = styled(UserHandle)`
-margin: 10px 0 0;
+margin: 5px 0 0;
 color: ${props => props.theme.subHandleText};
 `
 

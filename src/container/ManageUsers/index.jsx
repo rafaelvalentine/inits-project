@@ -20,8 +20,8 @@ const mapDispatchToProps = dispatch => ({
   handleEnableUser (userId) {
     return dispatch(handleEnableUser(userId))
   },
-  handleDisableUser (userId) {
-    return dispatch(handleDisableUser(userId))
+  handleDisableUser (userId, message) {
+    return dispatch(handleDisableUser(userId, message))
   },
   postSearchQuery (query) {
     return dispatch(postSearchQuery(query))

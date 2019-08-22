@@ -101,6 +101,7 @@ button {
 #filtermodal {
     max-width: 554px;
     margin: 176px auto;
+    color: #eff4f8;
 }
 
 #filtermodal .modal-content {

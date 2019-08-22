@@ -276,7 +276,7 @@ export const Text = ({ label, name, ...props }) => {
 }
 export const CheckBox = ({ label, name, type, ...props }) => {
   return (
-    <Form.CheckBoxLabel >
+    <Form.CheckBoxLabel className={props.labelClass}>
       <Form.MainLabel >
         <Type.BoldLabel > { label } </Type.BoldLabel>
       </Form.MainLabel >
@@ -285,6 +285,7 @@ export const CheckBox = ({ label, name, type, ...props }) => {
     </Form.CheckBoxLabel >
   )
 }
+
 export const DuoPickDate = ({
   labelFrom,
   labelTo,

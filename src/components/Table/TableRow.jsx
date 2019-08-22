@@ -54,7 +54,7 @@ export const JobRow = ({ jobInfo, creator, freelancer, milestones, assigned, com
       <ProfileAndText
         text={creator.organization.organizationName || 'Damilola Sasha'}
         subtext={creator.type || 'Frontend Developer'}
-        img={'' || require('../../assets/images/primework_purple.png')}
+        img={creator.organization.organizationLogoUrl || require('../../assets/images/primework_purple.png')}
       />
     </td>
     <td>
@@ -93,7 +93,7 @@ export const JobRow = ({ jobInfo, creator, freelancer, milestones, assigned, com
         altText='true'
         altSubText
         text={budget || '0'}
-        subtext='in Progress'
+        subtext={completed ? 'Complete' : 'In Progress'}
       />
     </td>
   </TableBody>
