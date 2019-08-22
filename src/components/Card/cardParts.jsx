@@ -1,13 +1,13 @@
 import React from 'react'
 import { User, Star, Logo } from '../Picture'
-import { Container, JobsCompleted, FixContainer, FixContainerAlt } from './styles'
+import { Container, JobsCompleted, FixContainer, FixContainerAlt, Email } from './styles'
 import { UserHandle, SubHandle, Number, Label, SkillType } from '../../theme/style/typeface'
 import Rating from 'react-rating'
 
 /**
  * this the component that holds the profile picture, username and rating for the user Card
  */
-export const UserDetails = ({ image, name, type, rating }) => {
+export const UserDetails = ({ image, name, type, rating, email }) => {
   return (
     <Container
       align='flex-start'
@@ -25,7 +25,7 @@ export const UserDetails = ({ image, name, type, rating }) => {
         justify='flex-start'
         backgroundColor='transparent'
         width='100%'
-        height='50px'
+        height='55px'
         padding='0'
         color='red'
         boxShadow='none'
@@ -40,16 +40,17 @@ export const UserDetails = ({ image, name, type, rating }) => {
           backgroundColor='transparent'
           width='calc(100% - 48px)'
           height='100%'
-          padding='8px 8px 0'
+          padding='0 8px 0'
           boxShadow='none'
         >
           {/* this is the name div that shows the name for a user */}
           <UserHandle>
             { name || 'harry potter' }
           </UserHandle>
-          <div>
+          <div style={{ margin: '0' }}>
             {/* this is the rating component that shows all the stars for a user */}
             <Rating
+              style={{ margin: '0' }}
               readonly
               initialRating={rating || '0'}
               emptySymbol={<Star empty='true' />}
@@ -57,6 +58,9 @@ export const UserDetails = ({ image, name, type, rating }) => {
             />
             <Number>{rating || '0'}</Number>
           </div>
+          <Email>
+            {email}
+          </Email>
         </Container>
       </Container>
       {/* this is the type div that shows the occupation of a user */}
@@ -81,7 +85,7 @@ export const JobCompleted = ({ jobs }) => (
 
 const SkillListContainer = ({ skills }) => {
   return (
-    <FixContainer>
+    <FixContainer >
       {skills && skills.length > 0 ? skills.map(skill => {
         let _skill
         let capitalized = skill.charAt(0).toUpperCase() + skill.slice(1)

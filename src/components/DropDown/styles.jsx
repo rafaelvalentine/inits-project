@@ -47,6 +47,38 @@ top: 48px;
 right:-55px;
 border-radius: 4px;
 `
+export const ConnectDropDown = styled(NavDropDown)`
+width: 90px;
+// height: 60px;
+min-height: 50px;
+right: 10px;
+top: 96%;
+padding: 3px;
+background: #FFFFFF;
+box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.16);
+border-radius: 4px;
+`
+
+export const ConnectOptions = styled(NavOptions)`
+width: 84px;
+height: 20px;
+background: #F7F7F7;
+border-radius: 2px;
+/* identical to box height */
+span{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 14px;
+  color: #000000;
+}
+:hover{
+  background: ${props => props.theme.green};
+  span{
+    color: #FFFFFF !important;
+  }
+}
+`
 export const SortOptions = styled(NavOptions)`
 padding: 12px 20px;
 border-top: 1px solid #F1F2F7;

@@ -48,7 +48,7 @@ justify-content: flex-start;
 align-items:center;
 background:${props => props.theme.transparent};
 width: 100%;
-height: 100% ;
+height: 100%;
 flex-wrap: wrap;
 overflow-y: scroll;
 `
@@ -99,4 +99,19 @@ export const Info = styled(Details)`
 font-size: 14px;
 color:${props => props.theme.text};
 text-align: center;
+`
+export const Message = styled(Details)`
+font-size: 14px;
+font-weight: normal;
+color:${props => props.theme.cardName};
+text-align: center;
+`
+export const Email = styled(Details)`
+ont-style: normal;
+font-weight: normal;
+font-size: 10px;
+line-height: 14px;
+/* identical to box height */
+color: #515151;
+margin: 0;
 `

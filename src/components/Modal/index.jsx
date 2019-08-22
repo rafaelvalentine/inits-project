@@ -1,6 +1,6 @@
 import FilterModal from './filterModal'
 import CreateCategoryModal, { EditCategoryModal, DeleteCategoryModal  } from './categoryModal'
-import DisableUserModal, { ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal } from './userStatusModal'
+import DisableUserModal, { ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal, DisableUserMessageModal } from './userStatusModal'
 
 export {
   FilterModal,
@@ -10,4 +10,5 @@ export {
   ConfirmEnableUserModal,
   CreateCategoryModal,
   EditCategoryModal,
-  DeleteCategoryModal  }
+  DeleteCategoryModal,
+  DisableUserMessageModal  }

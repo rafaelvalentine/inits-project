@@ -87,6 +87,73 @@ export const CheckBoxLabel = styled.label`
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
       }
+      &.radio {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      /* Hide the browser's default radio button */
+      &.radio input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+      
+      /* Create a custom radio button */
+      &.radio .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 12px;
+        width: 12px;
+        background-color: ${props => props.theme.white};
+        border-radius: 50%;
+        border: .5px solid ${props => props.theme.orange}
+      }
+      
+      /* On mouse-over, add a grey background color */
+      &.radio:hover input ~ .checkmark {
+        background-color: #ccc;
+      }
+      
+      /* When the radio button is checked, add a blue background */
+      &.radio input:checked ~ .checkmark {
+        background-color: ${props => props.theme.white};
+      }
+      
+      /* Create the indicator (the dot/circle - hidden when not checked) */
+      &.radio .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+      
+      /* Show the indicator (dot/circle) when checked */
+      &.radio input:checked ~ .checkmark:after {
+        display: block;
+      }
+      
+      /* Style the indicator (dot/circle) */
+      &.radio .checkmark:after {
+        top: 2.6px;
+        left: 2.7px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        border: solid ${props => props.theme.orange};
+        border-width: 1
+        background: ${props => props.theme.orange};
+      }
 `
 export const CheckBox = styled.input`
         position: absolute;
@@ -272,8 +339,8 @@ export const TxtArea = styled.textarea`
     border: 0.5px solid #54c4cf;    
     border-radius: 2px !important;
     // resize: none;
-    width: 100%;
-    height: 139px;
+    width: ${props => props.width ? props.width : '100%'};
+    height: ${props => props.height ? props.height : '139px'};
     padding: 10px;
 `
 export const NoLabelSelect = styled(Select)`

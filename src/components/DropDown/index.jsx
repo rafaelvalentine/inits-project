@@ -34,7 +34,7 @@ export const NavDropDown = props => {
       <DropDown.NavOptions onClick={() => {
         localStorage.clear()
         return props.history.push('/')
- }}>
+      }}>
         <img src={require('../../assets/images/logout.svg')} alt='logout' />
         <span> Logout </span>
       </DropDown.NavOptions>
@@ -55,6 +55,20 @@ export const JobsDropDown = ({ handleFilterBy }) => {
         <span>Unaccepted Jobs</span>
       </DropDown.SortOptions>
     </DropDown.SortDropDown>
+  )
+}
+export const ConnectDropDown = ({ email, toggleDropDown, handleStartNewChat, ...props }) => {
+  return (
+    <DropDown.ConnectDropDown>
+      <a href={`mailto:${email}`} target='_top'>
+        <DropDown.ConnectOptions onClick={toggleDropDown}>
+          <span>Via Email</span>
+        </DropDown.ConnectOptions>
+      </a>
+      <DropDown.ConnectOptions onClick={handleStartNewChat}>
+        <span>Via Live Chat</span>
+      </DropDown.ConnectOptions>
+    </DropDown.ConnectDropDown>
   )
 }
 export const MilestonesDropDown = ({ milestones }) => {
