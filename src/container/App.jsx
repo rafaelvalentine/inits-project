@@ -12,7 +12,7 @@ import Jobs from './ManageJobs';
 import { Helmet } from 'react-helmet'
 import ScrollToTop from '../components/Tools/ScrollToTop'
 import swal from 'sweetalert';
-import Chat from '../pages/chat';
+import Chat from '../container/Chat';
 
 
 function PrivateRoute ({ component: Component, ...rest }) {

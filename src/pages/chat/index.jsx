@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import swlt from "sweetalert";
 import Navbar from "../../container/Navbar";
+import { Star} from '../../components/Picture'
 import * as UI from "./style.js";
+import Rating from 'react-rating'
+import moment from 'moment'
 
 import { data, allChatText } from "./data";
 
@@ -15,6 +18,154 @@ import attachIcon from "../../assets/images/round-attach_file-24px.png";
 import picPhotoIcon from "../../assets/images/round-insert_photo-24px.png";
 import emojiIcon from "../../assets/images/round-sentiment_satisfied_alt-24px.png";
 
+
+
+
+const SelectedUserInfo =({ selectedUser, ...props})=>{
+  let chatId = localStorage.getItem('currentChatId')
+  let userId = localStorage.getItem('userId')
+  let firstName
+  let lastName
+  let organizationName
+  let profileImageUrl
+  let organizationLogoUrl
+  let nameToDisplay
+  let imageToDisplay
+  let status = selectedUser.active ? 'online' : 'offline'
+  if (selectedUser.freelancer) {
+    firstName = selectedUser.freelancer.firstName
+    lastName = selectedUser.freelancer.lastName
+    profileImageUrl = selectedUser.freelancer.profileImageUrl
+  }
+  if (selectedUser.organization) {
+    organizationName = selectedUser.organization.organizationName
+    organizationLogoUrl = selectedUser.organization.organizationLogoUrl
+  }
+  if (selectedUser.type === 'freelancer') {
+    nameToDisplay = `${firstName} ${lastName}`
+    imageToDisplay = profileImageUrl
+  }
+  if (selectedUser.type === 'organization') {
+    nameToDisplay = organizationName
+    imageToDisplay = organizationLogoUrl
+  }
+  return (
+     <UI.ChatHeaderProfile>
+       <UI.ChatHeaderProfileItem1 src={imageToDisplay} />
+       <UI.ChatHeaderProfileItem2>
+         {nameToDisplay}
+       </UI.ChatHeaderProfileItem2>
+     </UI.ChatHeaderProfile>
+   )
+ }
+
+const ChatMessages = ({chats, ...props}) =>{
+let userId = localStorage.getItem('userId')
+  return chats.map(chat =>{
+    if (chat.userId !== userId){
+    return (  
+        <UI.ChatTextDisplayLeft key={chat._id}>
+            <UI.ChatTextDisplayOthersText
+                color="blue"
+                backgroundColor="#FFF">
+                  {chat.message}
+            </UI.ChatTextDisplayOthersText>
+        </UI.ChatTextDisplayLeft>
+      )
+    }
+    return (  
+      <UI.ChatTextDisplayRight key={chat._id}>
+          <UI.ChatTextDisplayMyText
+                color="#FFF"
+                backgroundColor="#3CB46E"
+              >
+                {chat.message}
+          </UI.ChatTextDisplayMyText>
+      </UI.ChatTextDisplayRight>
+    )
+  })
+ }
+
+ const UserInfo =({selectedUser, averageRate, jobsCompleted, ...props})=> {
+  let chatId = localStorage.getItem('currentChatId')
+  let userId = localStorage.getItem('userId')
+  let firstName
+  let lastName
+  let organizationName
+  let profileImageUrl
+  let organizationLogoUrl
+  let nameToDisplay
+  let imageToDisplay
+  let profession 
+  let biography
+  let skills = []
+  // let status = selectedUser.active ? 'online' : 'offline'
+  if (selectedUser.freelancer) {
+    firstName = selectedUser.freelancer.firstName
+    lastName = selectedUser.freelancer.lastName
+    profileImageUrl = selectedUser.freelancer.profileImageUrl
+    profession = selectedUser.freelancer.jobTitle
+    biography = selectedUser.freelancer.biography
+    skills = selectedUser.freelancer.skills
+  }
+  if (selectedUser.organization) {
+    organizationName = selectedUser.organization.organizationName
+    organizationLogoUrl = selectedUser.organization.organizationLogoUrl
+    profession = 'Organization'
+  }
+  if (selectedUser.type === 'freelancer') {
+    nameToDisplay = `${firstName} ${lastName}`
+    imageToDisplay = profileImageUrl
+  }
+  if (selectedUser.type === 'organization') {
+    nameToDisplay = organizationName
+    imageToDisplay = organizationLogoUrl
+  }
+   return (
+    <UI.Div>
+       <UI.Div>
+       <UI.ProfileSectionJob>
+            <UI.ProfileImage src={imageToDisplay} />
+        </UI.ProfileSectionJob>
+        <UI.ProfileSectionName>
+          {nameToDisplay}
+        </UI.ProfileSectionName>
+        <UI.ProfileSectionJob>
+          {profession}
+        </UI.ProfileSectionJob>
+        <UI.ProfileSectionJob>
+        <Rating
+              style={{ margin: '0' }}
+              readonly
+              initialRating={averageRate || '0'}
+              emptySymbol={<Star empty='true' />}
+              fullSymbol={<Star />}
+            />
+        </UI.ProfileSectionJob>
+       
+      </UI.Div>
+      <UI.JobsCompletedTextContainer>
+        <UI.JobsCompletedTextIcon src={bagIcon} />
+        <UI.JobsCompletedText>{jobsCompleted && jobsCompleted.length > 0 ? jobsCompleted.length : '0' } Jobs completed</UI.JobsCompletedText>
+      </UI.JobsCompletedTextContainer>
+      <UI.BioSection>
+        Bio <br />
+        <UI.BioTextSection>{biography}</UI.BioTextSection>
+      </UI.BioSection>
+      <UI.Div style={{paddingLeft: '10px'}}>
+        Skills <br />
+        {skills && skills.length > 0 ?
+        <UI.DisplaySkilll>
+          <DisplaySkill skill={skills}/>
+        </UI.DisplaySkilll> : null}
+      </UI.Div>
+    </UI.Div>
+  )
+ }
+
+ const DisplaySkill = ({skills, ...props}) => skills.map(skill => (
+  <UI.SkillText key={Math.random()}>{skill}</UI.SkillText>
+));
 /**
  *@class chat
  */
@@ -45,21 +196,105 @@ export default class Chat extends Component {
     }
   };
 
-  handleSelectedContact = data => this.setState({ selectedContact: data });
+  handleSelectedContact = data => {
+    // this.setState({ selectedContact: data })
+  };
 
   render() {
-    const { contacts, selectedContact } = this.state;
-    const displaySkill = (selectedContact.skills || []).map(data => (
-      <UI.SkillText>{data}</UI.SkillText>
-    ));
-    const displayPeople = contacts.map(data => (
-      <UI.ChatPeopleContainer onClick={() => this.handleSelectedContact(data)}>
-        <UI.ChatItemImage src={data.avatar} />
-        <UI.ChatItemName>{data.name}</UI.ChatItemName>
-        <UI.ChatItemTime>{data.time}</UI.ChatItemTime>
-        <UI.ChatItemPhrase>{data.phrase}</UI.ChatItemPhrase>
-      </UI.ChatPeopleContainer>
-    ));
+    // const { contacts, selectedContact } = this.state;
+    const { Contacts, SelectedUser, Chat, AllUsers } = this.props
+    const selectedUserExtras = AllUsers.filter(user =>(
+      user._id === SelectedUser._id
+    ))
+    // console.log('selectedUserExtras :', selectedUserExtras);
+    const displayPeople = Contacts.map(chat => { 
+        let userId = localStorage.getItem('userId')
+        let firstName
+        let lastName
+        let organizationName
+        let ImageToDisplay = ''
+        if (chat.SUser === null || chat.FUser === null) {
+          return null
+        }
+        if (chat.SUser._id !== userId) {
+          if (chat.SUser.freelancer) {
+            firstName = chat.SUser.freelancer.firstName
+            lastName = chat.SUser.freelancer.lastName
+            ImageToDisplay = chat.SUser.freelancer.profileImageUrl
+          }
+          if (chat.SUser.organization) {
+            organizationName = chat.SUser.organization.organizationName
+            ImageToDisplay = chat.SUser.organization.organizationLogoUrl
+          }
+          let status = chat.active ? 'online' : 'offline'
+          let nameToDisplay
+          let lastMessage = chat.chat.length - 1
+          let latestMessage = chat.chat && chat.chat.length > 0 ? chat.chat[ lastMessage ].message : status
+          let LatestMessageTime = chat.chat && chat.chat.length > 0 ? moment(new Date(chat.chat[lastMessage].createdAt)).calendar(null, {
+            sameDay: 'LT',
+            nextDay: '[Tomorrow]',
+            nextWeek: 'dddd',
+            lastDay: '[Yesterday]',
+            lastWeek: '[Last] dddd',
+            sameElse: 'DD/MM/YYYY'
+          }) : moment(new Date()).fromNow()
+          if (chat.SUser.type === 'freelancer') {
+            nameToDisplay = `${firstName} ${lastName}`
+          }
+          if (chat.SUser.type === 'organziation') {
+            nameToDisplay = organizationName
+          }
+          // console.log(user)
+          return (
+            <UI.ChatPeopleContainer key={Math.random()} onClick={() => this.handleSelectedContact(data)}>
+              <UI.ChatItemImage src={ImageToDisplay} />
+              <UI.ChatItemName>{nameToDisplay}</UI.ChatItemName>
+              <UI.ChatItemTime>{LatestMessageTime}</UI.ChatItemTime>
+              <UI.ChatItemPhrase>{latestMessage}</UI.ChatItemPhrase>
+            </UI.ChatPeopleContainer>
+          )
+        }
+        if (chat.SUser._id === userId) {
+          if (chat.FUser.freelancer) {
+            firstName = chat.FUser.freelancer.firstName
+            lastName = chat.FUser.freelancer.lastName
+            ImageToDisplay = chat.FUser.freelancer.profileImageUrl
+          }
+          if (chat.FUser.organization) {
+            organizationName = chat.FUser.organization.organizationName
+            ImageToDisplay = chat.FUser.organization.organizationLogoUrl
+          }
+          let status = chat.active ? 'online' : 'offline'
+          let nameToDisplay
+          let lastMessage = chat.chat.length - 1
+          let latestMessage = chat.chat && chat.chat.length > 0 ? chat.chat[ lastMessage ].message : status
+          let LatestMessageTime = chat.chat && chat.chat.length > 0 ? moment(new Date(chat.chat[lastMessage].createdAt)).calendar(null, {
+            sameDay: 'LT',
+            nextDay: '[Tomorrow]',
+            nextWeek: 'dddd',
+            lastDay: '[Yesterday]',
+            lastWeek: '[Last] dddd',
+            sameElse: 'DD/MM/YYYY'
+          }) : moment(new Date()).fromNow()
+          if (chat.FUser.type === 'freelancer') {
+            nameToDisplay = `${firstName} ${lastName}`
+          }
+          if (chat.FUser.type === 'organization') {
+            nameToDisplay = organizationName
+          }
+          // console.log(user)
+          return (
+            <UI.ChatPeopleContainer onClick={() => this.handleSelectedContact(data)}>
+              <UI.ChatItemImage src={ImageToDisplay} />
+              <UI.ChatItemName>{nameToDisplay}</UI.ChatItemName>
+              <UI.ChatItemTime>{LatestMessageTime}</UI.ChatItemTime>
+              <UI.ChatItemPhrase>{latestMessage}</UI.ChatItemPhrase>
+            </UI.ChatPeopleContainer>
+          )
+        }
+      })
+
+      
     return (
       <UI.View>
         <Navbar />
@@ -81,50 +316,10 @@ export default class Chat extends Component {
           {/* SECOND SECTION COLUMN */}
           <UI.ChatContainer>
             <UI.ChatHeader>
-              {selectedContact && (
-                <UI.ChatHeaderProfile>
-                  <UI.ChatHeaderProfileItem1 src={selectedContact.avatar} />
-                  <UI.ChatHeaderProfileItem2>
-                    {selectedContact.name}
-                  </UI.ChatHeaderProfileItem2>
-                </UI.ChatHeaderProfile>
-              )}
+            <SelectedUserInfo selectedUser={SelectedUser}/>
             </UI.ChatHeader>
             <UI.ChatTextDisplaySection>
-              {selectedContact && (
-                <UI.ChatTextDisplayLeft>
-                  {selectedContact.conversation.length > 0 &&
-                    selectedContact.conversation.map(data => {
-                      if (data.notReply) {
-                        return (
-                          <UI.ChatTextDisplayOthersText
-                            color="blue"
-                            backgroundColor="#FFF"
-                          >
-                            {data.text}
-                          </UI.ChatTextDisplayOthersText>
-                        );
-                      }
-                    })}
-                </UI.ChatTextDisplayLeft>
-              )}
-              {selectedContact && (
-                <UI.ChatTextDisplayRight>
-                  {selectedContact.conversation.length > 0 &&
-                    selectedContact.conversation.map(data => {
-                      if (!data.notReply) {
-                        return (
-                          <UI.ChatTextDisplayMyText
-                            color="#FFF"
-                            backgroundColor="#3CB46E"
-                          >
-                            {data.text}
-                          </UI.ChatTextDisplayMyText>
-                        );
-                      }
-                    })}
-                </UI.ChatTextDisplayRight>
-              )}
+              <ChatMessages chats={Chat}/>
             </UI.ChatTextDisplaySection>
             <UI.ChatFooter>
               <UI.footerIcon src={attachIcon} />
@@ -141,35 +336,7 @@ export default class Chat extends Component {
 
           {/* THIRD SECTION COLUMN */}
           <UI.FlexThirdColumn>
-            {selectedContact ? (
-              <UI.Div>
-                <UI.ProfileImage src={selectedContact.profilePic} />
-                <UI.Div>
-                  <UI.ProfileSectionName>
-                    {selectedContact.name}
-                  </UI.ProfileSectionName>
-                  <UI.ProfileSectionJob>
-                    {selectedContact.profession}
-                  </UI.ProfileSectionJob>
-                </UI.Div>
-                <UI.JobsCompletedTextContainer>
-                  <UI.JobsCompletedTextIcon src={bagIcon} />
-                  <UI.JobsCompletedText>48 Jobs Completed</UI.JobsCompletedText>
-                </UI.JobsCompletedTextContainer>
-                <UI.BioSection>
-                  Bio <br />
-                  <UI.BioTextSection>{selectedContact.bio}</UI.BioTextSection>
-                </UI.BioSection>
-                <UI.Div style={{paddingLeft: '10px'}}>
-                  Skills <br />
-                  <UI.DisplaySkilll>{displaySkill}</UI.DisplaySkilll>
-                </UI.Div>
-              </UI.Div>
-            ) : (
-              <UI.NoContactSelected>
-                No Contact Selected Yet!
-              </UI.NoContactSelected>
-            )}
+         <UserInfo selectedUser={SelectedUser} {...selectedUserExtras[0]}/>
           </UI.FlexThirdColumn>
         </UI.GridLayout>
       </UI.View>
