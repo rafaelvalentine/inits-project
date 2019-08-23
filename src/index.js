@@ -8,7 +8,7 @@ import './index.css'
 import App from './container/App'
 import colors from './theme/main'
 import * as serviceWorker from './serviceWorker'
-import { handleGetAdminDetailOnRefresh, handleGetAllUsersCardInfo, handleGetAllJobs, handleGetAllTransactions } from './Store/Actions'
+import { handleGetAdminDetailOnRefresh, handleGetAllUsersCardInfo, handleGetAllJobs, handleGetAllTransactions, handleFetchUserChatHistory } from './Store/Actions'
 
 axios.defaults.baseURL = 'https://primework-staging.herokuapp.com/api/v1'
 
@@ -20,6 +20,8 @@ if (token) {
     Store.dispatch(handleGetAllTransactions())
     Store.dispatch(handleGetAllUsersCardInfo())
     Store.dispatch(handleGetAllJobs())
+    Store.dispatch(handleFetchUserChatHistory())
+
 }
 ReactDOM.render( < Provider store = { Store } >
     <

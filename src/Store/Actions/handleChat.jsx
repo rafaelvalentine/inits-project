@@ -1,7 +1,7 @@
 import type from '../Type'
 import axios from 'axios'
 // import swal from 'sweetalert'
-import { handleError } from '../../../lib'
+import { handleError } from '../../lib'
 import openSocket from 'socket.io-client'
 const socket = openSocket('https://primework-staging.herokuapp.com')
 
@@ -37,7 +37,7 @@ export const handleFetchUserChatHistory = () => dispatch => {
       let second = b.chat && b.chat.length > 0 ? new Date(b.chat[b.chat.length - 1].createdAt).getTime() : new Date().getTime()
       return second - first
     })
-    // console.log(data)
+    console.log(data)
     chat = data[0].chat
 
     if (data[0].FUser._id !== userId) {
