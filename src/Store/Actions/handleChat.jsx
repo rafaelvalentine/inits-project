@@ -25,29 +25,36 @@ const handleUpdateChat = payload => ({
 })
 export const handleFetchUserChatHistory = () => dispatch => {
   let userId = localStorage.getItem('userId')
-  let chat
+  let chat = []
   let user
+  let data = []
   return axios({
     url: `https://primework-staging.herokuapp.com/api/v1/chat/user/all/${userId}`,
     method: 'GET'
   }).then(res => {
     let result = res.data
-    let data = result.data.sort((a, b) => {
-      let first = a.chat && a.chat.length > 0 ? new Date(a.chat[a.chat.length - 1].createdAt).getTime() : new Date().getTime()
-      let second = b.chat && b.chat.length > 0 ? new Date(b.chat[b.chat.length - 1].createdAt).getTime() : new Date().getTime()
-      return second - first
-    })
-    console.log(data)
-    chat = data[0].chat
+    if (result.data && result.data.length > 0) {
+      data = result.data.filter(chat => chat.FUser !== null).filter(chat => chat.SUser !== null).sort((a, b) => {
+        let first = a.chat && a.chat.length > 0 ? new Date(a.chat[a.chat.length - 1].createdAt).getTime() : new Date().getTime()
+        let second = b.chat && b.chat.length > 0 ? new Date(b.chat[b.chat.length - 1].createdAt).getTime() : new Date().getTime()
+        return second - first
+      })
+    }
+    // console.log(data)
 
-    if (data[0].FUser._id !== userId) {
-      user = data[0].FUser
-      dispatch(handleSetCurrentUser({ user }))
+    if (data && data.length > 0) {
+      localStorage.setItem('currentChatId', data[0]._id)
+      chat = data[0].chat
+      if (data[0].FUser._id !== userId) {
+        user = data[0].FUser
+        dispatch(handleSetCurrentUser({ user }))
+      }
+      if (data[0].FUser._id === userId) {
+        user = data[0].SUser
+        dispatch(handleSetCurrentUser({ user }))
+      }
     }
-    if (data[0].FUser._id === userId) {
-      user = data[0].SUser
-      dispatch(handleSetCurrentUser({ user }))
-    }
+
     // console.log(user)
     dispatch(handleSetAllChat({ data }))
     dispatch(handleSetCurrentChat({ chat }))
@@ -60,11 +67,19 @@ export const handleFetchUserChatHistory = () => dispatch => {
 }
 
 export const handleSetChatInfo = (user, chat, chatId, chatArray, userType) => dispatch => {
-  let newChatArray = chatArray.filter(chats => chats.SUser._id !== user._id)
-  let data = [
-    chatArray.find(users => users.SUser._id === user._id),
+  let newChatArray = chatArray.filter(chats => {
+    if (chats.SUser !== null) {
+      return chats.SUser._id !== user._id
+    }
+  })
+  let nonEmptyArray = chatArray.filter(chat => chat.SUser !== null)
+  let data
+
+  data = [
+    nonEmptyArray.find(users => users.SUser._id === user._id),
     ...newChatArray
   ]
+
   if (userType === 'FUser') {
     let newChatArray = chatArray.filter(chats => chats.FUser._id !== user._id)
     data = [
@@ -72,7 +87,7 @@ export const handleSetChatInfo = (user, chat, chatId, chatArray, userType) => di
       ...newChatArray
     ]
   }
-  // console.log(data)
+
   if (chatId !== undefined) {
     localStorage.setItem('currentChatId', chatId)
   }

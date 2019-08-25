@@ -228,6 +228,16 @@ handleStartNewChat = userId =>{
   // console.log(userId)
   this.props.history.push('/chat')
 } 
+
+handleStartNewChat = SUserId => {
+  this.props.handleStartNewChat(SUserId)
+  .then(res=>{
+    this.props.handleFetchUserChatHistory()
+    .then(res=>{
+      this.props.history.push('/chat')
+    })
+  })
+}
 componentWillReceiveProps(nextProps) {
   // Typical usage (don't forget to compare props):
   if (nextProps.Users !== this.props.Users) {

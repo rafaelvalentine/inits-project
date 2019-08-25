@@ -37,3 +37,16 @@ export const handledLogin = (userDetails, history) => dispatch => {
     console.log(err)
   })
 }
+export const handleLogoutUser = () => dispatch => {
+  let userId = localStorage.getItem('userId')
+  return axios
+  .put(`/admin/set/inactive/${userId}`)
+  .then(res => {
+    let result = res.data
+    console.log(result)
+    return result
+  })
+  .catch(err => {
+    handleError(err)
+    console.log(err)
+  })}

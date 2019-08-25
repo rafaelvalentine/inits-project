@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import swlt from "sweetalert";
+import swal from "sweetalert";
 import Navbar from "../../container/Navbar";
 import { Star} from '../../components/Picture'
 import * as UI from "./style.js";
 import Rating from 'react-rating'
 import moment from 'moment'
+import validator from 'validator'
 
 import { data, allChatText } from "./data";
 
@@ -173,7 +174,7 @@ export default class Chat extends Component {
   state = {
     contacts: [],
 
-    chatText: "",
+    message: "",
     textToDisplay: "",
 
     selectedContact: "",
@@ -187,17 +188,28 @@ export default class Chat extends Component {
     this.setState({ [event.target.name]: event.target.value });
 
   handleKeyPress = event => {
+    let message = this.state.message
+    let userId = localStorage.getItem('userId')
+    let data
+    data={
+      userId,
+      message
+    }
+    if(validator.isEmpty(message)){
+      swal('', 'Enter message', 'warning')
+      return
+    }
     if (event.keyCode === 13) {
-      if (!this.state.selectedContact) {
-        return swlt("", "No Contact Selected Yet!", "error");
-      }
-      event.target.value = "";
-      this.setState({ textToDisplay: this.state.chatText });
+      this.props.handlePostNewChatMessage(data)
+      .then(res=>{
+        this.setState({loading:false, message:'', file:''})
+        this.props.handleFetchUserChatHistory()
+      })
     }
   };
 
-  handleSelectedContact = data => {
-    // this.setState({ selectedContact: data })
+  handleSelectedContact = (...props) => {
+    this.props.handleSetChatInfo(...props)
   };
 
   render() {
@@ -246,7 +258,7 @@ export default class Chat extends Component {
           }
           // console.log(user)
           return (
-            <UI.ChatPeopleContainer key={Math.random()} onClick={() => this.handleSelectedContact(data)}>
+            <UI.ChatPeopleContainer key={Math.random()} onClick={() => this.handleSelectedContact(chat.SUser, chat.chat, chat._id, Contacts, 'SUser')}>
               <UI.ChatItemImage src={ImageToDisplay} />
               <UI.ChatItemName>{nameToDisplay}</UI.ChatItemName>
               <UI.ChatItemTime>{LatestMessageTime}</UI.ChatItemTime>
@@ -284,7 +296,7 @@ export default class Chat extends Component {
           }
           // console.log(user)
           return (
-            <UI.ChatPeopleContainer onClick={() => this.handleSelectedContact(data)}>
+            <UI.ChatPeopleContainer onClick={() => this.handleSelectedContact(chat.FUser, chat.chat, chat._id, Contacts, 'FUser')}>
               <UI.ChatItemImage src={ImageToDisplay} />
               <UI.ChatItemName>{nameToDisplay}</UI.ChatItemName>
               <UI.ChatItemTime>{LatestMessageTime}</UI.ChatItemTime>
@@ -325,9 +337,10 @@ export default class Chat extends Component {
               <UI.footerIcon src={attachIcon} />
               <UI.ChatTextArea
                 placeholder="Type your message here..."
-                name="chatText"
+                name="message"
                 onChange={this.handleChange}
                 onKeyUp={this.handleKeyPress}
+                value={this.state.message}
               />
               <UI.footerIcon src={picPhotoIcon} />
               <UI.footerIcon src={emojiIcon} />

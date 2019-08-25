@@ -1,5 +1,6 @@
 import Navbar from '../../components/Navbar'
 import { connect } from 'react-redux'
+import { handleLogoutUser } from '../../Store/Actions'
 
 
 /**
@@ -9,10 +10,8 @@ const mapStateToProps = (state) => ({
  Admin: state.Admin.Admin
 })
 
-// const mapDispatchToProps = dispatch => ({
-//   // handleFreelancerPageRefresh () {
-//   //   dispatch(action.handlefreelancerPageRefresh())
-//   // }
-// })
+const mapDispatchToProps = dispatch => ({
+  handleLogoutUser: () => dispatch(handleLogoutUser())
+})
 
-export default connect(mapStateToProps, null)(Navbar)
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

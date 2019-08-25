@@ -1,4 +1,4 @@
-export { handledLogin } from './handleLogins'
+export { handledLogin, handleLogoutUser } from './handleLogins'
 
 export { handleCreateAdmin, handleGetAdminDetailOnRefresh, handleUpdateAdmin } from './AdminActions.jsx'
 export { handleGetAllUsers, handleGetJobs, handleGetAllTransactions } from './handleDashboard'
