@@ -8,7 +8,7 @@ import AdminInfo from './admin'
 /**
  * this is the main navbar component and feeds redux state to the Admin component
  */
-const index = ({ Admin, history }) => {
+const index = ({ Admin, history, ...props }) => {
   return (
     <Navbar.Nav>
       <Logo />
@@ -16,6 +16,7 @@ const index = ({ Admin, history }) => {
       <AdminInfo
         admin={Admin}
         history={history}
+        handleLogoutUser={props.handleLogoutUser}
       />
     </Navbar.Nav>
   )

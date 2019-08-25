@@ -1,6 +1,6 @@
 import Users from '../../pages/ManageUsers'
 import { connect } from 'react-redux'
-import { handleGetAllUsersCardInfo, handleEnableUser, handleDisableUser, postSearchQuery, cancelSearch, handleGetAllCategories } from '../../Store/Actions'
+import { handleGetAllUsersCardInfo, handleEnableUser, handleDisableUser, postSearchQuery, cancelSearch, handleGetAllCategories, handleStartNewChat, handleFetchUserChatHistory } from '../../Store/Actions'
 
 /**
  * here we handle passing redux to our component and export
@@ -31,7 +31,9 @@ const mapDispatchToProps = dispatch => ({
   },
   handleGetAllCategories () {
     return dispatch(handleGetAllCategories())
-  }
+  },
+  handleStartNewChat: SUserId => dispatch(handleStartNewChat(SUserId)),
+  handleFetchUserChatHistory: () => dispatch(handleFetchUserChatHistory())
 
 })
 

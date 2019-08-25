@@ -31,10 +31,7 @@ export const NavDropDown = props => {
         <img src={require('../../assets/images/settings.svg')} alt='settings' />
         <span> Settings </span>
       </DropDown.NavOptions>
-      <DropDown.NavOptions onClick={() => {
-        localStorage.clear()
-        return props.history.push('/')
-      }}>
+      <DropDown.NavOptions onClick={props.handleLogoutUser}>
         <img src={require('../../assets/images/logout.svg')} alt='logout' />
         <span> Logout </span>
       </DropDown.NavOptions>
