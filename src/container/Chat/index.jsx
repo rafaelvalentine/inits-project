@@ -1,4 +1,4 @@
-import Chat from '../../pages/Chat'
+import Chat from '../../pages/Chat/index'
 import { connect } from 'react-redux'
 import { handleFetchUserChatHistory,
   handleSetChatInfo,
