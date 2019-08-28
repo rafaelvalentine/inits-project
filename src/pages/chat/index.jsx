@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import swal from "sweetalert";
 import Navbar from "../../container/Navbar";
 import { Star} from '../../components/Picture'
-import * as UI from "./style.js";
+import * as UI from "./style";
 import Rating from 'react-rating'
 import moment from 'moment'
 import validator from 'validator'
@@ -171,7 +171,7 @@ let userId = localStorage.getItem('userId')
 /**
  *@class chat
  */
-export default class Chat extends Component {
+class Chat extends Component {
   state = {
     contacts: [],
 
@@ -380,3 +380,4 @@ export default class Chat extends Component {
     );
   }
 }
+export default Chat
