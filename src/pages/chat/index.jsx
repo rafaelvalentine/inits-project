@@ -171,7 +171,7 @@ let userId = localStorage.getItem('userId')
 /**
  *@class chat
  */
-export default class Chat extends Component {
+class Chat extends Component {
   state = {
     contacts: [],
 
@@ -380,3 +380,4 @@ export default class Chat extends Component {
     );
   }
 }
+export default Chat
