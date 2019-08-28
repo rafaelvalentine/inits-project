@@ -1,6 +1,7 @@
 const ChatState = {
   contacts: [],
   currentChat: [],
-  selectedUser:{}
+  selectedUser:{},
+  ChatIds:[]
 }
 export default ChatState

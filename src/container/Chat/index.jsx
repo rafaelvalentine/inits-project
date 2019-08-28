@@ -4,7 +4,7 @@ import { handleFetchUserChatHistory,
   handleSetChatInfo,
   handlePostNewChatMessage,
   handleStartNewChat,
-  handleSearchResult } from '../../Store/Actions'
+  handleResult } from '../../Store/Actions'
 
 /**
  * here we handle passing redux to our component and export
@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
   Contacts: state.Chat.contacts,
   Chat: state.Chat.currentChat,
   SelectedUser: state.Chat.selectedUser,
-  AllUsers: state.Admin.Admin.allUsers
+  AllUsers: state.Admin.Admin.allUsers,
+  ChatIds: state.Chat.ChatIds
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -30,8 +31,8 @@ const mapDispatchToProps = dispatch => ({
   handleFetchUserChatHistory () {
     return dispatch(handleFetchUserChatHistory())
   },
-  handleSearchResult (results) {
-    return dispatch(handleSearchResult(results))
+  handleResult (results) {
+    return dispatch(handleResult(results))
   }
 })
 

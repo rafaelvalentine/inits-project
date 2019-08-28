@@ -6,6 +6,7 @@ import * as UI from "./style.js";
 import Rating from 'react-rating'
 import moment from 'moment'
 import validator from 'validator'
+import openSocket from 'socket.io-client'
 
 import { data, allChatText } from "./data";
 
@@ -200,6 +201,7 @@ export default class Chat extends Component {
       return
     }
     if (event.keyCode === 13) {
+      event.preventDefault()
       this.props.handlePostNewChatMessage(data)
       .then(res=>{
         this.setState({loading:false, message:'', file:''})
@@ -211,7 +213,29 @@ export default class Chat extends Component {
   handleSelectedContact = (...props) => {
     this.props.handleSetChatInfo(...props)
   };
-
+  socket = openSocket('https://primework-staging.herokuapp.com/')
+  componentDidMount(){
+    this.props.handleFetchUserChatHistory()
+    // let chatId = localStorage.getItem('currentChatId')
+    // console.log(`chat${chatId}`)
+    // this.socket.on(`chat${chatId}`, (data) => console.log(data))
+    // this.socket.on(`data`, (data) => console.log(data))
+  }
+  handleResult = data =>{
+    this.props.handleResult(data)
+    this.props.handleFetchUserChatHistory()
+    // .then(res=>{
+    //   this.setState({loading:false, message:'', file:''})
+    // })
+  }
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.ChatIds !==  this.props.ChatIds) {
+      nextProps.ChatIds.map(id => (
+        this.socket.on(`chat${id}`, data => this.handleResult(data))
+      ))
+      // console.log('[this is from the willUpdate component]', nextProps.ChatIds);
+    }
+  }
   render() {
     // const { contacts, selectedContact } = this.state;
     const { Contacts, SelectedUser, Chat, AllUsers } = this.props
