@@ -5,5 +5,5 @@ export { handleGetAllUsers, handleGetJobs, handleGetAllTransactions } from './ha
 export { handleGetAllUsersCardInfo, handleEnableUser, handleDisableUser, handleCreateFreelancer } from './handleManageUsers'
 export { handleGetAllCategories, handleCreateCategory, handleEditCategory, handleGetAllJobs, handleDeleteCategory } from './handleManageJobs'
 export { postSearchQuery, cancelSearch } from './handleSearch'
-export { handleFetchUserChatHistory, handleSetChatInfo, handlePostNewChatMessage, handleStartNewChat, handleSearchResult } from './handleChat'
+export { handleFetchUserChatHistory, handleSetChatInfo, handlePostNewChatMessage, handleStartNewChat, handleResult } from './handleChat'
  

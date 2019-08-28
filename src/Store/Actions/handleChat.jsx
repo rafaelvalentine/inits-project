@@ -5,7 +5,7 @@ import { handleError } from '../../lib'
 import openSocket from 'socket.io-client'
 const socket = openSocket('https://primework-staging.herokuapp.com')
 
-const { SET_CHAT_HISTORY, SET_CURRENT_CHAT, SET_CURRENT_USER, UPDATE_CURRENT_CHAT } = type
+const { SET_CHAT_HISTORY, SET_CURRENT_CHAT, SET_CURRENT_USER, UPDATE_CURRENT_CHAT, STORE_CHAT_IDS } = type
 
 const handleSetAllChat = payload => ({
   type: SET_CHAT_HISTORY,
@@ -23,11 +23,16 @@ const handleUpdateChat = payload => ({
   type: UPDATE_CURRENT_CHAT,
   payload
 })
+const handleStoreChatIds = payload => ({
+  type: STORE_CHAT_IDS,
+  payload
+})
 export const handleFetchUserChatHistory = () => dispatch => {
   let userId = localStorage.getItem('userId')
   let chat = []
   let user
   let data = []
+  let chatIds
   return axios({
     url: `https://primework-staging.herokuapp.com/api/v1/chat/user/all/${userId}`,
     method: 'GET'
@@ -43,6 +48,8 @@ export const handleFetchUserChatHistory = () => dispatch => {
     // console.log(data)
 
     if (data && data.length > 0) {
+      chatIds = data.map(chat => chat._id)
+      dispatch(handleStoreChatIds(chatIds))
       localStorage.setItem('currentChatId', data[0]._id)
       chat = data[0].chat
       if (data[0].FUser._id !== userId) {
@@ -104,7 +111,7 @@ export const handlePostNewChatMessage = message => dispatch => {
       let result = res.data
       localStorage.setItem('currentChatId', result.data._id)
       dispatch(handleUpdateChat(result.data))
-      socket.on(`chat${chatId}`, data => console.log(data))
+      // socket.on(`chat${chatId}`, data => console.log(data))
       return res
     })
     .catch(err => {
@@ -130,6 +137,6 @@ export const handleStartNewChat = SUserId => dispatch => {
       console.log(err)
     })
 }
-export const handleSearchResult = results => dispatch => {
-  console.log(results)
+export const handleResult = results => dispatch => {
+  dispatch(handleUpdateChat(results))
 }

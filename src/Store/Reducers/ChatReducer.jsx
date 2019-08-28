@@ -24,7 +24,11 @@ export default (state = initialState, action) => {
         ...state,
         currentChat: [...action.payload.chat]
       }
-
+    case 'STORE_CHAT_IDS':
+      return {
+        ...state,
+        ChatIds: [...action.payload]
+      }
     default:
       return state
   }

@@ -8,11 +8,11 @@ import AdminSettings from '../container/Settings'
 import Users from '../container/ManageUsers'
 import Transactions from '../container/Transactions'
 import CreateUser from './CreateUser'
-import Jobs from './ManageJobs';
+import Jobs from './ManageJobs'
 import { Helmet } from 'react-helmet'
 import ScrollToTop from '../components/Tools/ScrollToTop'
-import swal from 'sweetalert';
-// import Chat from '../container/Chat'
+import swal from 'sweetalert'
+import Chat from '../container/Chat'
 
 
 function PrivateRoute ({ component: Component, ...rest }) {

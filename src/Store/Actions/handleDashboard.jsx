@@ -91,11 +91,12 @@ export const handleGetAllTransactions = () => dispatch => {
     let transactionArray = result.data
     let sum = 0
     let transactionsValue
-    transactionArray.map(transaction => {
-      if (transaction.amount) {
-        transactionsValue = sum + transaction.amount
-      }
-    })
+    const reducer = (accumulator, currentValue) => accumulator + currentValue
+    transactionsValue = transactionArray.map(transaction => {
+      return sum + transaction.amount
+    }).reduce(reducer)
+    // console.log(result.data)
+    // console.log(arrayValue)
     let transactionData = {
       transactionsPerformed: transactionArray.length,
       transactionsValue,
