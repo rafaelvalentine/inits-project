@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import swal from "sweetalert";
 import Navbar from "../../container/Navbar";
 import { Star} from '../../components/Picture'
-import * as UI from "./style.js";
+import * as UI from "./style";
 import Rating from 'react-rating'
 import moment from 'moment'
 import validator from 'validator'
