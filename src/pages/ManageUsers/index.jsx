@@ -6,7 +6,7 @@ import { CreateUserButton, CloseSearchButton  } from '../../components/Button'
 import Pagination from '../../components/Tools/Pagination'
 import GoldSpinner from '../../components/Tools/GoldSpinner'
 import * as Page from '../../theme/style/styles'
-import { FilterModal, DisableUserModal, ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal,  DisableUserMessageModal  } from '../../components/Modal'
+import { FilterModal, DisableUserModal as DeleteUserModal, ConfirmDisableUserModal, EnableUserModal, ConfirmEnableUserModal,  DisableUserMessageModal  } from '../../components/Modal'
 import swal from 'sweetalert'
 import validator from 'validator'
 import { Helmet } from 'react-helmet'
@@ -34,7 +34,48 @@ export default class index extends Component {
       id:'',
       name:''
     },
-    data:[],
+    data:[
+      {
+          "_id": Math.random(),
+          "email":  "www.swipe.com",
+          "type": "business",
+          "disabled": false,
+          "ratings": [],
+          "averageRate": 4.7,
+          "jobsCompleted": [],
+          "organization": {
+              "categories": ['software'],
+              "organizationName": "Swipe",
+              "organizationLogoUrl":'',
+              "links": [],
+              "portfolioImages": [],
+              "biography": "Fun and witty. Always available to get the job done",
+              "businessTitle": "Technology",
+              "location": "lagos",
+              organizationSize:23
+          }
+      },
+      {
+          "_id": Math.random(),
+          "email": "www.initsng.com",
+          "type": "freelancer",
+          "disabled": false,
+          "ratings": [],
+          "averageRate": 4.4,
+          "jobsCompleted": [],
+          "organization": {
+            "categories": ['software', 'hardware'],
+            "organizationName": "Inits",
+            "organizationLogoUrl":'',
+            "links": [],
+            "portfolioImages": [],
+            "biography": "Fun and witty. Always available to get the job done",
+            "businessTitle": "Technology",
+            "location": "lagos",
+            'organizationSize':30
+        }
+      }
+    ],
     query:'',
     categories:[],
     spinner:true
@@ -201,26 +242,25 @@ handleCancelSearch = () => {
   this.setState({data: this.props.Users, query:''}, ()=> this.props.cancelSearch(false))
 }
 RefreshUsersCards = () => this.props.handleGetAllUsersCardInfo()
-componentDidMount(){
-  this.renderPageNumbers()
-  this.props.handleGetAllUsersCardInfo()
-    .then(res=>(
-      this.setState({data: this.props.Users})
-    ))
-    this.props.handleGetAllCategories()
-      .then(res=>{
-        this.setState({categories: this.props.Categories})
-      })
-this.setState({data: this.props.Users})
- setTimeout(() => {
-   this.setState({spinner:false, data: this.props.Users})
- }, 15000);
-}
+// componentDidMount(){
+//   this.renderPageNumbers()
+//   this.props.handleGetAllUsersCardInfo()
+//     .then(res=>(
+//       this.setState({data: this.props.Users})
+//     ))
+//     this.props.handleGetAllCategories()
+//       .then(res=>{
+//         this.setState({categories: this.props.Categories})
+//       })
+// this.setState({data: this.props.Users})
+//  setTimeout(() => {
+//    this.setState({spinner:false, data: this.props.Users})
+//  }, 15000);
+// }
 
 handleShowDisableMessageModal =()=>{
- let showDisableMessage = !this.state.showDisableMessage
  let showDisableModal = !this.state.showDisableModal
- this.setState({showDisableMessage, showDisableModal})
+ this.setState({showDisableModal})
 }
 handleDisableInput = e =>{
   this.setState({[e.target.name]:e.target.value}, ()=> console.log(this.state))
@@ -239,14 +279,14 @@ handleStartNewChat = SUserId => {
     })
   })
 }
-componentWillReceiveProps(nextProps) {
-  // Typical usage (don't forget to compare props):
-  if (nextProps.Users !== this.props.Users) {
-    if (nextProps.Users && nextProps.Users > 0) {
-      this.setState({data: this.props.Users})
-    }
-  }
-}
+// componentWillReceiveProps(nextProps) {
+//   // Typical usage (don't forget to compare props):
+//   if (nextProps.Users !== this.props.Users) {
+//     if (nextProps.Users && nextProps.Users > 0) {
+//       this.setState({data: this.props.Users})
+//     }
+//   }
+// }
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage
     const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage
@@ -292,7 +332,7 @@ componentWillReceiveProps(nextProps) {
             //  This is the create new user Component 
             <CreateUserButton
             clicked={()=> this.props.history.push('manage-users/createuser')}
-            content='create new user'
+            content='create new Business'
             />
            }
         </Page.SubWrapper>
@@ -303,17 +343,16 @@ componentWillReceiveProps(nextProps) {
         >
           {/* This is the map Component  to display all available users */}
           {currentUsers && currentUsers.length > 0 ?  currentUsers.map(user =>{
-            let name = `${user.freelancer.firstName || 'Jon'} ${user.freelancer.lastName || 'Snow'}`
+            let name = `${user.organization.organizationName || 'Business'}`
           return  <Profile 
           key={user._id}
           {...user}
-          {...user.freelancer}
+          {...user.organization}
           handleEnableUser={()=>this.handleEnableUser(name, user._id)}
           handleDisableUser={()=>this.handleDisableUser(name, user._id)}
           name={name }
-          jobsCompleted={ user.jobsCompleted.length || '0'}
+          organizationSize={ user.organization.organizationSize || '0'}
           isDisabled={user.disabled}
-          handleStartNewChat={this.handleStartNewChat}
           />
           }) : 
           <Page.SubWrapperAlt
@@ -354,7 +393,7 @@ componentWillReceiveProps(nextProps) {
         This is the disable user modal Component 
         Note:  that all Modal CSS is handled by index.css
         */}
-        <DisableUserModal
+        <DeleteUserModal
         show={this.state.showDisableModal}
         loading={this.state.loading}
         onHide={this.handleCloseDisableUser}

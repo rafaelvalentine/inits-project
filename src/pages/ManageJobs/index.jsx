@@ -13,9 +13,19 @@ export default class index extends Component {
   state ={ 
     selected:true,
     loading:false,
-    spinner:true,
+    spinner:false,
     data:[],
-    categoryData:[],
+    categoryData:[
+    { _id:Math.random(),
+      category:'software',
+    },
+    { _id:Math.random(),
+      category:'hardware',
+    },
+    { _id:Math.random(),
+      category:'development',
+    }
+  ],
     firstPage: 1,
     currentPage: 1,
     usersPerPage: 9,
@@ -125,10 +135,13 @@ handleCreateCategory= () =>{
     category: this.state.category
   }
   this.setState({ loading:true, })
-  this.props.handleCreateCategory(data)
-  .then(res =>{
-    this.setState({loading: false, showCreateCategory: false, categoryData:[...this.state.categoryData, res.data]}) 
-  })
+  // this.props.handleCreateCategory(data)
+  // .then(res =>{
+  //   this.setState({loading: false, showCreateCategory: false, categoryData:[...this.state.categoryData, res.data]}) 
+  // })
+  setTimeout(() => {
+    this.setState({ loading:false})
+  }, 3000);
 }
 handleEditCategory= () =>{
   let categoryId = this.state.categoryId
@@ -144,27 +157,33 @@ handleEditCategory= () =>{
     category: this.state.category
   }
   this.setState({ loading:true, })
-  this.props.handleEditCategory(category, categoryId)
-  .then(res=>{
+  setTimeout(() => {
     this.setState({loading:false, showEditCategory: false}) 
-    this.props.handleGetAllCategories()
-      .then(res=>{
-        this.setState({categoryData: this.props.Categories})
-      })
-  })
+  }, 3000);
+  // this.props.handleEditCategory(category, categoryId)
+  // .then(res=>{
+  //   this.setState({loading:false, showEditCategory: false}) 
+  //   this.props.handleGetAllCategories()
+  //     .then(res=>{
+  //       this.setState({categoryData: this.props.Categories})
+  //     })
+  // })
 }
 handleDeleteCategory= () =>{
   let categoryId = this.state.categoryId
 
   this.setState({ loading:true, })
-  this.props.handleDeleteCategory(categoryId) 
-  .then(res =>{
+  setTimeout(() => {
     this.setState({loading:false, showDeleteCategory: false}) 
-    this.props.handleGetAllCategories()
-      .then(res=>{
-        this.setState({categoryData: this.props.Categories})
-      })
-  })
+  }, 3000);
+  // this.props.handleDeleteCategory(categoryId) 
+  // .then(res =>{
+  //   this.setState({loading:false, showDeleteCategory: false}) 
+  //   this.props.handleGetAllCategories()
+  //     .then(res=>{
+  //       this.setState({categoryData: this.props.Categories})
+  //     })
+  // })
 }
 handleFilterBy = filter =>{
 let Jobs = [...this.props.Jobs]
@@ -197,31 +216,31 @@ handleCancel = () => (
 
 componentDidMount(){
   this.renderPageNumbers()
-  this.setState({data: this.props.Jobs, categoryData: this.props.Categories})
-  this.props.handleGetAllJobs()
-  .then(res=>{
-    this.setState({data: this.props.Jobs})
-  })
-  this.props.handleGetAllCategories()
-  .then(res=>{
-    this.setState({categoryData: this.props.Categories})
-  })
+  // this.setState({data: this.props.Jobs, categoryData: this.props.Categories})
+//   this.props.handleGetAllJobs()
+//   .then(res=>{
+//     this.setState({data: this.props.Jobs})
+//   })
+//   this.props.handleGetAllCategories()
+//   .then(res=>{
+//     this.setState({categoryData: this.props.Categories})
+//   })
 
- setTimeout(() => {
-   this.setState({spinner:false, data: this.props.Jobs, categoryData: this.props.Categories })
- }, 15000);
+//  setTimeout(() => {
+//    this.setState({spinner:false, data: this.props.Jobs, categoryData: this.props.Categories })
+//  }, 15000);
 }
-componentWillReceiveProps(nextProps) {
-  // Typical usage (don't forget to compare props):
-  if(nextProps.Jobs){
-    this.setState({data: this.props.Jobs})
-  }
-  if (nextProps.Jobs !== this.props.Jobs) {
-    if (nextProps.Jobs && nextProps.Jobs > 0) {
-      this.setState({data: this.props.Jobs})
-    }
-  }
-}
+// componentWillReceiveProps(nextProps) {
+//   // Typical usage (don't forget to compare props):
+//   if(nextProps.Jobs){
+//     this.setState({data: this.props.Jobs})
+//   }
+//   if (nextProps.Jobs !== this.props.Jobs) {
+//     if (nextProps.Jobs && nextProps.Jobs > 0) {
+//       this.setState({data: this.props.Jobs})
+//     }
+//   }
+// }
   render () {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage
     const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage
@@ -231,20 +250,6 @@ componentWillReceiveProps(nextProps) {
     let pageUsers = currentUsers.length + indexOfFirstUser
     let spinner = this.state.spinner ? <GoldSpinner/> : null
     let messages = this.state.spinner ? 'Searching...' : 'No Jobs Found'
-    let table =(
-      <JobsTable 
-         pageInfo={this.state}
-         allUsers={allUsers}
-         newindexOfFirstUser={newindexOfFirstUser}
-         pageUsers={pageUsers}
-         pageNumbers={this.renderPageNumbers}
-         selectedPage={this.selectedPage}
-         handleDataRange={this.handleDataRange}
-         handlePagnationUp={this.handlePagnationUp}
-         handlePagnationDown={this.handlePagnationDown}
-         data={currentUsers} 
-         setPagination={true} />
-    )
     let placerholder = (
       <Page.SubWrapperAlt
       padding='50px 80px 500px'
@@ -253,9 +258,9 @@ componentWillReceiveProps(nextProps) {
     </Page.SubWrapperAlt>
     )
     let display = placerholder
-    if(this.state.data && this.state.data.length > 0 ){
-      display = table
-    }
+    // if(this.state.data && this.state.data.length > 0 ){
+    //   display = table
+    // }
 
 
     return (
@@ -278,7 +283,7 @@ componentWillReceiveProps(nextProps) {
           clickedCategory={this.handleShowCreateCategory}
           cancel={this.handleCancel}
           />
-         { this.state.selected ? display :
+         { !this.state.selected ? null :
          <CategoryTable data={this.state.categoryData}
          handleShowEditCategory={ this.handleShowEditCategory}
          handleShowDeleteCategory={this.handleShowDeleteCategory}

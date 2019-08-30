@@ -19,7 +19,7 @@ margin:0 auto;
 @media ${device.laptop} {
   justify-content: ${props => props.justifyContent ? props.justifyContent : 'center' };
   &.usersCard{
-    justify-content:space-between;
+    justify-content:flex-start;
   }
 }
 `

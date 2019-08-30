@@ -50,13 +50,13 @@ export const Links = props => {
    */
 Links.defaultProps = {
   links: [
-    {
-      id: '1',
-      img: dashboardOrange,
-      img2: dashboard,
-      address: 'dashboard',
-      link: 'dashboard'
-    },
+    // {
+    //   id: '1',
+    //   img: dashboardOrange,
+    //   img2: dashboard,
+    //   address: 'dashboard',
+    //   link: 'dashboard'
+    // },
     {
       id: '2',
       img: userOrange,
@@ -70,21 +70,21 @@ Links.defaultProps = {
       img2: jobs,
       address: 'manage jobs',
       link: 'manage-jobs'
-    },
-    {
-      id: '4',
-      img: transOrange,
-      img2: trans,
-      address: 'transactions',
-      link: 'transactions'
-    },
-    {
-      id: '5',
-      img: chatOrange,
-      img2: chat,
-      address: 'live chat',
-      link: 'chat'
     }
+    // {
+    //   id: '4',
+    //   img: transOrange,
+    //   img2: trans,
+    //   address: 'transactions',
+    //   link: 'transactions'
+    // },
+    // {
+    //   id: '5',
+    //   img: chatOrange,
+    //   img2: chat,
+    //   address: 'live chat',
+    //   link: 'chat'
+    // }
   ]
 }
 export default Links

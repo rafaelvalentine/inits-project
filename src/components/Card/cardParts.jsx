@@ -77,7 +77,7 @@ export const JobCompleted = ({ jobs }) => (
   <div style={{ padding: '0 16px' }}>
     <JobsCompleted>
       <Logo width='16px' height='16px' margin='0 10px 0 0'src={require('../../assets/images/jobsposted.svg')} />
-      <span>{jobs || 0 } Job completed</span>
+      <span>{jobs || 0 } Employees</span>
     </JobsCompleted>
   </div>
 
@@ -111,7 +111,7 @@ const SkillListContainer = ({ skills }) => {
 
           </Container>
         )
-      }) : <UserHandle> No Skills Listed </UserHandle> }
+      }) : <UserHandle> No Category Listed </UserHandle> }
     </FixContainer>
   )
 }
@@ -119,7 +119,7 @@ const SkillListContainer = ({ skills }) => {
 export const SkillList = ({ skills }) => (
   <FixContainerAlt>
     <Label>
-      skills
+      Categories
     </Label>
     <SkillListContainer skills={skills} />
   </FixContainerAlt>

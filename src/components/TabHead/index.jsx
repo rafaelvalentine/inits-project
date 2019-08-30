@@ -49,19 +49,19 @@ const TabHead = ({ selected, clickedJob, clickedCategory, sortByValue, task, can
   selected ? clickedTwo = clickedJob : clickedOne = clickedJob
   return (
     <Tab.Wrapper >
-      <TabHeader
+      {/* <TabHeader
         onClick={clickedOne}
         alt={selected}>
               JOB HISTORY
-      </TabHeader>
+      </TabHeader> */}
       <TabHeader
         onClick={clickedTwo}
-        alt={!selected}>
-             JOB CATEGORIES
+        alt={selected}>
+              CATEGORIES
       </TabHeader>
 
       <div style={{ marginLeft: 'auto', marginRight: '87px' }} ref={wrapperRef}>
-        {selected ? <SortInput
+        {!selected ? <SortInput
           showCancel={showCancel}
           cancel={cancel}
           placeholder={task || 'Sort By'}
@@ -71,7 +71,7 @@ const TabHead = ({ selected, clickedJob, clickedCategory, sortByValue, task, can
           { dropdown }
         </SortInput>
           : <Button
-            content='CREATE JOB CATEGORY'
+            content='CREATE CATEGORY'
             width='154px'
             height='40px'
             borderRadius='4px'
