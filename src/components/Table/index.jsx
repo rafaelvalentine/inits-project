@@ -250,7 +250,7 @@ export const CategoryTable = ({ title, setPagination, data, handleShowEditCatego
         {header}
         <Table id='myTable'>
           <TableHead >
-            <th>Job Category</th>
+            <th>Category</th>
             <th>Actions</th>
           </TableHead>
           <tbody>

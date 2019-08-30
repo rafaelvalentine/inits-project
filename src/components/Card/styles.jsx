@@ -25,14 +25,14 @@ export const Container = styled.div`
       padding: 5px 0;
     }
     @media ${device.laptop}{
-      &.profileCard{
-        margin:25px auto 25px 20px;
-      }
+      // &.profileCard{
+      //   margin:25px auto 25px 20px;
+      // }
     }
     @media ${device.desktop}{
-      &.profileCard{
-        margin:25px 15px;
-      }
+      // &.profileCard{
+      //   margin:25px 15px;
+      // }
     }
    
 `

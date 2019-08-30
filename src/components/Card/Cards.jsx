@@ -74,28 +74,30 @@ export const AnalyticsCard = ({ figure, figure2, info, info2, info3, img, color,
   )
 }
 
-
-export const Profile = ({ name, 
-  profileImageUrl, 
-  averageRate, 
-  jobTitle, 
-  jobsCompleted, 
-  skills, 
-  primaryAlt, 
-  secondAlt, 
-  primaryContent, 
-  secondaryClicked, 
-  isDisabled, 
-  handleEnableUser, 
-  handleDisableUser, 
-  email, 
+export const Profile = ({ name,
+  organizationLogoUrl,
+  averageRate,
+  jobTitle,
+  jobsCompleted,
+  skills,
+  primaryAlt,
+  secondAlt,
+  primaryContent,
+  secondaryClicked,
+  isDisabled,
+  handleEnableUser,
+  handleDisableUser,
+  email,
   handleStartNewChat,
+  categories,
+  organizationSize,
+  businessTitle,
   _id,
   ...props }) => {
   let secondaryContent
   let altButton
   let clicked
-  !isDisabled ? secondaryContent = 'Disable' : secondaryContent = 'Enable'
+  secondaryContent = 'Delete'
   isDisabled ? altButton = true : altButton = false
   isDisabled ? clicked = handleEnableUser : clicked = handleDisableUser
   const [connect, setConnect] = useState({ show: false })
@@ -144,25 +146,25 @@ export const Profile = ({ name,
       {...props}
     >
       <UserDetails
-        image={profileImageUrl}
+        image={organizationLogoUrl}
         rating={averageRate}
-        type={jobTitle}
+        type={businessTitle}
         name={name}
         email={email}
       />
-      <JobCompleted jobs={jobsCompleted} />
-      <SkillList skills={skills} />
+      <JobCompleted jobs={organizationSize} />
+      <SkillList skills={categories} />
       <DuoButton
         DuoButtonMargin='40px 0 0'
-        primaryContent='Connect'
+        primaryContent='Edit'
         secondaryContent={secondaryContent}
         secondAlt={altButton}
         primaryClicked={toggleDropDown}
         secondaryClicked={clicked}
       />
-      <div ref={wrapperRef}>
+      {/* <div ref={wrapperRef}>
         {connect.show ? dropdown : null}
-      </div>
+      </div> */}
 
       {/* <ConnectDropDown /> */}
     </CardBox>
@@ -234,7 +236,7 @@ export const EditCategory = ({ history, inputs, complete, changed, loading, clos
         altBackground='true'
         fontSize='18px'
       >
-         Edit Job Category
+         Edit Category
         <Logo
           src={require('../../assets/images/close-line-alt.svg')}
           height='24px'
@@ -286,7 +288,7 @@ export const DeleteCategory = ({ history, inputs, complete, changed, loading, cl
         altBackground='true'
         fontSize='18px'
       >
-         Edit Job Category
+         Delete Category
         <Logo
           src={require('../../assets/images/close-line-alt.svg')}
           height='24px'

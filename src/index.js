@@ -10,10 +10,7 @@ import colors from './theme/main'
 import * as serviceWorker from './serviceWorker'
 import { handleGetAdminDetailOnRefresh, handleGetAllUsersCardInfo, handleGetAllJobs, handleGetAllTransactions, handleFetchUserChatHistory } from './Store/Actions'
 
-axios.defaults.baseURL = 'https://primework-staging.herokuapp.com/api/v1'
 
-// const userID = localStorage.getItem('_userID')
-// const jobID = localStorage.getItem('_jobID')
 const token = localStorage.getItem('token')
 if (token) {
     Store.dispatch(handleGetAdminDetailOnRefresh())

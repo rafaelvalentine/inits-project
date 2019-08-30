@@ -53,14 +53,14 @@ const Login = ({ handleLogin, loading }) => {
     <Page.Wrapper>
       <Page.Left>
         <Page.Header>
-          <Logo  />
+          <Logo width='40px' height='40px' src={require('../../assets/images/logo.png')} />
         </Page.Header>
         <Form.CardsContainer
           margin='100px 0 0'
           justify='center'
           align='center'>
           <Type.Header>
-                Sign in to Primework Admin
+                Sign in to Business centeral Admin
           </Type.Header>
           <Type.SubHeader>
              Please enter your credentials to proceed.

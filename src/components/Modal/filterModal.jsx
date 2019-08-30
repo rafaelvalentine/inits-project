@@ -109,32 +109,12 @@ const FilterModal = ({ categories, loading, handleFilterSearchInput, clicked, ..
           >
             <option hidden>Skills</option>
             <option value="">none</option>
-            <option value='html5'>HTML5</option>
+            {/* <option value='html5'>HTML5</option>
             <option value='css3'>CSS3</option>
             <option value='javascript'>Javascript</option>
             <option value='bootstrap'>Bootstrap</option>
-            <option value='react'>React</option>
+            <option value='react'>React</option> */}
           </Select>
-          <Select
-            name='jobsCompleted'
-            width='120px'
-            height=' 32px'
-            margin='0'
-            value={inputs.jobsCompleted}
-            changed={handleChange}
-            label='Job Completed'
-            marTop='0'
-            MainLabelContainerMargin='5px 10px 10px 15px'
-          >
-            <option hidden>Jobs Completed</option>
-            <option value="">none</option>
-            <option value='5'>5</option>
-            <option value='10'>10</option>
-            <option value='15'>15</option>
-            <option value='20'>20</option>
-            <option value='30'>30</option>
-          </Select>
-
         </AltBox>
 
       </Modal.Body>

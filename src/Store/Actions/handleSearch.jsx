@@ -48,20 +48,6 @@ export const postSearchQuery = query => dispatch => {
   const searchObj = { searchPhrase: query }
   // console.log('search query object')
   // console.log(searchObj)
-  return axios
-    .post('/job/search', searchObj)
-    .then(res => {
-      dispatch(searchQuery(query))
-      dispatch(searchResult(res.data.data))
-      dispatch(searchEnd())
-      dispatch(searchCancel(true))
-      return res
-    })
-    .catch(err => {
-      console.log(err)
-      handleError(err)
-      return err
-    })
 }
 export const cancelSearch = value => dispatch => {
   dispatch(searchCancel(value))

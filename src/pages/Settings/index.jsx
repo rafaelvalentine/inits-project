@@ -102,14 +102,14 @@ export default class index extends Component {
    
   }
   componentDidMount(){
-    this.props.handleGetAdminDetailOnRefresh()
-    .then(res =>{
-      this.setState({ ...this.state, fullname: res.data.fullname,
-        email:res.data.email,
-        state:res.data.state,
-        lga: res.data.lga, 
-        town: res.data.town })
-    })
+    // this.props.handleGetAdminDetailOnRefresh()
+    // .then(res =>{
+    //   this.setState({ ...this.state, fullname: res.data.fullname,
+    //     email:res.data.email,
+    //     state:res.data.state,
+    //     lga: res.data.lga, 
+    //     town: res.data.town })
+    // })
   }
   render () {
     return (

@@ -19,34 +19,8 @@ export const handleLoading = (value) => dispatch => {
   dispatch(failedLogin(value))
 }
 export const handledLogin = (userDetails, history) => dispatch => {
-   return axios({
-    url: `https://primework-staging.herokuapp.com/api/v1/admin/login`,
-    method: 'POST',
-    data: userDetails
-  }).then(res => {
-    let result = res.data
-    // call dispatch here
-    localStorage.setItem('token', result.token)
-    localStorage.setItem('userId', result.data._id)
-    dispatch(handleLogin(result))
-    
-    return result.data
-  }).catch(err => {
-    handleError(err);
-    // dispatch(failedLogin(false))
-    console.log(err)
-  })
+  
 }
 export const handleLogoutUser = () => dispatch => {
   let userId = localStorage.getItem('userId')
-  return axios
-  .put(`/admin/set/inactive/${userId}`)
-  .then(res => {
-    let result = res.data
-    console.log(result)
-    return result
-  })
-  .catch(err => {
-    handleError(err)
-    console.log(err)
-  })}
+ }

@@ -247,7 +247,7 @@ export const CreateUserForm = ({ history, changed, inputs, loading, submit }) =>
             height='24px'
             width='24px'
             margin='0 8px'
-          />   Create New User
+          />   Create New Business
         </div>
 
       </CardHeader>
@@ -263,8 +263,8 @@ export const CreateUserForm = ({ history, changed, inputs, loading, submit }) =>
         align='center'
       >
         <Main
-          label='Full name'
-          placeholder='John Doe'
+          label='Company'
+          placeholder='Company'
           width='290px'
           marTop='24px'
           name='name'
@@ -272,8 +272,8 @@ export const CreateUserForm = ({ history, changed, inputs, loading, submit }) =>
           changed={changed}
         />
         <Main
-          label='Email address'
-          placeholder='john_doe@outlook.com'
+          label='Website'
+          placeholder='business@outlook.com'
           type='email'
           width='290px'
           marTop='24px'
@@ -396,7 +396,7 @@ export const DisableUser = ({ history, loading, inputs, openConfirm, close }) =>
           margin='0 0 24px'
         />
         <Card.Info>
-          Are you sure you want to disable { inputs.name || 'John Doe'} ?
+          Are you sure you want to Delete { inputs.name || 'John Doe'} ?
         </Card.Info>
 
         <DuoButton

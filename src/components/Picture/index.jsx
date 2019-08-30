@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 const LogoIMG = styled.img.attrs(props => ({
-  src: props.src || require('../../assets/images/primeworklogo.svg'),
-  width: props.width || '135px',
-  height: props.height || '25px',
+  src: props.src || require('../../assets/images/logo.png'),
+  width: props.width || '40px',
+  height: props.height || '40px',
   margin: props.margin
 }))`
 width: ${props => props.width};
